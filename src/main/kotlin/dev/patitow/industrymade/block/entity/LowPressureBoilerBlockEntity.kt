@@ -5,6 +5,7 @@ import dev.patitow.industrymade.init.ModBlockEntities
 import dev.patitow.industrymade.init.ModBlocks
 import dev.patitow.industrymade.init.ModSounds
 import dev.patitow.industrymade.thermal.OxygenReceiver
+import dev.patitow.industrymade.thermal.SteamProvider
 import dev.patitow.industrymade.thermal.TemperatureHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -27,7 +28,8 @@ import net.minecraft.world.phys.AABB
 
 class LowPressureBoilerBlockEntity(pos: BlockPos, state: BlockState) :
     BlockEntity(ModBlockEntities.LOW_PRESSURE_BOILER, pos, state),
-    OxygenReceiver {
+    OxygenReceiver,
+    SteamProvider {
 
     companion object {
         const val MAX_WATER: Int = 4000 // 4 buckets (4000 mB)
@@ -42,7 +44,7 @@ class LowPressureBoilerBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     var waterAmount: Int = 0
-    var steamPressure: Double = 0.0
+    override var steamPressure: Double = 0.0
     var temperature: Double = TemperatureHelper.ROOM_TEMPERATURE_CELSIUS
     var targetTemperature: Double = TemperatureHelper.ROOM_TEMPERATURE_CELSIUS
     var oxygenBoostTicks: Int = 0

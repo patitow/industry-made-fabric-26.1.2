@@ -57,4 +57,34 @@ class ThermalAndMechanicsTest {
         assertNull(MetalRegistry.getMetal("unobtainium"), "Querying unknown metal must safely return null")
         assertNull(MetalRegistry.getMetal(""), "Empty string metal ID must safely return null")
     }
+
+    @Test
+    @DisplayName("Verify SteamProvider pressure equalization and SteamConsumer draw mechanics")
+    fun testSteamSystemMechanics() {
+        val providerA = object : dev.patitow.industrymade.thermal.SteamProvider {
+            override var steamPressure: Double = 4.0
+        }
+        val providerB = object : dev.patitow.industrymade.thermal.SteamProvider {
+            override var steamPressure: Double = 0.0
+        }
+
+        // Draw pressure test
+        val drawn = providerA.drawPressure(1.5)
+        assertEquals(1.5, drawn, 0.001)
+        assertEquals(2.5, providerA.steamPressure, 0.001)
+
+        // Draw more than available
+        val overDrawn = providerA.drawPressure(10.0)
+        assertEquals(2.5, overDrawn, 0.001)
+        assertEquals(0.0, providerA.steamPressure, 0.001)
+
+        // Consumer operation test
+        val consumer = object : dev.patitow.industrymade.thermal.SteamConsumer {}
+        providerB.steamPressure = 1.0 // Below operating pressure of 1.5 bar
+        assertFalse(consumer.tryConsumeSteam(providerB, 0.5), "Consumer must not operate below minimum pressure")
+
+        providerB.steamPressure = 2.0 // Above operating threshold
+        assertTrue(consumer.tryConsumeSteam(providerB, 0.5), "Consumer must operate when pressure >= 1.5 bar")
+        assertEquals(1.5, providerB.steamPressure, 0.001)
+    }
 }

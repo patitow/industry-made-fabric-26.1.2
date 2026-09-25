@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "P": "industry-made:bronze_plate"
+  },
+  "pattern": [
+    "P P",
+    "P P",
+    "P P"
+  ],
+  "result": {
+    "count": 6,
+    "id": "industry-made:bronze_steam_pipe"
+  }
+}

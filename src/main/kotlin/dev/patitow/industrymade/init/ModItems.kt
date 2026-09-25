@@ -142,6 +142,7 @@ object ModItems {
                 output.accept(CERAMIC_MOLD)
                 output.accept(HOT_INGOT_MOLD)
                 output.accept(ModBlocks.LOW_PRESSURE_BOILER)
+                output.accept(ModBlocks.BRONZE_STEAM_PIPE)
                 output.accept(ModBlocks.STEAM_PISTON)
                 output.accept(ModBlocks.MECHANICAL_HAMMER)
             }

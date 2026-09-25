@@ -45,6 +45,15 @@ object ModBlockEntities {
         ).build()
     )
 
+    val BRONZE_STEAM_PIPE: BlockEntityType<dev.patitow.industrymade.block.entity.BronzeSteamPipeBlockEntity> = Registry.register(
+        BuiltInRegistries.BLOCK_ENTITY_TYPE,
+        IndustryMade.id("bronze_steam_pipe"),
+        FabricBlockEntityTypeBuilder.create(
+            { pos, state -> dev.patitow.industrymade.block.entity.BronzeSteamPipeBlockEntity(pos, state) },
+            ModBlocks.BRONZE_STEAM_PIPE
+        ).build()
+    )
+
     fun initialize() {
         // Classloading trigger
     }

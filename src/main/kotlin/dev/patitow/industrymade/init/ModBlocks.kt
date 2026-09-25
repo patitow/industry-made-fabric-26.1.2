@@ -90,6 +90,17 @@ object ModBlocks {
         )
     }
 
+    val BRONZE_STEAM_PIPE: dev.patitow.industrymade.block.BronzeSteamPipeBlock = registerBlock("bronze_steam_pipe") { id ->
+        dev.patitow.industrymade.block.BronzeSteamPipeBlock(
+            BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id))
+                .strength(2.0f, 4.0f)
+                .sound(SoundType.COPPER)
+                .noOcclusion()
+                .requiresCorrectToolForDrops()
+        )
+    }
+
     private fun <T : Block> registerBlock(name: String, blockFactory: (net.minecraft.resources.Identifier) -> T): T {
         val id = IndustryMade.id(name)
         val block = blockFactory(id)

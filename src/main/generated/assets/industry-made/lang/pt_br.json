@@ -1,5 +1,6 @@
 {
   "block.industry-made.bellows": "Fole Manual",
+  "block.industry-made.bronze_steam_pipe": "Tubo de Vapor de Bronze",
   "block.industry-made.crucible": "Cadinho de Fundição",
   "block.industry-made.low_pressure_boiler": "Caldeira a Vapor de Baixa Pressão",
   "block.industry-made.mechanical_hammer": "Martelo Forjador Mecânico",
@@ -14,6 +15,7 @@
   "item.industry-made.bronze_plate": "Placa de Bronze",
   "item.industry-made.bronze_rod": "Haste de Bronze",
   "item.industry-made.bronze_shovel": "Pá de Bronze",
+  "item.industry-made.bronze_steam_pipe": "Tubo de Vapor de Bronze",
   "item.industry-made.bronze_sword": "Espada de Bronze",
   "item.industry-made.ceramic_mold": "Molde Cerâmico",
   "item.industry-made.clay_mold": "Molde de Argila Cru",

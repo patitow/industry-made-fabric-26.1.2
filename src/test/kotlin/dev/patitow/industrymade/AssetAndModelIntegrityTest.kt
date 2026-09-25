@@ -195,4 +195,60 @@ class AssetAndModelIntegrityTest {
             )
         }
     }
+
+    @Test
+    @DisplayName("Verify Bronze Steam Pipe 3D models, multipart blockstate, textures and localization")
+    fun testBronzeSteamPipeIntegrity() {
+        val modelsDir = File(assetsDir, "models/block")
+        val pipeModels = listOf(
+            "bronze_steam_pipe_core",
+            "bronze_steam_pipe_arm",
+            "bronze_steam_pipe_inventory"
+        )
+
+        for (m in pipeModels) {
+            val modelFile = File(modelsDir, "$m.json")
+            assertTrue(modelFile.exists(), "Pipe model $m must exist at ${modelFile.path}")
+            val content = modelFile.readText()
+            assertTrue(content.contains("\"elements\""), "Pipe model $m must contain elements")
+            assertTrue(content.contains("industry-made:block/bronze_pipe"), "Pipe model $m must reference bronze_pipe texture")
+        }
+
+        // Verify inventory model has standard display transforms
+        val invFile = File(modelsDir, "bronze_steam_pipe_inventory.json")
+        val invContent = invFile.readText()
+        assertTrue(invContent.contains("\"gui\""), "Inventory model must contain gui display")
+        assertTrue(invContent.contains("\"ground\""), "Inventory model must contain ground display")
+
+        // Verify item file points to inventory model
+        val itemFile = File(assetsDir, "items/bronze_steam_pipe.json")
+        assertTrue(itemFile.exists(), "Item file bronze_steam_pipe.json must exist")
+        val itemContent = itemFile.readText()
+        assertTrue(itemContent.contains("industry-made:block/bronze_steam_pipe_inventory"))
+
+        // Verify multipart blockstate
+        val stateFile = File(assetsDir, "blockstates/bronze_steam_pipe.json")
+        assertTrue(stateFile.exists(), "Blockstate bronze_steam_pipe.json must exist")
+        val stateContent = stateFile.readText()
+        assertTrue(stateContent.contains("\"multipart\""), "Pipe blockstate must use multipart format")
+        assertTrue(stateContent.contains("industry-made:block/bronze_steam_pipe_core"), "Blockstate must reference core")
+        assertTrue(stateContent.contains("industry-made:block/bronze_steam_pipe_arm"), "Blockstate must reference arm")
+
+        // Verify texture
+        val texFile = File(assetsDir, "textures/block/bronze_pipe.png")
+        assertTrue(texFile.exists(), "Texture bronze_pipe.png must exist")
+        val img = ImageIO.read(texFile)
+        assertNotNull(img, "ImageIO must decode bronze_pipe.png")
+        assertEquals(16, img.width, "bronze_pipe.png width must be 16")
+        assertEquals(16, img.height, "bronze_pipe.png height must be 16")
+
+        // Verify dual localization
+        val enFile = File(generatedAssetsDir, "lang/en_us.json")
+        val ptFile = File(generatedAssetsDir, "lang/pt_br.json")
+        assertTrue(enFile.readText().contains("\"block.industry-made.bronze_steam_pipe\""))
+        assertTrue(enFile.readText().contains("\"item.industry-made.bronze_steam_pipe\""))
+        assertTrue(ptFile.readText().contains("\"block.industry-made.bronze_steam_pipe\""))
+        assertTrue(ptFile.readText().contains("\"item.industry-made.bronze_steam_pipe\""))
+    }
 }
+

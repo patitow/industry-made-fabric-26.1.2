@@ -3,6 +3,7 @@ package dev.patitow.industrymade.block.entity
 import dev.patitow.industrymade.block.SteamPistonBlock
 import dev.patitow.industrymade.init.ModBlockEntities
 import dev.patitow.industrymade.init.ModSounds
+import dev.patitow.industrymade.thermal.SteamProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleTypes
@@ -40,21 +41,19 @@ class SteamPistonBlockEntity(pos: BlockPos, state: BlockState) :
     fun serverTick(level: Level, pos: BlockPos, state: BlockState) {
         val serverLevel = level as ServerLevel
 
-        // Check for adjacent steam boiler (below or horizontal)
-        var sourceBoiler: LowPressureBoilerBlockEntity? = null
+        // Check for adjacent steam provider (boiler or steam pipe)
+        var sourceProvider: SteamProvider? = null
         for (dir in Direction.entries) {
             val neighborBe = level.getBlockEntity(pos.relative(dir))
-            if (neighborBe is LowPressureBoilerBlockEntity) {
-                if (neighborBe.steamPressure >= 1.5) {
-                    sourceBoiler = neighborBe
-                    break
-                }
+            if (neighborBe is SteamProvider && neighborBe.getAvailablePressure() >= 1.5) {
+                sourceProvider = neighborBe
+                break
             }
         }
 
-        if (sourceBoiler != null) {
+        if (sourceProvider != null) {
             // Draw working steam
-            sourceBoiler.steamPressure = (sourceBoiler.steamPressure - 0.002).coerceAtLeast(0.0)
+            sourceProvider.drawPressure(0.002)
             active = true
 
             animTicks = (animTicks + 1) % CYCLE_TICKS

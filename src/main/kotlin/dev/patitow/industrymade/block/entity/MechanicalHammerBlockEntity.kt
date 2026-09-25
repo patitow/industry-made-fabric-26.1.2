@@ -4,6 +4,7 @@ import dev.patitow.industrymade.block.MechanicalHammerBlock
 import dev.patitow.industrymade.init.ModBlockEntities
 import dev.patitow.industrymade.init.ModItems
 import dev.patitow.industrymade.init.ModSounds
+import dev.patitow.industrymade.thermal.SteamProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.NonNullList
@@ -77,14 +78,14 @@ class MechanicalHammerBlockEntity(pos: BlockPos, state: BlockState) :
         val serverLevel = level as? ServerLevel ?: return
         prevAnimTicks = animTicks
 
-        // 1. Detect power source: Adjacent steam boiler, steam piston, or redstone signal
+        // 1. Detect power source: Adjacent steam provider (boiler or pipe), steam piston, or redstone signal
         var hasPower = false
-        var sourceBoiler: LowPressureBoilerBlockEntity? = null
+        var sourceProvider: SteamProvider? = null
 
         for (dir in Direction.entries) {
             val neighborBe = level.getBlockEntity(pos.relative(dir))
-            if (neighborBe is LowPressureBoilerBlockEntity && neighborBe.steamPressure >= 1.5) {
-                sourceBoiler = neighborBe
+            if (neighborBe is SteamProvider && neighborBe.getAvailablePressure() >= 1.5) {
+                sourceProvider = neighborBe
                 hasPower = true
                 break
             } else if (neighborBe is SteamPistonBlockEntity && neighborBe.active) {
@@ -98,8 +99,8 @@ class MechanicalHammerBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
         // Draw small steam pressure when operating
-        if (sourceBoiler != null) {
-            sourceBoiler.steamPressure = (sourceBoiler.steamPressure - 0.002).coerceAtLeast(0.0)
+        if (sourceProvider != null) {
+            sourceProvider.drawPressure(0.002)
         }
 
         val wasPowered = state.getValue(MechanicalHammerBlock.POWERED)
