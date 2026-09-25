@@ -217,3 +217,37 @@ This generates `.obj` and `.mtl` files inside `blender_export/`. In Blender:
 1. File ➔ Import ➔ Wavefront (.obj).
 2. Select the exported `.obj` file.
 3. Switch 3D Viewport shading to **Material Preview** (`Z` ➔ Material Preview) to see all component textures applied.
+
+---
+
+## 🚫 9. Z-Fighting Prevention & Surface Inset Rules (The Anti-Z-Fighting Protocol)
+
+Z-fighting occurs when the GPU depth buffer cannot decide which face is in front because two or more polygons share the exact same mathematical coordinate plane. In Minecraft voxel modeling, this causes ugly black flickering or flickering textures.
+
+Follow these strict design rules to guarantee zero Z-fighting across all models:
+
+### 1. The Coplanar Overlap Prohibition
+- Two separate cuboid elements must **NEVER** define faces pointing in the same direction on the exact same plane if their 2D cross-sections overlap.
+- If cuboid $A$ has an east face at $x = 14.0$ from $y \in [4, 12], z \in [2, 14]$, no other cuboid $B$ may define an east face at $x = 14.0$ that overlaps that $[y, z]$ bounding box.
+
+### 2. Decorative Bands, Straps & Belts (The $\pm 0.1$ to $0.25$ Offset Rule)
+- When modeling structural bands (e.g. boiler reinforcement hoops, rivet straps, collar rings):
+  - Do **NOT** set the band's outer face to the same coordinate as the underlying tank or pipe wall.
+  - **Always extrude** the band by at least $0.1$ to $0.25$ voxels beyond the wall surface.
+  - *Example:* If the tank wall is at $z = 14.0$, the reinforcing strap outer face must be at $z = 14.1$ or $z = 14.2$.
+
+### 3. Flange & Shaft Junctions
+- When a pipe shaft is capped by a pipe flange:
+  - The shaft must terminate at the back plane of the flange (e.g., if the flange spans $z \in [0.0, 1.0]$, the shaft must end at $z = 1.0$, NOT extend into $z = 0.0$).
+  - Alternatively, omit the redundant end face on the shaft since it is covered by the flange.
+
+### 4. Chamfered / Recessed 3D Interconnections (Handwheels & Spokes)
+- When connecting spokes or cross-braces between a central hub and an outer rim:
+  - Make the spokes slightly recessed in height relative to the hub and rim.
+  - *Example:* If the hub and rim span $y \in [14.8, 15.8]$ (thickness 1.0), the spokes should span $y \in [15.0, 15.6]$ (thickness 0.6).
+  - This prevents the top and bottom faces of the spokes from ever sharing a plane with the hub or rim, while creating an authentic bevelled mechanical look.
+
+### 5. Omission of Hidden Internal Faces
+- If two elements touch back-to-back (e.g., a leg top touching a boiler hearth bottom):
+  - Do not define faces that are permanently buried inside solid geometry. Omitting occluded faces eliminates depth fighting and saves GPU vertex fill rate.
+
