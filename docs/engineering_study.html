@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Industry Made — Tratado de Engenharia, Mecanismos & Antes x Depois</title>
+    <title>Industry Made — Tratado de Engenharia, Mecanismos & Antes x Depois v2.0</title>
     <style>
         :root {
             --bg-deep: #0e1116;
@@ -73,7 +73,7 @@
         .subtitle {
             font-size: 1.15rem;
             color: var(--text-muted);
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto 20px auto;
         }
 
@@ -89,10 +89,10 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-muted);
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 600;
             transition: all 0.2s ease;
             display: flex;
@@ -138,7 +138,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
 
         .manifesto-box {
@@ -157,6 +157,11 @@
             border: 1px solid rgba(78, 205, 196, 0.4);
         }
 
+        .manifesto-box.gold {
+            background: rgba(241, 224, 90, 0.08);
+            border: 1px solid rgba(241, 224, 90, 0.35);
+        }
+
         .manifesto-title {
             font-size: 1.25rem;
             font-weight: 700;
@@ -168,6 +173,7 @@
 
         .manifesto-box.bad .manifesto-title { color: var(--accent-red); }
         .manifesto-box.good .manifesto-title { color: var(--steam-cyan); }
+        .manifesto-box.gold .manifesto-title { color: var(--accent-gold); }
 
         .manifesto-box ul {
             list-style: none;
@@ -195,6 +201,13 @@
             font-size: 0.85rem;
         }
 
+        .manifesto-box.gold li::before {
+            content: "⚡";
+            position: absolute;
+            left: 0;
+            font-size: 0.85rem;
+        }
+
         /* Section Headings */
         .section-header {
             margin: 36px 0 20px 0;
@@ -206,7 +219,7 @@
         }
 
         .section-header h2 {
-            font-size: 1.6rem;
+            font-size: 1.55rem;
             color: #fff;
             display: flex;
             align-items: center;
@@ -222,7 +235,22 @@
             color: var(--text-muted);
         }
 
-        /* Card Matrix (Antes x Depois) */
+        /* Callout Box */
+        .callout-box {
+            background: #161b22;
+            border-left: 4px solid var(--bronze);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .callout-box b {
+            color: var(--bronze-light);
+        }
+
+        /* Comparison Cards (Antes x Depois) */
         .comparison-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -262,7 +290,7 @@
         }
 
         .card-title {
-            font-size: 1.25rem;
+            font-size: 1.22rem;
             font-weight: 700;
             color: #fff;
         }
@@ -340,6 +368,7 @@
             padding: 24px;
             margin: 24px 0;
             text-align: center;
+            overflow-x: auto;
         }
 
         .diagram-title {
@@ -352,8 +381,9 @@
 
         svg.schematic {
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             height: auto;
+            min-width: 700px;
         }
 
         /* Table */
@@ -368,7 +398,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             text-align: left;
         }
 
@@ -400,6 +430,7 @@
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .tag-status.keep { background: rgba(78, 205, 196, 0.2); color: var(--steam-cyan); border: 1px solid var(--steam-cyan); }
@@ -419,15 +450,17 @@
 <body>
 
 <header>
-    <div class="badge-header">Industry Made • Tratado de Engenharia v1.0</div>
+    <div class="badge-header">Industry Made • Tratado de Engenharia v2.0</div>
     <h1>A Máquina Além da <span>Mesa de Madeira</span></h1>
-    <p class="subtitle">Auditoria profunda de todos os 25 itens, blocos e mecanismos da Era 1: como transformar o crafting abstrato em transformações físicas no mundo sem gerar <i>complexity creep</i>.</p>
+    <p class="subtitle">Auditoria profunda de todos os 33 itens, blocos e mecanismos da Era 1: Arquitetura de Progressão Linear Sem Bloqueio Circular, Ferramentas Manuais e Transição Orgânica para Automação a Vapor.</p>
 
     <nav class="tabs">
         <button class="tab-btn active" onclick="switchTab('manifesto')">⚖️ Filosofia & Princípios</button>
+        <button class="tab-btn" onclick="switchTab('tree')">🪜 Árvore de Dependência Linear</button>
+        <button class="tab-btn" onclick="switchTab('tools')">🔨 Ferramentas Manuais vs Automação</button>
         <button class="tab-btn" onclick="switchTab('comparison')">🔄 Comparativo Antes x Depois</button>
-        <button class="tab-btn" onclick="switchTab('sawmill')">🪵 Estudo da Serraria & Calha</button>
-        <button class="tab-btn" onclick="switchTab('matrix')">📊 Matriz dos 25 Itens</button>
+        <button class="tab-btn" onclick="switchTab('sawmill')">🪵 Serraria & Calha de Gravidade</button>
+        <button class="tab-btn" onclick="switchTab('matrix')">📊 Matriz dos 33 Elementos</button>
     </nav>
 </header>
 
@@ -440,86 +473,275 @@
                 <div class="manifesto-title">O Abismo do "Crafting Table Mágico"</div>
                 <ul>
                     <li>Máquinas complexas surgem instantaneamente unindo lingotes em uma bancada 3x3 de madeira.</li>
-                    <li>Sem lógica física: uma chapa de bronze vira um tambor estanque de 6 bar sem rebites ou calandragem.</li>
-                    <li>Bússola magnética usada magicamente para medir pressão elástica de vapor.</li>
+                    <li>Sem lógica física: chapas soltas viram um vaso de 6.0 bar sem rebites de união estrutural.</li>
+                    <li>Bússola magnética do jogo base usada para medir pressão elástica de vapor Bourdon.</li>
                     <li>O mundo 3D é ignorado: o jogador passa 90% do tempo em menus cinzas 2D.</li>
                 </ul>
             </div>
             <div class="manifesto-box good">
                 <div class="manifesto-title">A Engenharia Tangível (Industry Made)</div>
                 <ul>
-                    <li><b>O mundo é a bancada:</b> calor, oxigênio forçado, deformação plástica e fluxo de vapor ocorrem no bloco.</li>
-                    <li><b>Máquinas Criando Máquinas:</b> o Martelo Forjador estampa lâminas e dials que constroem a Serraria e o Manômetro.</li>
-                    <li><b>Sem Complexity Creep:</b> nada de criar 30 chaves de fenda ou microparafusos descartáveis; reutilização lógica de peças existentes (ex: o Tubo de Bronze vira a camisa do Pistão).</li>
+                    <li><b>O mundo é a bancada:</b> calor, oxigênio forçado, sinterização cerâmica e fluxo de vapor ocorrem no bloco.</li>
+                    <li><b>Progresso Orgânico:</b> o jogador começa forjando à mão com martelo manual e evolui para a matriz a vapor que multiplica rendimentos.</li>
+                    <li><b>Sem Complexity Creep:</b> nada de 30 chaves descartáveis; reutilização lógica de peças existentes (o Tubo vira a camisa do Pistão).</li>
                     <li><b>Game Feel recompensador:</b> animações suaves a 60 FPS, sons rítmicos graves e vapor vivo.</li>
                 </ul>
             </div>
         </div>
 
+        <div class="callout-box">
+            <b>🛡️ O Princípio da Progressão Linear Sem Bloqueio Circular:</b><br>
+            <i>"Nenhuma máquina que consome pressão de vapor (como o Martelo Mecânico ou a Serraria) pode ser pré-requisito para fabricar os componentes que geram, conduzem ou monitoram essa mesma pressão (Caldeira, Tubos e Manômetro). A pressão é o primeiro degrau; a força cinética linear é o segundo; a matriz pesada de estampagem é o terceiro."</i>
+        </div>
+
+        <div class="manifesto-grid">
+            <div class="manifesto-box gold">
+                <div class="manifesto-title">O Papel Vital das Ferramentas Manuais</div>
+                <ul>
+                    <li><b>Ponte do Early-Game:</b> O <b>Martelo de Ferreiro manual</b> permite forjar as primeiras chapas e rebites necessários para montar a Caldeira e os Tubos sem precisar de vapor prévio.</li>
+                    <li><b>Garantia Anti-Softlock:</b> O jogador nunca fica travado em um loop de dependência circular.</li>
+                    <li><b>Incentivo Real à Automação:</b> O trabalho manual consome durabilidade e rende 1:1; o Martelo Mecânico a vapor consome pressão, trabalha sozinho e <b>dobra o rendimento para 1:2</b>!</li>
+                </ul>
+            </div>
+            <div class="manifesto-box good">
+                <div class="manifesto-title">A Matriz Central que Forja o Futuro</div>
+                <ul>
+                    <li><b>O Martelo Mecânico como Eixo:</b> Quando ativado a vapor, ele não serve apenas para bater lingotes: ele estampa os dentes da <b>Lâmina da Serraria (saw_blade)</b>.</li>
+                    <li><b>Ciclo Fechado:</b> A Serraria corta madeira gerando serragem; o Martelo compacta serragem em briquetes; os briquetes queimam na caldeira da Serraria.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: LINEAR DEPENDENCY TREE (NO LOOPS) -->
+    <div id="tab-tree" class="tab-content">
+        <div class="section-header">
+            <h2>Árvore de Dependência Linear Sem Bloqueio Circular</h2>
+            <span class="tag">6 Camadas Estritamente Sequenciais</span>
+        </div>
+
+        <p class="subtitle" style="text-align: left; margin-bottom: 20px;">
+            Este fluxograma mapeia toda a jornada técnica da Era 1. Observe como a <b>Camada 1 (Forja Manual)</b> fornece os componentes estruturais para a <b>Camada 2 (Caldeira e Tubulação)</b>, que então alimenta a <b>Camada 3 (Pistão)</b>, destravando a <b>Camada 4 (Martelo Mecânico)</b> e finalmente a <b>Camada 5 (Serraria & Automação)</b>.
+        </p>
+
         <div class="diagram-container">
-            <div class="diagram-title">📈 A Escada Mecânica da Era 1: Conexão Orgânica das Máquinas</div>
-            <svg class="schematic" viewBox="0 0 850 260" xmlns="http://www.w3.org/2000/svg">
+            <div class="diagram-title">🪜 Fluxo de Dependência Física: Do Barro à Automação a Vapor</div>
+            <svg class="schematic" viewBox="0 0 960 620" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                    <linearGradient id="grad-fire" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#ff6b35"/>
-                        <stop offset="100%" stop-color="#d48b46"/>
+                    <linearGradient id="grad-c0" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#1f2d20"/>
+                        <stop offset="100%" stop-color="#141d15"/>
                     </linearGradient>
-                    <linearGradient id="grad-steam" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#4ecdc4"/>
-                        <stop offset="100%" stop-color="#2b6777"/>
+                    <linearGradient id="grad-c1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3d2412"/>
+                        <stop offset="100%" stop-color="#241508"/>
                     </linearGradient>
-                    <linearGradient id="grad-wood" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#a06030"/>
-                        <stop offset="100%" stop-color="#6b3e1b"/>
+                    <linearGradient id="grad-c2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#163238"/>
+                        <stop offset="100%" stop-color="#0c1d21"/>
                     </linearGradient>
+                    <linearGradient id="grad-c3" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#1d2638"/>
+                        <stop offset="100%" stop-color="#0e1420"/>
+                    </linearGradient>
+                    <linearGradient id="grad-c4" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#383014"/>
+                        <stop offset="100%" stop-color="#211c08"/>
+                    </linearGradient>
+                    <linearGradient id="grad-c5" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#19331d"/>
+                        <stop offset="100%" stop-color="#0c1d0f"/>
+                    </linearGradient>
+
+                    <marker id="arrow-c1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L6,3 z" fill="#d48b46" />
+                    </marker>
+                    <marker id="arrow-c2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L6,3 z" fill="#4ecdc4" />
+                    </marker>
+                    <marker id="arrow-c3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L6,3 z" fill="#8b9bb4" />
+                    </marker>
+                    <marker id="arrow-c4" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L6,3 z" fill="#f1e05a" />
+                    </marker>
+                    <marker id="arrow-c5" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L6,3 z" fill="#3fb950" />
+                    </marker>
                 </defs>
 
-                <!-- Box 1: Fole & Cadinho -->
-                <rect x="20" y="40" width="180" height="90" rx="8" fill="#1b2129" stroke="#d48b46" stroke-width="2"/>
-                <text x="110" y="70" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">1. CALOR & FUSÃO</text>
-                <text x="110" y="92" fill="#8b949e" font-size="12" text-anchor="middle">Fole + Cadinho</text>
-                <text x="110" y="112" fill="#ff6b35" font-size="11" text-anchor="middle">Cobre + Estanho = Bronze</text>
+                <!-- CAMADA 0: COLETA NATURAL -->
+                <rect x="20" y="30" width="160" height="150" rx="8" fill="url(#grad-c0)" stroke="#3fb950" stroke-width="2"/>
+                <text x="100" y="55" fill="#3fb950" font-size="12" font-weight="bold" text-anchor="middle">CAMADA 0: NATUREZA</text>
+                <text x="100" y="78" fill="#fff" font-size="12" text-anchor="middle">• fire_clay (Argila)</text>
+                <text x="100" y="98" fill="#fff" font-size="12" text-anchor="middle">• tin_ore (Estanho)</text>
+                <text x="100" y="118" fill="#fff" font-size="12" text-anchor="middle">• Cobre & Areia</text>
+                <text x="100" y="138" fill="#fff" font-size="12" text-anchor="middle">• Madeira & Carvão</text>
+                <text x="100" y="162" fill="#8b949e" font-size="10" text-anchor="middle">Mundo & Rios</text>
 
-                <!-- Arrow 1 -->
-                <path d="M 200 85 L 240 85" stroke="#d48b46" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+                <!-- Seta 0 -> 1 -->
+                <path d="M 180 105 L 210 105" stroke="#d48b46" stroke-width="2.5" fill="none" marker-end="url(#arrow-c1)"/>
 
-                <!-- Box 2: Martelo Forjador -->
-                <rect x="240" y="40" width="180" height="90" rx="8" fill="#1b2129" stroke="#ff6b35" stroke-width="2"/>
-                <text x="330" y="70" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">2. CONFORMAÇÃO</text>
-                <text x="330" y="92" fill="#8b949e" font-size="12" text-anchor="middle">Martelo Mecânico</text>
-                <text x="330" y="112" fill="#f3a860" font-size="11" text-anchor="middle">Chapas, Rebites & Lâminas</text>
+                <!-- CAMADA 1: METALURGIA MANUAL & FORJA -->
+                <rect x="215" y="20" width="220" height="230" rx="8" fill="url(#grad-c1)" stroke="#d48b46" stroke-width="2"/>
+                <text x="325" y="45" fill="#d48b46" font-size="12" font-weight="bold" text-anchor="middle">CAMADA 1: FORJA MANUAL</text>
+                <text x="325" y="68" fill="#fff" font-size="11" text-anchor="middle">• Cadinho Cru ➔ Cura no Fogo</text>
+                <text x="325" y="88" fill="#fff" font-size="11" text-anchor="middle">• Fole Manual (Injeção de Ar)</text>
+                <text x="325" y="108" fill="#fff" font-size="11" text-anchor="middle">• Fusão Bronze (Cu + Sn)</text>
+                <rect x="230" y="125" width="190" height="110" rx="6" fill="#140b03" stroke="#f3a860" stroke-dasharray="3,3"/>
+                <text x="325" y="145" fill="#f3a860" font-size="11" font-weight="bold" text-anchor="middle">🔨 Martelo de Ferreiro</text>
+                <text x="325" y="165" fill="#e6edf3" font-size="10" text-anchor="middle">1x Lingote ➔ 1x bronze_plate (1:1)</text>
+                <text x="325" y="185" fill="#e6edf3" font-size="10" text-anchor="middle">1x Haste ➔ 4x bronze_rivets</text>
+                <text x="325" y="205" fill="#8b949e" font-size="10" text-anchor="middle">(Durabilidade manual do jogador)</text>
+                <text x="325" y="223" fill="#3fb950" font-size="10" font-weight="bold" text-anchor="middle">Zero Dependência de Vapor!</text>
 
-                <!-- Arrow 2 -->
-                <path d="M 420 85 L 460 85" stroke="#ff6b35" stroke-width="3" fill="none"/>
+                <!-- Seta 1 -> 2 -->
+                <path d="M 435 135 L 475 135" stroke="#4ecdc4" stroke-width="2.5" fill="none" marker-end="url(#arrow-c2)"/>
 
-                <!-- Box 3: Caldeira & Vapor -->
-                <rect x="460" y="40" width="180" height="90" rx="8" fill="#1b2129" stroke="#4ecdc4" stroke-width="2"/>
-                <text x="550" y="70" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">3. FORÇA MOTRIZ</text>
-                <text x="550" y="92" fill="#8b949e" font-size="12" text-anchor="middle">Caldeira Rebitada (1.5 bar)</text>
-                <text x="550" y="112" fill="#4ecdc4" font-size="11" text-anchor="middle">Pistão & Rede de Tubos</text>
+                <!-- CAMADA 2: GERAÇÃO DE PRESSÃO & TELEMETRIA -->
+                <rect x="480" y="20" width="220" height="230" rx="8" fill="url(#grad-c2)" stroke="#4ecdc4" stroke-width="2"/>
+                <text x="590" y="45" fill="#4ecdc4" font-size="12" font-weight="bold" text-anchor="middle">CAMADA 2: PRESSÃO & REDE</text>
+                <text x="590" y="68" fill="#fff" font-size="11" text-anchor="middle">• Caldeira Rebitada (1.5 - 6 bar)</text>
+                <text x="590" y="86" fill="#8b949e" font-size="10" text-anchor="middle">(5 Chapas + 4 Rebites + Tijolos)</text>
+                <text x="590" y="110" fill="#fff" font-size="11" text-anchor="middle">• bronze_steam_pipe (Tubo)</text>
+                <text x="590" y="130" fill="#fff" font-size="11" text-anchor="middle">• bronze_valve_pipe (Válvula 3D)</text>
+                <rect x="495" y="145" width="190" height="90" rx="6" fill="#081518" stroke="#4ecdc4"/>
+                <text x="590" y="165" fill="#4ecdc4" font-size="11" font-weight="bold" text-anchor="middle">⏱️ Manômetro Bourdon</text>
+                <text x="590" y="185" fill="#e6edf3" font-size="10" text-anchor="middle">Tubo + Haste/Ponteiro + Vidro</text>
+                <text x="590" y="205" fill="#f1e05a" font-size="10" font-weight="bold" text-anchor="middle">SEM Martelo Mecânico!</text>
+                <text x="590" y="222" fill="#8b949e" font-size="10" text-anchor="middle">Construído livre de paradoxos</text>
 
-                <!-- Arrow 3 -->
-                <path d="M 640 85 L 680 85" stroke="#4ecdc4" stroke-width="3" fill="none"/>
+                <!-- Seta 2 -> 3 -->
+                <path d="M 700 135 L 735 135" stroke="#8b9bb4" stroke-width="2.5" fill="none" marker-end="url(#arrow-c3)"/>
 
-                <!-- Box 4: Serraria a Vapor -->
-                <rect x="680" y="40" width="150" height="90" rx="8" fill="#1b2129" stroke="#3fb950" stroke-width="2"/>
-                <text x="755" y="70" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">4. INDÚSTRIA</text>
-                <text x="755" y="92" fill="#8b949e" font-size="12" text-anchor="middle">Serraria a Vapor</text>
-                <text x="755" y="112" fill="#3fb950" font-size="11" text-anchor="middle">6 Tábuas + Serragem</text>
+                <!-- CAMADA 3: CONVERSÃO CINÉTICA -->
+                <rect x="740" y="50" width="195" height="170" rx="8" fill="url(#grad-c3)" stroke="#8b9bb4" stroke-width="2"/>
+                <text x="837" y="75" fill="#8b9bb4" font-size="12" font-weight="bold" text-anchor="middle">CAMADA 3: CINÉTICA</text>
+                <text x="837" y="100" fill="#fff" font-size="11" text-anchor="middle">• steam_piston (Pistão)</text>
+                <text x="837" y="120" fill="#8b949e" font-size="10" text-anchor="middle">Camisa do Cilindro = Tubo</text>
+                <text x="837" y="140" fill="#8b949e" font-size="10" text-anchor="middle">Êmbolo = Haste de Bronze</text>
+                <text x="837" y="165" fill="#4ecdc4" font-size="11" font-weight="bold" text-anchor="middle">Consome ≥ 1.5 bar</text>
+                <text x="837" y="185" fill="#e6edf3" font-size="10" text-anchor="middle">Gera Força Linear Alternativa</text>
+                <text x="837" y="202" fill="#8b949e" font-size="10" text-anchor="middle">Alimenta máquinas de topo</text>
 
-                <!-- Feedback Loop: Sawdust to Boiler -->
-                <path d="M 755 130 C 755 210, 550 210, 550 135" stroke="#3fb950" stroke-dasharray="5,5" stroke-width="2" fill="none"/>
-                <rect x="600" y="195" width="160" height="24" rx="4" fill="#0e1116" stroke="#3fb950"/>
-                <text x="680" y="211" fill="#3fb950" font-size="11" font-weight="bold" text-anchor="middle">Briquetes Alimentam Fogo</text>
+                <!-- Seta 3 -> 4 (Desce para a Camada 4) -->
+                <path d="M 837 220 L 837 320 L 590 320 L 590 340" stroke="#f1e05a" stroke-width="2.5" fill="none" marker-end="url(#arrow-c4)"/>
+
+                <!-- CAMADA 4: A MATRIZ FORJADORA MECÂNICA -->
+                <rect x="350" y="345" width="480" height="150" rx="8" fill="url(#grad-c4)" stroke="#f1e05a" stroke-width="2"/>
+                <text x="590" y="372" fill="#f1e05a" font-size="13" font-weight="bold" text-anchor="middle">CAMADA 4: MARTELO MECÂNICO A VAPOR (A MATRIZ INDUSTRIAL)</text>
+                <text x="590" y="394" fill="#8b949e" font-size="11" text-anchor="middle">Acoplado ao Pistão a Vapor • Opera em ciclo contínuo sem fadiga humana</text>
+
+                <!-- Sub-blocos da Camada 4 -->
+                <rect x="365" y="405" width="220" height="75" rx="6" fill="#1b170a" stroke="#d48b46"/>
+                <text x="475" y="425" fill="#f3a860" font-size="11" font-weight="bold" text-anchor="middle">Multiplicação de Chapas (1:2)</text>
+                <text x="475" y="445" fill="#fff" font-size="10" text-anchor="middle">1 Lingote ➔ 2x Chapas (+100% Lucro)</text>
+                <text x="475" y="465" fill="#3fb950" font-size="10" text-anchor="middle">Supera a forja manual do jogador!</text>
+
+                <rect x="595" y="405" width="220" height="75" rx="6" fill="#1b170a" stroke="#f1e05a"/>
+                <text x="705" y="425" fill="#f1e05a" font-size="11" font-weight="bold" text-anchor="middle">Estampagem & Conformação</text>
+                <text x="705" y="445" fill="#fff" font-size="10" text-anchor="middle">• Forja saw_blade (Lâmina Circular)</text>
+                <text x="705" y="465" fill="#fff" font-size="10" text-anchor="middle">• Prensa fuel_briquette & wrought_iron</text>
+
+                <!-- Seta 4 -> 5 (Vai para a Serraria) -->
+                <path d="M 590 495 L 590 530" stroke="#3fb950" stroke-width="2.5" fill="none" marker-end="url(#arrow-c5)"/>
+
+                <!-- CAMADA 5: INDÚSTRIA & AUTOMAÇÃO AVANÇADA -->
+                <rect x="180" y="535" width="650" height="70" rx="8" fill="url(#grad-c5)" stroke="#3fb950" stroke-width="2"/>
+                <text x="505" y="558" fill="#3fb950" font-size="13" font-weight="bold" text-anchor="middle">CAMADA 5: SERRARIA MECÂNICA A VAPOR & CALHA DE GRAVIDADE</text>
+                <text x="505" y="578" fill="#e6edf3" font-size="11" text-anchor="middle">Corte no mundo a 60 FPS (6 Tábuas + 1 Serragem) • Calha aberta alimenta troncos e lingotes sem GUI</text>
+                <text x="505" y="595" fill="#f1e05a" font-size="10" font-weight="bold" text-anchor="middle">♻️ Ciclo Fechado: 4x Serragem ➔ Briquete no Martelo ➔ Queima na Caldeira!</text>
             </svg>
         </div>
     </div>
 
-    <!-- TAB 2: COMPARISON (ANTES X DEPOIS) -->
+    <!-- TAB 3: TOOLS VS AUTOMATION -->
+    <div id="tab-tools" class="tab-content">
+        <div class="section-header">
+            <h2>Ferramentas Manuais vs Automação a Vapor</h2>
+            <span class="tag">Design de Incentivos & Equilíbrio</span>
+        </div>
+
+        <div class="manifesto-grid">
+            <div class="manifesto-box gold">
+                <div class="manifesto-title">O Papel do Martelo de Ferreiro Manual</div>
+                <p class="pane-desc">Em vez de pular direto de galhos de árvore para motores a pistão pneumáticos, o mod introduz o trabalho com metais no início:</p>
+                <ul>
+                    <li><b>Crafting Físico:</b> O jogador combina o martelo com lingotes para bater chapas e cortar hastes em rebites na bancada ou sobre pedra/bigorna.</li>
+                    <li><b>Relação 1:1:</b> 1 lingote de bronze produz exatamente 1 chapa pesada.</li>
+                    <li><b>Durabilidade Real:</b> O martelo possui durabilidade (128 a 250 usos), exigindo manutenção e investimento do jogador.</li>
+                    <li><b>Independência:</b> Permite criar a caldeira e os canos sem necessitar de energia mágica ou circuitos lógicos.</li>
+                </ul>
+            </div>
+
+            <div class="manifesto-box good">
+                <div class="manifesto-title">O Triunfo do Martelo Mecânico a Vapor</div>
+                <p class="pane-desc">Quando o vapor é introduzido, o Martelo Mecânico não é redundante — ele transforma a economia do jogador:</p>
+                <ul>
+                    <li><b>Dobro de Rendimento (1:2):</b> 1 lingote de bronze gera <b>2 chapas</b>. Cada mina de cobre e estanho agora rende 200%!</li>
+                    <li><b>Operação Mãos-Livres:</b> Bate continuamente a cada 1.2 segundos sem intervenção do jogador nem desgaste de durabilidade.</li>
+                    <li><b>Força de Impacto Impossível ao Braço:</b> Somente toneladas de força de vapor conseguem estampar os dentes temperados da lâmina de serra (<b>saw_blade</b>), britar minérios em 2x pós e forjar ferro batido (<b>wrought_iron</b>).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parâmetro de Engenharia</th>
+                        <th>Martelo de Ferreiro Manual (blacksmith_hammer)</th>
+                        <th>Martelo Mecânico a Vapor (mechanical_hammer)</th>
+                        <th>Vantagem da Automação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Fonte de Energia</b></td>
+                        <td>Força muscular do jogador (consome durabilidade)</td>
+                        <td>Vapor pressurizado contínuo (≥ 1.5 bar)</td>
+                        <td>Operação autônoma sem cansaço</td>
+                    </tr>
+                    <tr>
+                        <td><b>Rendimento de Chapas</b></td>
+                        <td>1 Lingote de Bronze ➔ <b>1x Chapa</b> (1:1)</td>
+                        <td>1 Lingote de Bronze ➔ <b>2x Chapas</b> (1:2)</td>
+                        <td><span class="tag-status keep">+100% Rendimento Metálico</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>Rendimento de Rebites</b></td>
+                        <td>1 Haste de Bronze ➔ <b>4x Rebites</b></td>
+                        <td>1 Haste de Bronze ➔ <b>8x Rebites</b></td>
+                        <td><span class="tag-status keep">+100% de Fixadores</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>Velocidade Operacional</b></td>
+                        <td>Manual por clique em bancada/bloco</td>
+                        <td>1 golpe forte a cada 1.2 segundos contínuos</td>
+                        <td>Produção massiva contínua</td>
+                    </tr>
+                    <tr>
+                        <td><b>Capacidade de Estampagem</b></td>
+                        <td>Limitada a conformação leve (chapas e rebites)</td>
+                        <td>Estampa dentes de lâmina, briquetes e britagem</td>
+                        <td><span class="tag-status keep">Desbloqueia a Serraria</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>Alimentação por Gravidade</b></td>
+                        <td>Não (depende de interação humana)</td>
+                        <td>Sim (recebe itens soltos via Calha de Gravidade)</td>
+                        <td>Automação física no mundo real</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- TAB 4: COMPARISON (ANTES X DEPOIS) -->
     <div id="tab-comparison" class="tab-content">
         <div class="section-header">
             <h2>Transformação dos Mecanismos: Do Mágico ao Físico</h2>
-            <span class="tag">6 Módulos Principais</span>
+            <span class="tag">6 Módulos Principais Auditados</span>
         </div>
 
         <!-- 1. O CADINHO -->
@@ -528,7 +750,7 @@
                 <div class="card-title-group">
                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATElEQVR4nGNgGPKAEV1gc5Ldf3wafOcdQtHDhMzp8dDGqxmbGhZ0BdXbLuA1IM5AlgGnC8gBTGTpGjUAf0IK0ZPGmxbWXHqKoWeIAwAyOg69vkRElgAAAABJRU5ErkJggg==" class="pixel-art" alt="Cadinho">
                     <div>
-                        <div class="card-title">Cadinho de Fundição (Crucible)</div>
+                        <div class="card-title">1. Cadinho de Fundição (Crucible)</div>
                         <span style="font-size: 0.85rem; color: var(--text-muted);">Metalurgia por Fusão e Ligas em Alta Temperatura</span>
                     </div>
                 </div>
@@ -548,13 +770,39 @@
             </div>
         </div>
 
-        <!-- 2. A CALDEIRA -->
+        <!-- 2. FORJA MANUAL VS MECÂNICA -->
+        <div class="comparison-card">
+            <div class="card-top">
+                <div class="card-title-group">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAT0lEQVR4nGNgGGjASEjB1515/0H0/Us3UMR1SneB9TIRYwu6ZmTARIlmol1AdQPWbTtHvgHrkDQTBCnmkv8XxOuCY4FkkDKqmTRAUYBRCgAcYCuUGFd1MQAAAABJRU5ErkJggg==" class="pixel-art" alt="Martelo Manual">
+                    <div>
+                        <div class="card-title">2. Forja de Chapas & Rebites: Manual vs Mecânica</div>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Eliminação do Paradoxo Circular & Transição de Produtividade</span>
+                    </div>
+                </div>
+                <span class="card-tier">Tier 1 / Tier 2 • Conformação</span>
+            </div>
+            <div class="card-body">
+                <div class="side-pane before">
+                    <div class="pane-label">❌ Antes (Paradoxo de Dependência Circular)</div>
+                    <div class="pane-desc">Para fazer a Caldeira precisava-se de chapas. No rascunho anterior, o Martelo Mecânico a vapor era proposto para fazer chapas e dials, mas o martelo depende de vapor! Criava-se um paradoxo insolúvel de "quem veio primeiro".</div>
+                    <div class="pane-meta">Problema: <b>Máquina a vapor exigida para criar caldeira a vapor!</b></div>
+                </div>
+                <div class="side-pane after">
+                    <div class="pane-label">✔️ Depois (Martelo de Ferreiro Manual ➔ Martelo Mecânico 1:2)</div>
+                    <div class="pane-desc">O jogador usa o <b>Martelo de Ferreiro manual</b> para bater as primeiras chapas e rebites (1:1). Assim monta a Caldeira e o Pistão. Quando o <b>Martelo Mecânico</b> liga, ele dobra o rendimento para 1:2 e assume toda a forja pesada!</div>
+                    <div class="pane-meta">Evolução: <b>Manual 1:1 no início ➔ Vapor 1:2 na industrialização</b></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. A CALDEIRA -->
         <div class="comparison-card">
             <div class="card-top">
                 <div class="card-title-group">
                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAgklEQVR4nGNgGNSg1p7vPwiTbcC9yVr/QRifGkZstuLT0HzwE4oeFmyKKhs9GF5cvoIhPn/NEwwxJgYKAQs+yfTeeyh8C3k20l0wm0GCYdf97zjlmQgZIH//PvleAAE3RU4Gsg2YWaw0QLHQXr+DaANQUlWInjRR6X7NpacYKZhsAAB8xSO/AaDdoAAAAABJRU5ErkJggg==" class="pixel-art" alt="Caldeira">
                     <div>
-                        <div class="card-title">Caldeira a Vapor de Baixa Pressão (Low Pressure Boiler)</div>
+                        <div class="card-title">3. Caldeira a Vapor de Baixa Pressão (Low Pressure Boiler)</div>
                         <span style="font-size: 0.85rem; color: var(--text-muted);">Vaso de Pressão Hermético com Alívio Acústico</span>
                     </div>
                 </div>
@@ -574,43 +822,43 @@
             </div>
         </div>
 
-        <!-- 3. O MANÔMETRO -->
+        <!-- 4. O MANÔMETRO BOURDON -->
         <div class="comparison-card">
             <div class="card-top">
                 <div class="card-title-group">
                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA9ElEQVR4nGNgoBAw4pKoiZL7j8xvWfYIq1oWXBrdLMTQpf5jM4gFXTNMI5vNDIZAb1+G9Vs3g/luDBlwg5ANYcKlWUGMG8z+FhAEZoPEYC5D9h4TujtBCrP2pcH5Wsd2QhjxiXBDkAEjsu3INoOAoakTw/nT+1A0PHj1leHXkQyGXSdegcODiQEHcPUMQ6FB4JWVO4Y6JnSBuKR8ML17+yoGERERMA0DYjDv4DNg0byJcDayZlyACUSA/ALyE8hvID/iAuj+x+qCXzgMgWlGB4zIHPS0gG4wCCDbjmEAzBAQjZ6UQRph3sXpAmwGwQCuzEQxAAAylXIvLqfpHwAAAABJRU5ErkJggg==" class="pixel-art" alt="Manômetro">
                     <div>
-                        <div class="card-title">Manômetro de Tubo Bourdon (Bronze Gauge Pipe)</div>
-                        <span style="font-size: 0.85rem; color: var(--text-muted);">Telemetria Analógica com Ponteiro Mecânico 3D</span>
+                        <div class="card-title">4. Manômetro de Tubo Bourdon (Bronze Gauge Pipe)</div>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Telemetria Analógica com Ponteiro Mecânico 3D Sem Paradoxo</span>
                     </div>
                 </div>
                 <span class="card-tier">Tier 2 • Telemetria</span>
             </div>
             <div class="card-body">
                 <div class="side-pane before">
-                    <div class="pane-label">❌ Antes (Crafting Mágico na Bancada)</div>
-                    <div class="pane-desc">1 Tubo de Bronze + 1 Bússola vanilla. Uma bússola mede o campo magnético do planeta; ela não tem relação com o tubo oval deformável de Eugène Bourdon de 1849.</div>
-                    <div class="pane-meta">Receita: <b>1x bronze_steam_pipe + 1x compass</b></div>
+                    <div class="pane-label">❌ Antes (Bússola Mágica & Paradoxo do Martelo)</div>
+                    <div class="pane-desc">No jogo original usava-se uma bússola magnética vanilla para medir pressão de vapor. No rascunho anterior tentou-se exigir estampar o mostrador no Martelo Mecânico, travando o jogador antes da caldeira.</div>
+                    <div class="pane-meta">Erro: <b>Bússola magnética mágica / Bloqueio circular de vapor</b></div>
                 </div>
                 <div class="side-pane after">
-                    <div class="pane-label">✔️ Depois (Mostrador Mecânico Calibrado)</div>
-                    <div class="pane-desc">O mostrador de pressão com quadrante graduado é forjado no Martelo Mecânico a partir de uma chapa de bronze, montado com uma haste indicadora e tubo de pressão real.</div>
-                    <div class="pane-meta">Evolução: <b>Tubo de Bronze + Mostrador Estampado + Haste</b></div>
+                    <div class="pane-label">✔️ Depois (Mecanismo Bourdon Puro de Tier 2)</div>
+                    <div class="pane-desc">Inspirado na patente real de 1849 de Eugène Bourdon: um tubo elástico oval de bronze se deforma com o vapor, empurrando o ponteiro mecânico sob uma carcaça selada com visor de vidro. Montável no Tier 2 antes do pistão!</div>
+                    <div class="pane-meta">Evolução: <b>bronze_steam_pipe + bronze_rod (ponteiro) + glass_pane</b></div>
                 </div>
             </div>
         </div>
 
-        <!-- 4. O PISTÃO A VAPOR -->
+        <!-- 5. O PISTÃO A VAPOR -->
         <div class="comparison-card">
             <div class="card-top">
                 <div class="card-title-group">
                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAYklEQVR4nGNgGPKAEZdEQl7tf2T+gknNWNUy4TM9IMADjPEBJgYKAROlBjCiC9Ta86H4HR00H/yEoocFm6LEEBmsmueveTIIw4BpwA1gROYQigEYQI4JlFg48fAXpQ4iHQAADNUTjeZcHssAAAAASUVORK5CYII=" class="pixel-art" alt="Pistão">
                     <div>
-                        <div class="card-title">Pistão Mecânico a Vapor (Steam Piston)</div>
+                        <div class="card-title">5. Pistão Mecânico a Vapor (Steam Piston)</div>
                         <span style="font-size: 0.85rem; color: var(--text-muted);">Cilindro de Expansão e Conversão Linear de Força</span>
                     </div>
                 </div>
-                <span class="card-tier">Tier 2 • Cinética</span>
+                <span class="card-tier">Tier 2/3 • Cinética</span>
             </div>
             <div class="card-body">
                 <div class="side-pane before">
@@ -621,22 +869,22 @@
                 <div class="side-pane after">
                     <div class="pane-label">✔️ Depois (O Tubo de Vapor como Camisa do Cilindro)</div>
                     <div class="pane-desc">O cilindro retificado onde o êmbolo corre é literalmente o <b>Tubo de Vapor (bronze_steam_pipe)</b>! Reutiliza um bloco existente com coerência de engenharia absoluta.</div>
-                    <div class="pane-meta">Evolução: <b>Tubo de Bronze (cilindro) + Haste (êmbolo) + Engrenagem</b></div>
+                    <div class="pane-meta">Evolução: <b>Tubo de Bronze (cilindro) + Haste (êmbolo) + Engrenagem + Chapa</b></div>
                 </div>
             </div>
         </div>
 
-        <!-- 5. O MARTELO MECÂNICO -->
+        <!-- 6. O MARTELO MECÂNICO COMO MATRIZ -->
         <div class="comparison-card">
             <div class="card-top">
                 <div class="card-title-group">
-                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAlklEQVR4nGNgGDlgS57G/zvTbP5XuEn+RxZnwaZ4QbwyiiIQePPxN8OcDXcx1LKgC5w4dR1F85wiWzhbhIuVsAEgMH36VAYYWHjkDSPMC0dufGRAB0wMFAImSg1gxCbY0zcbIxA1HvQywLzQses5I94wOHLkIIaYhgytvRAVk4bhbHxg2ZJZYL0UuwAeBjduXKPULPIAAILULeGnUJXxAAAAAElFTkSuQmCC" class="pixel-art" alt="Martelo">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAlklEQVR4nGNgGDlgS57G/zvTbP5XuEn+RxZnwaZ4QbwyiiIQePPxN8OcDXcx1LKgC5w4dR1F85wiWzhbhIuVsAEgMH36VAYYWHjkDSPMC0dufGRAB0wMFAImSg1gxCbY0zcbIxA1HvQywLzQses5I94wOHLkIIaYhgytvRAVk4bhbHxg2ZJZYL0UuwAeBjduXKPULPIAAILULeGnUJXxAAAAAElFTkSuQmCC" class="pixel-art" alt="Martelo Mecânico">
                     <div>
-                        <div class="card-title">Martelo Forjador Mecânico (Mechanical Hammer)</div>
-                        <span style="font-size: 0.85rem; color: var(--text-muted);">Conformação por Impacto, Estampagem e Britagem</span>
+                        <div class="card-title">6. Martelo Forjador Mecânico (Mechanical Hammer)</div>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">A Grande Matriz Industrial: Estampagem, Britagem e Briquetagem</span>
                     </div>
                 </div>
-                <span class="card-tier">Tier 2 • Matriz</span>
+                <span class="card-tier">Tier 4 • Matriz de Forja</span>
             </div>
             <div class="card-body">
                 <div class="side-pane before">
@@ -646,14 +894,14 @@
                 </div>
                 <div class="side-pane after">
                     <div class="pane-label">✔️ Depois (A Matriz que Forja as Próximas Máquinas)</div>
-                    <div class="pane-desc">O Martelo torna-se a <b>ferramenta central da indústria</b>: é ele quem prensa os dentes afiados da Lâmina de Serra Circular (saw_blade), estampa rebites e compacta a serragem em briquetes.</div>
-                    <div class="pane-meta">Evolução: <b>Forja de Lâminas, Rebites, Dials e Briquetes</b></div>
+                    <div class="pane-desc">O Martelo torna-se a <b>ferramenta central da indústria</b>: é ele quem prensa os dentes afiados da Lâmina de Serra Circular (saw_blade), dobra o rendimento de chapas para 1:2 e compacta a serragem em briquetes combustíveis.</div>
+                    <div class="pane-meta">Evolução: <b>Forja de Lâminas, Briquetes, Chapas 1:2 e Wrought Iron</b></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- TAB 3: SAWMILL & CHUTE -->
+    <!-- TAB 5: SAWMILL & CHUTE -->
     <div id="tab-sawmill" class="tab-content">
         <div class="section-header">
             <h2>A Serraria Mecânica a Vapor & A Calha de Gravidade</h2>
@@ -677,7 +925,7 @@
                 <circle cx="350" cy="100" r="8" fill="#d48b46"/>
                 <path d="M 330 70 L 370 70" stroke="#f3a860" stroke-width="2"/>
                 <path d="M 350 50 L 350 90" stroke="#f3a860" stroke-width="2"/>
-                <text x="350" y="45" fill="#f3a860" font-size="11" font-weight="bold" text-anchor="middle">saw_blade (Lâmina Forjada)</text>
+                <text x="350" y="45" fill="#f3a860" font-size="11" font-weight="bold" text-anchor="middle">saw_blade (Lâmina Estampada)</text>
 
                 <!-- Steam Input -->
                 <rect x="220" y="240" width="100" height="35" rx="4" fill="#111418" stroke="#4ecdc4" stroke-width="2"/>
@@ -699,8 +947,8 @@
 
                 <!-- Sawdust to Briquette -->
                 <path d="M 670 235 L 670 280 L 450 280" stroke="#f1e05a" stroke-dasharray="4,4" stroke-width="2" fill="none"/>
-                <rect x="360" y="265" width="160" height="30" rx="4" fill="#0e1116" stroke="#ff6b35"/>
-                <text x="440" y="284" fill="#ff6b35" font-size="11" font-weight="bold" text-anchor="middle">Martelo: 4x Pó ➔ Briquete</text>
+                <rect x="340" y="265" width="200" height="30" rx="4" fill="#0e1116" stroke="#ff6b35"/>
+                <text x="440" y="284" fill="#ff6b35" font-size="11" font-weight="bold" text-anchor="middle">Martelo: 4x Serragem ➔ Briquete</text>
             </svg>
         </div>
 
@@ -727,10 +975,10 @@
         </div>
     </div>
 
-    <!-- TAB 4: MATRIX (TODOS OS 25 ITENS) -->
+    <!-- TAB 6: MATRIX (TODOS OS 33 ELEMENTOS) -->
     <div id="tab-matrix" class="tab-content">
         <div class="section-header">
-            <h2>Inventário & Matriz de Decisões dos 25 Elementos</h2>
+            <h2>Inventário & Matriz de Decisões dos 33 Elementos</h2>
             <span class="tag">Auditoria de 100% da Era 1</span>
         </div>
 
@@ -786,6 +1034,14 @@
                         <td>Bancada: Tábuas + Couro + Ferro</td>
                         <td>Manter receita (Tier 0 essencial); permitir bombeamento por pistão</td>
                         <td><span class="tag-status keep">Mantido</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAASElEQVR4nGNgGAWMyEGwftWC/8QESWBYAlwfC7rk5cvX8GrW1dVC4TNRGglMlBrAgi5gY2OJV8PHjx+p6wKmwRcGH9H8OAIAAFAmDW8F/4ANAAAAAElFTkSuQmCC" class="pixel-art"></td>
+                        <td><b>unfired_crucible</b></td>
+                        <td>Cerâmica Crua</td>
+                        <td>Não existia</td>
+                        <td>Moldado à mão de fire_clay; deve queimar na forja para funcionar</td>
+                        <td><span class="tag-status new">Novo</span></td>
                     </tr>
                     <tr>
                         <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATElEQVR4nGNgGPKAEV1gc5Ldf3wafOcdQtHDhMzp8dDGqxmbGhZ0BdXbLuA1IM5AlgGnC8gBTGTpGjUAf0IK0ZPGmxbWXHqKoWeIAwAyOg69vkRElgAAAABJRU5ErkJggg==" class="pixel-art"></td>
@@ -860,11 +1116,19 @@
                         <td><span class="tag-status keep">Validado</span></td>
                     </tr>
                     <tr>
+                        <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAT0lEQVR4nGNgGGjASEjB1515/0H0/Us3UMR1SneB9TIRYwu6ZmTARIlmol1AdQPWbTtHvgHrkDQTBCnmkv8XxOuCY4FkkDKqmTRAUYBRCgAcYCuUGFd1MQAAAABJRU5ErkJggg==" class="pixel-art"></td>
+                        <td><b>blacksmith_hammer</b></td>
+                        <td>Ferramenta Manual</td>
+                        <td>Não existia</td>
+                        <td>Martelo de forja manual (1:1 chapas, 1:4 rebites); sem softlock</td>
+                        <td><span class="tag-status new">Novo</span></td>
+                    </tr>
+                    <tr>
                         <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAX0lEQVR4nGNgGAWMyEFQa8/3n9ggaT74CayXBV2istGDoOb2+h1wNgs2Bf4JmxhmFithiKf33gPTFvJscDEmbAZg04xLnImBQsBEEwPSoX4lRpwFl8m4DKF6OmAY+gAA05gXpzjVw8AAAAAASUVORK5CYII=" class="pixel-art"></td>
                         <td><b>bronze_plate</b></td>
                         <td>Chapa Pesada</td>
                         <td>2 lingotes na bancada ou martelo</td>
-                        <td>Conformação mecânica sob o martelo forjador</td>
+                        <td>Forjada manualmente (1:1) ou no Martelo a Vapor (1:2 - dobro!)</td>
                         <td><span class="tag-status keep">Validado</span></td>
                     </tr>
                     <tr>
@@ -872,8 +1136,16 @@
                         <td><b>bronze_rod</b></td>
                         <td>Perfil Mecânico</td>
                         <td>2 lingotes verticais</td>
-                        <td>Haste usinada para eixos, êmbolos e ponteiros</td>
+                        <td>Haste usinada para eixos, êmbolos, ponteiros e rebites</td>
                         <td><span class="tag-status keep">Mantido</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAQElEQVR4nGNgGH7g6868/6TIMSJzrnS7gRU8uPmIwWfODaLlUECTo8h/cuRGAZFRSTAa8UUX0dHIgCe6hmk0AgD6ti/HyXIQ5gAAAABJRU5ErkJggg==" class="pixel-art"></td>
+                        <td><b>bronze_rivets</b></td>
+                        <td>Fixador Mecânico</td>
+                        <td>Não existia</td>
+                        <td>Rebites para caldeiraria hermética de vasos de pressão</td>
+                        <td><span class="tag-status new">Novo</span></td>
                     </tr>
                     <tr>
                         <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAkUlEQVR4nGNgGNSg1p7vPwjT31YGBgaGbwfC/oPwvclaYIwshwwYsRkC0ghjv7h8BS6ulHsNQz0TPs1cDqsYkTXBXILX6VszJf6DMIjtqsDxH4Rh8jA1yF5hYqAQMKILwGwHAe/pLxjRbWw++ImRYCBuRTLkxLVvDLg0Y/VCrT3ff5jNyACkeWASVS3dbSUVAACfREoEmh1rEgAAAABJRU5ErkJggg==" class="pixel-art"></td>
@@ -896,7 +1168,7 @@
                         <td><b>iron_plate</b></td>
                         <td>Chapa Estrutural</td>
                         <td>Ferro forjado sob o martelo</td>
-                        <td>Chapa rígida para trilhos, bigornas e dentes de serra</td>
+                        <td>Chapa rígida para trilhos, bigornas e lâminas de serra</td>
                         <td><span class="tag-status keep">Validado</span></td>
                     </tr>
                     <tr>
@@ -928,7 +1200,7 @@
                         <td><b>bronze_gauge_pipe</b></td>
                         <td>Telemetria</td>
                         <td>Tubo + Bússola mágica</td>
-                        <td>Tubo Bourdon + Mostrador metálico estampado no martelo</td>
+                        <td>Tubo Bourdon: Tubo de Bronze + Ponteiro + Visor de Vidro</td>
                         <td><span class="tag-status refine">Refinar</span></td>
                     </tr>
                     <tr>
@@ -944,8 +1216,48 @@
                         <td><b>mechanical_hammer</b></td>
                         <td>Matriz de Forja</td>
                         <td>Pistão + Chapas + Bigorna</td>
-                        <td>Matriz estampadora: cria a lâmina da serra e rebites</td>
+                        <td>Matriz estampadora: lâminas, briquetes e chapas 1:2</td>
                         <td><span class="tag-status keep">Validado</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVR4nGNgGGjAiE3wRJPNf2ziFnVHMNQzInO+Hm4Ca7y8fxdW23Qd3cA0t20dXB8LsgJcGvHJMxFyNjaArJYJ3XnIIGzOczBGB8hqmXA5D1kjuiHIapkYKARM2JwFAqtSJLGy0dUykhOIyGmCCV2AFM0Y6UAX6jRCCYmB4QhcjOKkPPAAAD8yNUPurTmBAAAAAElFTkSuQmCC" class="pixel-art"></td>
+                        <td><b>saw_blade</b></td>
+                        <td>Componente de Usinagem</td>
+                        <td>Não existia</td>
+                        <td>Lâmina circular dentada de bronze forjada sob o martelo</td>
+                        <td><span class="tag-status new">Novo</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAX0lEQVR4nGNgGPKAEZfEhxM9/5H5AhYlWNUyUeoCpqFvACOI6AmQ+68hJ8KgICtClKYdR28wgNT7TDrHyAISAHFuPHoDlgTRMD4hGu6FGyRoQqbhBmiQoXkYuYCBUgAAuwaIv9NHw8AAAAAASUVORK5CYII=" class="pixel-art"></td>
+                        <td><b>mechanical_sawmill</b></td>
+                        <td>Máquina de Usinagem</td>
+                        <td>Não existia</td>
+                        <td>Serraria a vapor em 60 FPS: 6 tábuas + serragem por tora</td>
+                        <td><span class="tag-status new">Novo</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATklEQVR4nGNgGAWDHHy91PP/zvr4//jUMOGSODzR8f/zu5cZnj96xIDPECZcmiXl5MCaYTQuQ5iI0YzPECZiNeMyhAmZQ0gzjB4FDCgAAHUwS3yzEk++AAAAAElFTkSuQmCC" class="pixel-art"></td>
+                        <td><b>sawdust</b></td>
+                        <td>Subproduto Útil</td>
+                        <td>Não existia</td>
+                        <td>Pó de madeira gerado no corte; matéria do briquete</td>
+                        <td><span class="tag-status new">Novo</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATElEQVR4nGNgGAWMyEHgaKD8X1laBG+o3H36hmH/hbtwfSzYFJACmCiNBBZ0gedvPuLVICnCj98ASTQFQ9AFd5/gjwVlGfzRzDACAQDG4BNCvSKziAAAAABJRU5ErkJggg==" class="pixel-art"></td>
+                        <td><b>fuel_briquette</b></td>
+                        <td>Combustível Denso</td>
+                        <td>Não existia</td>
+                        <td>4 serragens prensadas no Martelo Mecânico; queima 8 itens</td>
+                        <td><span class="tag-status new">Novo</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATElEQVR4nGNgoDa4My3gP1kaewLk/m/JM/pPqiFMMIaGnAjDjUdvGECGqGRtYCTJJSnmImDFIM3kuoRh1JARGyYkAWRDSNOJxRCqAgDvJHmQIz/Y7gAAAABJRU5ErkJggg==" class="pixel-art"></td>
+                        <td><b>gravity_chute</b></td>
+                        <td>Logística Física</td>
+                        <td>Não existia</td>
+                        <td>Calha inclinada sem GUI; itens deslizam para máquinas</td>
+                        <td><span class="tag-status new">Novo</span></td>
                     </tr>
                 </tbody>
             </table>
