@@ -51,6 +51,7 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             blockModelGenerators.createParticleOnlyBlock(ModBlocks.CRUCIBLE, ModBlocks.REFRACTORY_BRICKS)
             blockModelGenerators.createParticleOnlyBlock(ModBlocks.LOW_PRESSURE_BOILER, Blocks.COPPER_BLOCK)
             blockModelGenerators.createParticleOnlyBlock(ModBlocks.STEAM_PISTON, Blocks.COPPER_BLOCK)
+            blockModelGenerators.createParticleOnlyBlock(ModBlocks.MECHANICAL_HAMMER, Blocks.ANVIL)
         }
 
         override fun generateItemModels(itemModelGenerators: ItemModelGenerators) {
@@ -60,12 +61,20 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             itemModelGenerators.generateFlatItem(ModBlocks.CRUCIBLE.asItem(), ModelTemplates.FLAT_ITEM)
             itemModelGenerators.generateFlatItem(ModBlocks.LOW_PRESSURE_BOILER.asItem(), ModelTemplates.FLAT_ITEM)
             itemModelGenerators.generateFlatItem(ModBlocks.STEAM_PISTON.asItem(), ModelTemplates.FLAT_ITEM)
+            itemModelGenerators.generateFlatItem(ModBlocks.MECHANICAL_HAMMER.asItem(), ModelTemplates.FLAT_ITEM)
             itemModelGenerators.generateFlatItem(ModItems.RAW_TIN, ModelTemplates.FLAT_ITEM)
             itemModelGenerators.generateFlatItem(ModItems.TIN_INGOT, ModelTemplates.FLAT_ITEM)
             itemModelGenerators.generateFlatItem(ModItems.BRONZE_INGOT, ModelTemplates.FLAT_ITEM)
             itemModelGenerators.generateFlatItem(ModItems.BRONZE_PLATE, ModelTemplates.FLAT_ITEM)
             itemModelGenerators.generateFlatItem(ModItems.BRONZE_ROD, ModelTemplates.FLAT_ITEM)
             itemModelGenerators.generateFlatItem(ModItems.BRONZE_GEAR, ModelTemplates.FLAT_ITEM)
+            itemModelGenerators.generateFlatItem(ModItems.WROUGHT_IRON_INGOT, ModelTemplates.FLAT_ITEM)
+            itemModelGenerators.generateFlatItem(ModItems.IRON_PLATE, ModelTemplates.FLAT_ITEM)
+            itemModelGenerators.generateFlatItem(ModItems.BRONZE_SWORD, ModelTemplates.FLAT_HANDHELD_ITEM)
+            itemModelGenerators.generateFlatItem(ModItems.BRONZE_SHOVEL, ModelTemplates.FLAT_HANDHELD_ITEM)
+            itemModelGenerators.generateFlatItem(ModItems.BRONZE_PICKAXE, ModelTemplates.FLAT_HANDHELD_ITEM)
+            itemModelGenerators.generateFlatItem(ModItems.BRONZE_AXE, ModelTemplates.FLAT_HANDHELD_ITEM)
+            itemModelGenerators.generateFlatItem(ModItems.BRONZE_HOE, ModelTemplates.FLAT_HANDHELD_ITEM)
             itemModelGenerators.generateFlatItem(ModItems.CLAY_MOLD, ModelTemplates.FLAT_ITEM)
             itemModelGenerators.generateFlatItem(ModItems.CERAMIC_MOLD, ModelTemplates.FLAT_ITEM)
             itemModelGenerators.generateFlatItem(ModItems.HOT_INGOT_MOLD, ModelTemplates.FLAT_ITEM)
@@ -241,6 +250,76 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
                         .pattern(" R ")
                         .unlockedBy("has_bronze_gear", has(ModItems.BRONZE_GEAR))
                         .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("steam_piston")))
+
+                    // 14. Mechanical Forge Hammer (Plates + Ingot + Piston + Bricks)
+                    shaped(RecipeCategory.REDSTONE, ModBlocks.MECHANICAL_HAMMER, 1)
+                        .define('P', ModItems.BRONZE_PLATE)
+                        .define('I', ModItems.BRONZE_INGOT)
+                        .define('S', ModBlocks.STEAM_PISTON)
+                        .define('B', ModBlocks.REFRACTORY_BRICKS)
+                        .pattern("PPP")
+                        .pattern("ISI")
+                        .pattern("BBB")
+                        .unlockedBy("has_steam_piston", has(ModBlocks.STEAM_PISTON))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("mechanical_hammer")))
+
+                    // 15. Iron Plate (Crafting fallback)
+                    shaped(RecipeCategory.MISC, ModItems.IRON_PLATE, 2)
+                        .define('I', Items.IRON_INGOT)
+                        .pattern("II")
+                        .pattern("II")
+                        .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("iron_plate_from_crafting")))
+
+                    // 16. Bronze Sword
+                    shaped(RecipeCategory.COMBAT, ModItems.BRONZE_SWORD, 1)
+                        .define('B', ModItems.BRONZE_INGOT)
+                        .define('R', ModItems.BRONZE_ROD)
+                        .pattern("B")
+                        .pattern("B")
+                        .pattern("R")
+                        .unlockedBy("has_bronze_ingot", has(ModItems.BRONZE_INGOT))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("bronze_sword")))
+
+                    // 17. Bronze Shovel
+                    shaped(RecipeCategory.TOOLS, ModItems.BRONZE_SHOVEL, 1)
+                        .define('B', ModItems.BRONZE_INGOT)
+                        .define('R', ModItems.BRONZE_ROD)
+                        .pattern("B")
+                        .pattern("R")
+                        .pattern("R")
+                        .unlockedBy("has_bronze_ingot", has(ModItems.BRONZE_INGOT))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("bronze_shovel")))
+
+                    // 18. Bronze Pickaxe
+                    shaped(RecipeCategory.TOOLS, ModItems.BRONZE_PICKAXE, 1)
+                        .define('B', ModItems.BRONZE_INGOT)
+                        .define('R', ModItems.BRONZE_ROD)
+                        .pattern("BBB")
+                        .pattern(" R ")
+                        .pattern(" R ")
+                        .unlockedBy("has_bronze_ingot", has(ModItems.BRONZE_INGOT))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("bronze_pickaxe")))
+
+                    // 19. Bronze Axe
+                    shaped(RecipeCategory.TOOLS, ModItems.BRONZE_AXE, 1)
+                        .define('B', ModItems.BRONZE_INGOT)
+                        .define('R', ModItems.BRONZE_ROD)
+                        .pattern("BB")
+                        .pattern("BR")
+                        .pattern(" R")
+                        .unlockedBy("has_bronze_ingot", has(ModItems.BRONZE_INGOT))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("bronze_axe")))
+
+                    // 20. Bronze Hoe
+                    shaped(RecipeCategory.TOOLS, ModItems.BRONZE_HOE, 1)
+                        .define('B', ModItems.BRONZE_INGOT)
+                        .define('R', ModItems.BRONZE_ROD)
+                        .pattern("BB")
+                        .pattern(" R")
+                        .pattern(" R")
+                        .unlockedBy("has_bronze_ingot", has(ModItems.BRONZE_INGOT))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("bronze_hoe")))
                 }
             }
         }
@@ -256,6 +335,7 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             dropSelf(ModBlocks.CRUCIBLE)
             dropSelf(ModBlocks.LOW_PRESSURE_BOILER)
             dropSelf(ModBlocks.STEAM_PISTON)
+            dropSelf(ModBlocks.MECHANICAL_HAMMER)
         }
     }
 
@@ -269,11 +349,13 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
                 .add(ModBlocks.CRUCIBLE)
                 .add(ModBlocks.LOW_PRESSURE_BOILER)
                 .add(ModBlocks.STEAM_PISTON)
+                .add(ModBlocks.MECHANICAL_HAMMER)
             valueLookupBuilder(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.REFRACTORY_BRICKS)
                 .add(ModBlocks.CRUCIBLE)
                 .add(ModBlocks.LOW_PRESSURE_BOILER)
                 .add(ModBlocks.STEAM_PISTON)
+                .add(ModBlocks.MECHANICAL_HAMMER)
             valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE)
                 .add(ModBlocks.BELLOWS)
         }
@@ -284,7 +366,13 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
         registriesFuture: CompletableFuture<HolderLookup.Provider>
     ) : FabricTagsProvider.ItemTagsProvider(output, registriesFuture) {
         override fun addTags(wrapperLookup: HolderLookup.Provider) {
-            // Placeholder for custom item tags in Era 1
+            valueLookupBuilder(ItemTags.SWORDS).add(ModItems.BRONZE_SWORD)
+            valueLookupBuilder(ItemTags.SHOVELS).add(ModItems.BRONZE_SHOVEL)
+            valueLookupBuilder(ItemTags.PICKAXES).add(ModItems.BRONZE_PICKAXE)
+            valueLookupBuilder(ItemTags.AXES).add(ModItems.BRONZE_AXE)
+            valueLookupBuilder(ItemTags.HOES).add(ModItems.BRONZE_HOE)
+            valueLookupBuilder(dev.patitow.industrymade.init.ModItemTags.BRONZE_TOOL_MATERIALS)
+                .add(ModItems.BRONZE_INGOT)
         }
     }
 
@@ -300,12 +388,20 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add(ModBlocks.CRUCIBLE, "Smelting Crucible")
             translationBuilder.add(ModBlocks.LOW_PRESSURE_BOILER, "Low Pressure Steam Boiler")
             translationBuilder.add(ModBlocks.STEAM_PISTON, "Mechanical Steam Piston")
+            translationBuilder.add(ModBlocks.MECHANICAL_HAMMER, "Mechanical Forge Hammer")
             translationBuilder.add(ModItems.RAW_TIN, "Raw Tin")
             translationBuilder.add(ModItems.TIN_INGOT, "Tin Ingot")
             translationBuilder.add(ModItems.BRONZE_INGOT, "Bronze Ingot")
             translationBuilder.add(ModItems.BRONZE_PLATE, "Bronze Plate")
             translationBuilder.add(ModItems.BRONZE_ROD, "Bronze Rod")
             translationBuilder.add(ModItems.BRONZE_GEAR, "Bronze Gear")
+            translationBuilder.add(ModItems.WROUGHT_IRON_INGOT, "Wrought Iron Ingot")
+            translationBuilder.add(ModItems.IRON_PLATE, "Iron Plate")
+            translationBuilder.add(ModItems.BRONZE_SWORD, "Bronze Sword")
+            translationBuilder.add(ModItems.BRONZE_SHOVEL, "Bronze Shovel")
+            translationBuilder.add(ModItems.BRONZE_PICKAXE, "Bronze Pickaxe")
+            translationBuilder.add(ModItems.BRONZE_AXE, "Bronze Axe")
+            translationBuilder.add(ModItems.BRONZE_HOE, "Bronze Hoe")
             translationBuilder.add(ModItems.CLAY_MOLD, "Clay Ingot Mold")
             translationBuilder.add(ModItems.CERAMIC_MOLD, "Ceramic Ingot Mold")
             translationBuilder.add(ModItems.HOT_INGOT_MOLD, "Hot Ingot Mold")
@@ -325,6 +421,7 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add(ModSounds.STEAM_WHISTLE, "Steam whistle blaring")
             translationBuilder.add(ModSounds.VALVE_CLICK, "Valve clicking")
             translationBuilder.add(ModSounds.PISTON_CHUG, "Steam piston chugging")
+            translationBuilder.add(ModSounds.HAMMER_SLAM, "Mechanical hammer slamming")
         }
     }
 
@@ -340,12 +437,20 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add(ModBlocks.CRUCIBLE, "Cadinho de Fundição")
             translationBuilder.add(ModBlocks.LOW_PRESSURE_BOILER, "Caldeira a Vapor de Baixa Pressão")
             translationBuilder.add(ModBlocks.STEAM_PISTON, "Pistão Mecânico a Vapor")
+            translationBuilder.add(ModBlocks.MECHANICAL_HAMMER, "Martelo Forjador Mecânico")
             translationBuilder.add(ModItems.RAW_TIN, "Estanho Bruto")
             translationBuilder.add(ModItems.TIN_INGOT, "Lingote de Estanho")
             translationBuilder.add(ModItems.BRONZE_INGOT, "Lingote de Bronze")
             translationBuilder.add(ModItems.BRONZE_PLATE, "Placa de Bronze")
             translationBuilder.add(ModItems.BRONZE_ROD, "Haste de Bronze")
             translationBuilder.add(ModItems.BRONZE_GEAR, "Engrenagem de Bronze")
+            translationBuilder.add(ModItems.WROUGHT_IRON_INGOT, "Lingote de Ferro Forjado")
+            translationBuilder.add(ModItems.IRON_PLATE, "Placa de Ferro")
+            translationBuilder.add(ModItems.BRONZE_SWORD, "Espada de Bronze")
+            translationBuilder.add(ModItems.BRONZE_SHOVEL, "Pá de Bronze")
+            translationBuilder.add(ModItems.BRONZE_PICKAXE, "Picareta de Bronze")
+            translationBuilder.add(ModItems.BRONZE_AXE, "Machado de Bronze")
+            translationBuilder.add(ModItems.BRONZE_HOE, "Enxada de Bronze")
             translationBuilder.add(ModItems.CLAY_MOLD, "Molde de Argila Cru")
             translationBuilder.add(ModItems.CERAMIC_MOLD, "Molde Cerâmico")
             translationBuilder.add(ModItems.HOT_INGOT_MOLD, "Molde de Lingote Fervente")
@@ -365,6 +470,7 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add(ModSounds.STEAM_WHISTLE, "Apito de vapor estridente")
             translationBuilder.add(ModSounds.VALVE_CLICK, "Válvula estalando")
             translationBuilder.add(ModSounds.PISTON_CHUG, "Pistão a vapor trabalhando")
+            translationBuilder.add(ModSounds.HAMMER_SLAM, "Martelo mecânico batendo")
         }
     }
 }

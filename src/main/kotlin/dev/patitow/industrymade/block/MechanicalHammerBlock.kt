@@ -117,7 +117,7 @@ class MechanicalHammerBlock(properties: Properties) : BaseEntityBlock(properties
                     blockEntity.strikes = 0
                     blockEntity.setChanged()
                     level.sendBlockUpdated(pos, state, state, 3)
-                    level.playSound(null, pos, SoundEvents.ARMOR_EQUIP_GENERIC, SoundSource.BLOCKS, 1.0f, 1.0f)
+                    level.playSound(null, pos, SoundEvents.ARMOR_EQUIP_GENERIC.value(), SoundSource.BLOCKS, 1.0f, 1.0f)
                 }
                 return InteractionResult.SUCCESS
             }
@@ -126,14 +126,43 @@ class MechanicalHammerBlock(properties: Properties) : BaseEntityBlock(properties
         return InteractionResult.PASS
     }
 
-    override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState) {
-        if (!state.`is`(newState.block)) {
-            val blockEntity = level.getBlockEntity(pos) as? MechanicalHammerBlockEntity
-            if (blockEntity != null && !blockEntity.itemOnBed.isEmpty) {
-                Containers.dropItemStack(level, pos.x + 0.5, pos.y + 0.5, pos.z + 0.5, blockEntity.itemOnBed)
+    override fun useWithoutItem(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hitResult: BlockHitResult
+    ): InteractionResult {
+        val blockEntity = level.getBlockEntity(pos) as? MechanicalHammerBlockEntity ?: return InteractionResult.PASS
+        if (!blockEntity.itemOnBed.isEmpty) {
+            if (!level.isClientSide) {
+                val toGive = blockEntity.itemOnBed.copy()
+                blockEntity.itemOnBed = ItemStack.EMPTY
+                blockEntity.strikes = 0
+                blockEntity.setChanged()
+                level.sendBlockUpdated(pos, state, state, 3)
+
+                if (!player.inventory.add(toGive)) {
+                    Containers.dropItemStack(level, pos.x + 0.5, pos.y + 0.6, pos.z + 0.5, toGive)
+                }
+                level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0f, 1.0f)
             }
-            super.onRemove(state, level, pos, newState)
+            return InteractionResult.SUCCESS
         }
+        return InteractionResult.PASS
+    }
+
+    override fun affectNeighborsAfterRemoval(
+        state: BlockState,
+        level: net.minecraft.server.level.ServerLevel,
+        pos: BlockPos,
+        movedByPiston: Boolean
+    ) {
+        val blockEntity = level.getBlockEntity(pos) as? MechanicalHammerBlockEntity
+        if (blockEntity != null) {
+            Containers.dropContents(level, pos, blockEntity)
+        }
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston)
     }
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {

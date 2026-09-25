@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "B": "industry-made:refractory_bricks",
+    "I": "industry-made:bronze_ingot",
+    "P": "industry-made:bronze_plate",
+    "S": "industry-made:steam_piston"
+  },
+  "pattern": [
+    "PPP",
+    "ISI",
+    "BBB"
+  ],
+  "result": {
+    "id": "industry-made:mechanical_hammer"
+  }
+}

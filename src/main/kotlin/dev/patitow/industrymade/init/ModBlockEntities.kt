@@ -36,6 +36,15 @@ object ModBlockEntities {
         FabricBlockEntityTypeBuilder.create(::SteamPistonBlockEntity, ModBlocks.STEAM_PISTON).build()
     )
 
+    val MECHANICAL_HAMMER: BlockEntityType<dev.patitow.industrymade.block.entity.MechanicalHammerBlockEntity> = Registry.register(
+        BuiltInRegistries.BLOCK_ENTITY_TYPE,
+        IndustryMade.id("mechanical_hammer"),
+        FabricBlockEntityTypeBuilder.create(
+            { pos, state -> dev.patitow.industrymade.block.entity.MechanicalHammerBlockEntity(pos, state) },
+            ModBlocks.MECHANICAL_HAMMER
+        ).build()
+    )
+
     fun initialize() {
         // Classloading trigger
     }

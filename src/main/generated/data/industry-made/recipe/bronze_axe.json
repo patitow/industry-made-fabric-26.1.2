@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": "industry-made:bronze_ingot",
+    "R": "industry-made:bronze_rod"
+  },
+  "pattern": [
+    "BB",
+    "BR",
+    " R"
+  ],
+  "result": {
+    "id": "industry-made:bronze_axe"
+  }
+}
