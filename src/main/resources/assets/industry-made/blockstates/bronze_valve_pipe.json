@@ -1,0 +1,73 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "open": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_valve_pipe_core_open"
+      }
+    },
+    {
+      "when": {
+        "open": "false"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_valve_pipe_core_closed"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm"
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm",
+        "x": 90
+      }
+    }
+  ]
+}

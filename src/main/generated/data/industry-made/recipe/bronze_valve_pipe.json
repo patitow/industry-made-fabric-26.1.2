@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "G": "industry-made:bronze_gear",
+    "P": "industry-made:bronze_steam_pipe"
+  },
+  "pattern": [
+    "G",
+    "P"
+  ],
+  "result": {
+    "id": "industry-made:bronze_valve_pipe"
+  }
+}

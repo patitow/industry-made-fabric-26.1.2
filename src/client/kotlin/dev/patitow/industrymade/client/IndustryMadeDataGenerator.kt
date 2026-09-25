@@ -319,6 +319,24 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
                         .pattern("P P")
                         .unlockedBy("has_bronze_plate", has(ModItems.BRONZE_PLATE))
                         .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("bronze_steam_pipe")))
+
+                    // 22. Bronze Valve Pipe
+                    shaped(RecipeCategory.REDSTONE, ModBlocks.BRONZE_VALVE_PIPE, 1)
+                        .define('G', ModItems.BRONZE_GEAR)
+                        .define('P', ModBlocks.BRONZE_STEAM_PIPE)
+                        .pattern("G")
+                        .pattern("P")
+                        .unlockedBy("has_bronze_steam_pipe", has(ModBlocks.BRONZE_STEAM_PIPE))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("bronze_valve_pipe")))
+
+                    // 23. Bronze Gauge Pipe
+                    shaped(RecipeCategory.REDSTONE, ModBlocks.BRONZE_GAUGE_PIPE, 1)
+                        .define('C', net.minecraft.world.item.Items.COMPASS)
+                        .define('P', ModBlocks.BRONZE_STEAM_PIPE)
+                        .pattern("C")
+                        .pattern("P")
+                        .unlockedBy("has_bronze_steam_pipe", has(ModBlocks.BRONZE_STEAM_PIPE))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("bronze_gauge_pipe")))
                 }
             }
         }
@@ -336,6 +354,8 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             dropSelf(ModBlocks.STEAM_PISTON)
             dropSelf(ModBlocks.MECHANICAL_HAMMER)
             dropSelf(ModBlocks.BRONZE_STEAM_PIPE)
+            dropSelf(ModBlocks.BRONZE_VALVE_PIPE)
+            dropSelf(ModBlocks.BRONZE_GAUGE_PIPE)
         }
     }
 
@@ -351,6 +371,8 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
                 .add(ModBlocks.STEAM_PISTON)
                 .add(ModBlocks.MECHANICAL_HAMMER)
                 .add(ModBlocks.BRONZE_STEAM_PIPE)
+                .add(ModBlocks.BRONZE_VALVE_PIPE)
+                .add(ModBlocks.BRONZE_GAUGE_PIPE)
             valueLookupBuilder(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.REFRACTORY_BRICKS)
                 .add(ModBlocks.CRUCIBLE)
@@ -358,6 +380,8 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
                 .add(ModBlocks.STEAM_PISTON)
                 .add(ModBlocks.MECHANICAL_HAMMER)
                 .add(ModBlocks.BRONZE_STEAM_PIPE)
+                .add(ModBlocks.BRONZE_VALVE_PIPE)
+                .add(ModBlocks.BRONZE_GAUGE_PIPE)
             valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE)
                 .add(ModBlocks.BELLOWS)
         }
@@ -395,6 +419,10 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add("item.industry-made.low_pressure_boiler", "Low Pressure Steam Boiler")
             translationBuilder.add(ModBlocks.BRONZE_STEAM_PIPE, "Bronze Steam Pipe")
             translationBuilder.add("item.industry-made.bronze_steam_pipe", "Bronze Steam Pipe")
+            translationBuilder.add(ModBlocks.BRONZE_VALVE_PIPE, "Bronze Valve Pipe")
+            translationBuilder.add("item.industry-made.bronze_valve_pipe", "Bronze Valve Pipe")
+            translationBuilder.add(ModBlocks.BRONZE_GAUGE_PIPE, "Bronze Pressure Gauge Pipe")
+            translationBuilder.add("item.industry-made.bronze_gauge_pipe", "Bronze Pressure Gauge Pipe")
             translationBuilder.add(ModBlocks.STEAM_PISTON, "Mechanical Steam Piston")
             translationBuilder.add("item.industry-made.steam_piston", "Mechanical Steam Piston")
             translationBuilder.add(ModBlocks.MECHANICAL_HAMMER, "Mechanical Forge Hammer")
@@ -452,6 +480,10 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add("item.industry-made.low_pressure_boiler", "Caldeira a Vapor de Baixa Pressão")
             translationBuilder.add(ModBlocks.BRONZE_STEAM_PIPE, "Tubo de Vapor de Bronze")
             translationBuilder.add("item.industry-made.bronze_steam_pipe", "Tubo de Vapor de Bronze")
+            translationBuilder.add(ModBlocks.BRONZE_VALVE_PIPE, "Válvula de Tubo de Bronze")
+            translationBuilder.add("item.industry-made.bronze_valve_pipe", "Válvula de Tubo de Bronze")
+            translationBuilder.add(ModBlocks.BRONZE_GAUGE_PIPE, "Manômetro de Tubo de Bronze")
+            translationBuilder.add("item.industry-made.bronze_gauge_pipe", "Manômetro de Tubo de Bronze")
             translationBuilder.add(ModBlocks.STEAM_PISTON, "Pistão Mecânico a Vapor")
             translationBuilder.add("item.industry-made.steam_piston", "Pistão Mecânico a Vapor")
             translationBuilder.add(ModBlocks.MECHANICAL_HAMMER, "Martelo Forjador Mecânico")

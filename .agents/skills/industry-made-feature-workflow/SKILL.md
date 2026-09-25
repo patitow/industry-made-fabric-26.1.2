@@ -21,8 +21,8 @@ Every feature in Industry Made must complete all 8 steps without skipping auxili
 [ ] 1. Code Architecture (Zero Gray Boxes, In-World Interaction, Modern 26.x Data Components)
 [ ] 2. Core Registration (ModBlocks, ModItems, ModBlockEntities, ModDataComponents, ModSounds)
 [ ] 3. Creative Tab Placement (INDUSTRY_MADE_TAB in ModItems.kt)
-[ ] 4. Visual Textures (16x16 pixel art for items/blocks, 64x64 for entity models)
-[ ] 5. Client Rendering (BlockEntityRenderer with partialTicks interpolation for continuous animations)
+[ ] 4. Visual Textures & 3D Models (16x16 pixel art, modular textures, Blockbench voxel geometry)
+[ ] 5. Living Responsiveness & Animation (Fluid levels in cavities, visual telemetry gauges/dials, continuous partialTicks animation, zero static dead blocks)
 [ ] 6. Fabric DataGen (IndustryMadeDataGenerator: blockstates, models, recipes, loot tables, tags)
 [ ] 7. Full Dual Localization (English en_us and Portuguese pt_br)
 [ ] 8. Continuous Build Validation (compileKotlin, compileClientKotlin, runDatagen, build)
@@ -60,13 +60,14 @@ Every feature in Industry Made must complete all 8 steps without skipping auxili
   - `entity/<name>.png`: 64x64 texture map for custom block entity models.
 - Palette consistency: Maintain gritty, grounded Minecraft Vanilla+ aesthetic.
 
-### 5. Client Rendering (`src/client/kotlin/`)
-- For kinetic or animated block entities (bellows, pistons, shafts, crucibles with molten fluids):
-  - Register layer in `IndustryMadeClient.kt`: `ModelLayerRegistry.registerModelLayer(...)`.
-  - Register renderer in `BlockEntityRendererRegistry.register(...)`.
-  - Implement `BlockEntityRenderer<T, S : BlockEntityRenderState>`.
-  - Use `extractRenderState(..., partialTicks, ...)` for silky 60+ FPS visual interpolation independent of server 20 TPS.
-  - Molten liquid surfaces use `RenderTypes.entityCutout` with `FULL_BRIGHT (0x00F000F0)` for authentic incandescence.
+### 5. Living Responsiveness & Animation ("No Static Dead Blocks")
+Industrial machines must never appear frozen or unresponsive:
+- **Cavity Fluid Visibility:** Crucibles, boilers, and vats must visually display their contents. When molten metal or water is inside, render the liquid surface with the appropriate height, color, and `FULL_BRIGHT` incandescence.
+- **Visual Telemetry (Dials & Sight Glasses):** Pressure vessels must display moving gauge needles (e.g. `PRESSURE_LEVEL` blockstates 0..3) or transparent sight glass columns reflecting liquid levels.
+- **Firebox & Heat Glow:** Combustion chambers must change visually when lit (`LIT=true`), displaying glowing embers/flames and casting block light.
+- **Continuous Kinetic Animation (`partialTicks`):**
+  - Moving parts (pistons, hammer arms, bellows, saw blades) must interpolate between ticks using `partialTicks` for silky 60+ FPS motion.
+  - **CRITICAL OPENGL RULE FOR 26.x:** Never invoke `ModelPart.render(poseStack, ...)` inside a deferred `submitCustomGeometry` lambda where `poseStack` is popped before execution. Always draw custom dynamic quads (like liquid surfaces or moving quads) using the captured `pose.pose()` matrix from the lambda parameters.
 
 ### 6. Fabric DataGen Automation (`IndustryMadeDataGenerator.kt`)
 Never write raw JSON files manually. Declare them in `IndustryMadeDataGenerator.kt`:

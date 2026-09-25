@@ -35,7 +35,7 @@ import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import java.util.Locale
 
-class BronzeSteamPipeBlock(properties: Properties) : BaseEntityBlock(properties) {
+open class BronzeSteamPipeBlock(properties: Properties) : BaseEntityBlock(properties) {
 
     companion object {
         val CODEC: MapCodec<BronzeSteamPipeBlock> = simpleCodec(::BronzeSteamPipeBlock)

@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
@@ -194,6 +195,61 @@ class LowPressureBoilerBlock(properties: Properties) : BaseEntityBlock(propertie
         }
 
         return InteractionResult.SUCCESS
+    }
+
+    override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
+        if (!state.getValue(LIT)) return
+
+        val pLevel = state.getValue(PRESSURE_LEVEL)
+
+        // Gentle steam puff from top chimney / outlet
+        val topX = pos.x + 0.5 + (random.nextDouble() - 0.5) * 0.1
+        val topY = pos.y + 1.02
+        val topZ = pos.z + 0.5 + (random.nextDouble() - 0.5) * 0.1
+
+        if (random.nextFloat() < 0.4f) {
+            level.addParticle(ParticleTypes.SMOKE, topX, topY, topZ, 0.0, 0.03, 0.0)
+        }
+
+        // Boiling water simmering sound
+        if (random.nextFloat() < 0.1f) {
+            level.playLocalSound(
+                pos.x + 0.5, pos.y + 0.5, pos.z + 0.5,
+                SoundEvents.WATER_AMBIENT,
+                SoundSource.BLOCKS,
+                0.25f,
+                1.4f + random.nextFloat() * 0.3f,
+                false
+            )
+        }
+
+        // Additional steam effects under pressure
+        if (pLevel >= 2 && random.nextFloat() < 0.3f) {
+            level.addParticle(ParticleTypes.POOF, topX, topY, topZ, 0.0, 0.05, 0.0)
+        }
+
+        // High pressure hiss and seam leaks
+        if (pLevel == 3) {
+            if (random.nextFloat() < 0.5f) {
+                level.addParticle(
+                    ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                    pos.x + 0.5 + (random.nextDouble() - 0.5) * 0.4,
+                    pos.y + 0.9,
+                    pos.z + 0.5 + (random.nextDouble() - 0.5) * 0.4,
+                    0.0, 0.04, 0.0
+                )
+            }
+            if (random.nextFloat() < 0.05f) {
+                level.playLocalSound(
+                    pos.x + 0.5, pos.y + 0.8, pos.z + 0.5,
+                    SoundEvents.FIRE_EXTINGUISH,
+                    SoundSource.BLOCKS,
+                    0.3f,
+                    1.6f,
+                    false
+                )
+            }
+        }
     }
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {

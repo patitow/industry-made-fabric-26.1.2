@@ -1,0 +1,89 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "pressure_level": "0"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_gauge_pipe_core_p0"
+      }
+    },
+    {
+      "when": {
+        "pressure_level": "1"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_gauge_pipe_core_p1"
+      }
+    },
+    {
+      "when": {
+        "pressure_level": "2"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_gauge_pipe_core_p2"
+      }
+    },
+    {
+      "when": {
+        "pressure_level": "3"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_gauge_pipe_core_p3"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm"
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "industry-made:block/bronze_steam_pipe_arm",
+        "x": 90
+      }
+    }
+  ]
+}

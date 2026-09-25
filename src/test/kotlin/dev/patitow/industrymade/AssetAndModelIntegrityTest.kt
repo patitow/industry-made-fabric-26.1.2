@@ -250,5 +250,104 @@ class AssetAndModelIntegrityTest {
         assertTrue(ptFile.readText().contains("\"block.industry-made.bronze_steam_pipe\""))
         assertTrue(ptFile.readText().contains("\"item.industry-made.bronze_steam_pipe\""))
     }
+
+    @Test
+    @DisplayName("Verify living responsive boiler pressure gauge textures, models, and blockstate variants")
+    fun testResponsiveBoilerGaugeIntegrity() {
+        val texDir = File(assetsDir, "textures/block")
+        val modelsDir = File(assetsDir, "models/block")
+
+        for (p in 0..3) {
+            val gaugeTex = File(texDir, "boiler_gauge_$p.png")
+            assertTrue(gaugeTex.exists(), "Gauge texture boiler_gauge_$p.png must exist")
+            val img = ImageIO.read(gaugeTex)
+            assertNotNull(img, "ImageIO must decode boiler_gauge_$p.png")
+            assertEquals(16, img.width)
+            assertEquals(16, img.height)
+
+            val boilerModel = File(modelsDir, "low_pressure_boiler_p$p.json")
+            assertTrue(boilerModel.exists(), "Boiler model low_pressure_boiler_p$p.json must exist")
+            val content = boilerModel.readText()
+            assertTrue(
+                content.contains("industry-made:block/boiler_gauge_$p"),
+                "Model p$p must reference gauge texture boiler_gauge_$p"
+            )
+        }
+
+        val stateFile = File(assetsDir, "blockstates/low_pressure_boiler.json")
+        assertTrue(stateFile.exists(), "low_pressure_boiler blockstate must exist")
+        val stateContent = stateFile.readText()
+        for (p in 0..3) {
+            assertTrue(
+                stateContent.contains("industry-made:block/low_pressure_boiler_p$p"),
+                "Boiler blockstate must reference model p$p"
+            )
+        }
+    }
+
+    @Test
+    @DisplayName("Verify Bronze Valve Pipe 3D models, handwheel texture, multipart blockstate, and localization")
+    fun testBronzeValvePipeIntegrity() {
+        val texDir = File(assetsDir, "textures/block")
+        val modelsDir = File(assetsDir, "models/block")
+
+        val wheelTex = File(texDir, "bronze_valve_wheel.png")
+        assertTrue(wheelTex.exists(), "bronze_valve_wheel.png must exist")
+        val img = ImageIO.read(wheelTex)
+        assertNotNull(img)
+        assertEquals(16, img.width)
+        assertEquals(16, img.height)
+
+        val valveModels = listOf(
+            "bronze_valve_pipe_core_open",
+            "bronze_valve_pipe_core_closed",
+            "bronze_valve_pipe_inventory"
+        )
+        for (m in valveModels) {
+            val f = File(modelsDir, "$m.json")
+            assertTrue(f.exists(), "Valve model $m must exist")
+            val c = f.readText()
+            assertTrue(c.contains("industry-made:block/bronze_valve_wheel"))
+        }
+
+        val stateFile = File(assetsDir, "blockstates/bronze_valve_pipe.json")
+        assertTrue(stateFile.exists(), "bronze_valve_pipe blockstate must exist")
+        val stateContent = stateFile.readText()
+        assertTrue(stateContent.contains("bronze_valve_pipe_core_open"))
+        assertTrue(stateContent.contains("bronze_valve_pipe_core_closed"))
+
+        val enFile = File(generatedAssetsDir, "lang/en_us.json")
+        val ptFile = File(generatedAssetsDir, "lang/pt_br.json")
+        assertTrue(enFile.readText().contains("\"block.industry-made.bronze_valve_pipe\""))
+        assertTrue(ptFile.readText().contains("\"block.industry-made.bronze_valve_pipe\""))
+    }
+
+    @Test
+    @DisplayName("Verify Bronze Gauge Pipe 3D models, 4 pressure levels, multipart blockstate, and localization")
+    fun testBronzeGaugePipeIntegrity() {
+        val modelsDir = File(assetsDir, "models/block")
+
+        for (p in 0..3) {
+            val f = File(modelsDir, "bronze_gauge_pipe_core_p$p.json")
+            assertTrue(f.exists(), "Gauge pipe core p$p must exist")
+            val c = f.readText()
+            assertTrue(c.contains("industry-made:block/boiler_gauge_$p"))
+        }
+
+        val inv = File(modelsDir, "bronze_gauge_pipe_inventory.json")
+        assertTrue(inv.exists())
+
+        val stateFile = File(assetsDir, "blockstates/bronze_gauge_pipe.json")
+        assertTrue(stateFile.exists(), "bronze_gauge_pipe blockstate must exist")
+        val stateContent = stateFile.readText()
+        for (p in 0..3) {
+            assertTrue(stateContent.contains("bronze_gauge_pipe_core_p$p"))
+        }
+
+        val enFile = File(generatedAssetsDir, "lang/en_us.json")
+        val ptFile = File(generatedAssetsDir, "lang/pt_br.json")
+        assertTrue(enFile.readText().contains("\"block.industry-made.bronze_gauge_pipe\""))
+        assertTrue(ptFile.readText().contains("\"block.industry-made.bronze_gauge_pipe\""))
+    }
 }
 

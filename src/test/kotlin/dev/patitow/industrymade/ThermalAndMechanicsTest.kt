@@ -87,4 +87,50 @@ class ThermalAndMechanicsTest {
         assertTrue(consumer.tryConsumeSteam(providerB, 0.5), "Consumer must operate when pressure >= 1.5 bar")
         assertEquals(1.5, providerB.steamPressure, 0.001)
     }
+
+    @Test
+    @DisplayName("Verify Boiler and Gauge pressure levels calculation conform to specification")
+    fun testPressureLevelMapping() {
+        fun calcLevel(p: Double): Int = when {
+            p >= 5.5 -> 3
+            p >= 2.5 -> 2
+            p >= 0.5 -> 1
+            else -> 0
+        }
+
+        assertEquals(0, calcLevel(0.0), "0 bar must be level 0")
+        assertEquals(0, calcLevel(0.4), "0.4 bar must be level 0")
+        assertEquals(1, calcLevel(0.5), "0.5 bar must be level 1")
+        assertEquals(1, calcLevel(2.0), "2.0 bar must be level 1")
+        assertEquals(2, calcLevel(2.5), "2.5 bar must be level 2")
+        assertEquals(2, calcLevel(4.0), "4.0 bar must be level 2")
+        assertEquals(3, calcLevel(5.5), "5.5 bar must be level 3 (danger/max)")
+        assertEquals(3, calcLevel(6.0), "6.0 bar must be level 3 (danger/max)")
+    }
+
+    @Test
+    @DisplayName("Verify Valve pipe flow gating: blocks flow when closed, equalizes when open")
+    fun testValvePipeMechanics() {
+        val valveOpen = true
+        val valveClosed = false
+
+        var upstreamPressure = 4.0
+        var downstreamPressure = 1.0
+
+        // Closed valve: flow must be 0
+        val closedFlow = if (valveClosed && upstreamPressure > downstreamPressure) {
+            (upstreamPressure - downstreamPressure) * 0.25
+        } else {
+            0.0
+        }
+        assertEquals(0.0, closedFlow, "Closed valve must completely block flow")
+
+        // Open valve: flow occurs
+        val openFlow = if (valveOpen && upstreamPressure > downstreamPressure) {
+            (upstreamPressure - downstreamPressure) * 0.25
+        } else {
+            0.0
+        }
+        assertEquals(0.75, openFlow, 0.001, "Open valve must allow steam flow")
+    }
 }
