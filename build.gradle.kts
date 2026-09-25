@@ -16,6 +16,7 @@ repositories {
 
 loom {
 	splitEnvironmentSourceSets()
+	accessWidenerPath.set(file("src/main/resources/industry-made.accesswidener"))
 
 	mods {
 		register("industry-made") {

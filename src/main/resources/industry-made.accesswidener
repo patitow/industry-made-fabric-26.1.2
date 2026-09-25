@@ -1,0 +1,17 @@
+accessWidener	v1	official
+
+accessible	class	net/minecraft/client/data/models/BlockModelGenerators
+accessible	method	net/minecraft/client/data/models/BlockModelGenerators	createTrivialCube	(Lnet/minecraft/world/level/block/Block;)V
+accessible	method	net/minecraft/client/data/models/BlockModelGenerators	createTrivialBlock	(Lnet/minecraft/world/level/block/Block;Lnet/minecraft/client/data/models/model/TexturedModel$Provider;)V
+accessible	field	net/minecraft/client/data/models/BlockModelGenerators	blockStateOutput	Ljava/util/function/Consumer;
+accessible	field	net/minecraft/client/data/models/BlockModelGenerators	modelOutput	Ljava/util/function/BiConsumer;
+
+accessible	class	net/minecraft/client/data/models/ItemModelGenerators
+accessible	method	net/minecraft/client/data/models/ItemModelGenerators	generateFlatItem	(Lnet/minecraft/world/item/Item;Lnet/minecraft/client/data/models/model/ModelTemplate;)V
+accessible	method	net/minecraft/client/data/models/ItemModelGenerators	generateFlatItem	(Lnet/minecraft/world/item/Item;Lnet/minecraft/world/item/Item;Lnet/minecraft/client/data/models/model/ModelTemplate;)V
+accessible	field	net/minecraft/client/data/models/ItemModelGenerators	modelOutput	Ljava/util/function/BiConsumer;
+accessible	field	net/minecraft/client/data/models/ItemModelGenerators	itemModelOutput	Lnet/minecraft/client/data/models/ItemModelOutput;
+
+accessible	field	net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity	cookingTimer	I
+accessible	field	net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity	litTimeRemaining	I
+accessible	field	net/minecraft/world/level/block/entity/CampfireBlockEntity	cookingProgress	[I

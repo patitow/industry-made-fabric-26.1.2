@@ -1,5 +1,9 @@
 package dev.patitow.industrymade
 
+import dev.patitow.industrymade.init.ModBlockEntities
+import dev.patitow.industrymade.init.ModBlocks
+import dev.patitow.industrymade.init.ModItems
+import dev.patitow.industrymade.init.ModSounds
 import net.fabricmc.api.ModInitializer
 import net.minecraft.resources.Identifier
 import org.slf4j.LoggerFactory
@@ -10,11 +14,14 @@ object IndustryMade : ModInitializer {
 	private val LOGGER = LoggerFactory.getLogger(MOD_ID)
 
 	override fun onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
+		LOGGER.info("Initializing Industry Made...")
 
-		LOGGER.info("Hello Fabric world!")
+		ModSounds.initialize()
+		ModBlocks.initialize()
+		ModBlockEntities.initialize()
+		ModItems.initialize()
+
+		LOGGER.info("Industry Made initialized successfully!")
 	}
 
 	fun id(path: String): Identifier

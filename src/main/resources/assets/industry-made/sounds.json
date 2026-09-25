@@ -1,0 +1,16 @@
+{
+  "bellows_blow": {
+    "subtitle": "subtitles.industry-made.bellows_blow",
+    "sounds": [
+      "minecraft:item/brush/brushing_generic1",
+      "minecraft:item/brush/brushing_generic2"
+    ]
+  },
+  "bellows_pump": {
+    "subtitle": "subtitles.industry-made.bellows_pump",
+    "sounds": [
+      "minecraft:item/bundle/drop_contents1",
+      "minecraft:item/bundle/drop_contents2"
+    ]
+  }
+}
