@@ -1,6 +1,8 @@
 {
   "values": [
     "industry-made:refractory_bricks",
-    "industry-made:crucible"
+    "industry-made:crucible",
+    "industry-made:low_pressure_boiler",
+    "industry-made:steam_piston"
   ]
 }

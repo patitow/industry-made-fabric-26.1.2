@@ -59,6 +59,57 @@ object ModItems {
         )
     } as dev.patitow.industrymade.item.HotIngotMoldItem
 
+    val WROUGHT_IRON_INGOT: Item = registerItem("wrought_iron_ingot") { id ->
+        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+    }
+
+    val IRON_PLATE: Item = registerItem("iron_plate") { id ->
+        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+    }
+
+    val BRONZE_SWORD: Item = registerItem("bronze_sword") { id ->
+        Item(
+            Item.Properties()
+                .setId(ResourceKey.create(Registries.ITEM, id))
+                .sword(dev.patitow.industrymade.item.ModToolMaterials.BRONZE, 3.0f, -2.4f)
+        )
+    }
+
+    val BRONZE_SHOVEL: Item = registerItem("bronze_shovel") { id ->
+        net.minecraft.world.item.ShovelItem(
+            dev.patitow.industrymade.item.ModToolMaterials.BRONZE,
+            1.5f,
+            -3.0f,
+            Item.Properties().setId(ResourceKey.create(Registries.ITEM, id))
+        )
+    }
+
+    val BRONZE_PICKAXE: Item = registerItem("bronze_pickaxe") { id ->
+        Item(
+            Item.Properties()
+                .setId(ResourceKey.create(Registries.ITEM, id))
+                .pickaxe(dev.patitow.industrymade.item.ModToolMaterials.BRONZE, 1.0f, -2.8f)
+        )
+    }
+
+    val BRONZE_AXE: Item = registerItem("bronze_axe") { id ->
+        net.minecraft.world.item.AxeItem(
+            dev.patitow.industrymade.item.ModToolMaterials.BRONZE,
+            6.0f,
+            -3.1f,
+            Item.Properties().setId(ResourceKey.create(Registries.ITEM, id))
+        )
+    }
+
+    val BRONZE_HOE: Item = registerItem("bronze_hoe") { id ->
+        net.minecraft.world.item.HoeItem(
+            dev.patitow.industrymade.item.ModToolMaterials.BRONZE,
+            0.0f,
+            -1.0f,
+            Item.Properties().setId(ResourceKey.create(Registries.ITEM, id))
+        )
+    }
+
     val INDUSTRY_MADE_TAB_KEY: ResourceKey<CreativeModeTab> =
         ResourceKey.create(Registries.CREATIVE_MODE_TAB, IndustryMade.id("industry_made_tab"))
 
@@ -80,11 +131,19 @@ object ModItems {
                 output.accept(BRONZE_PLATE)
                 output.accept(BRONZE_ROD)
                 output.accept(BRONZE_GEAR)
+                output.accept(WROUGHT_IRON_INGOT)
+                output.accept(IRON_PLATE)
+                output.accept(BRONZE_SWORD)
+                output.accept(BRONZE_SHOVEL)
+                output.accept(BRONZE_PICKAXE)
+                output.accept(BRONZE_AXE)
+                output.accept(BRONZE_HOE)
                 output.accept(CLAY_MOLD)
                 output.accept(CERAMIC_MOLD)
                 output.accept(HOT_INGOT_MOLD)
                 output.accept(ModBlocks.LOW_PRESSURE_BOILER)
                 output.accept(ModBlocks.STEAM_PISTON)
+                output.accept(ModBlocks.MECHANICAL_HAMMER)
             }
             .build()
     )

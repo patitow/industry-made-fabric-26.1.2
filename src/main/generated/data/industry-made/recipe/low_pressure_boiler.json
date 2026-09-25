@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": "industry-made:refractory_bricks",
+    "P": "industry-made:bronze_plate"
+  },
+  "pattern": [
+    "PPP",
+    "P P",
+    "BBB"
+  ],
+  "result": {
+    "id": "industry-made:low_pressure_boiler"
+  }
+}

@@ -33,6 +33,12 @@ class LowPressureBoilerBlockEntity(pos: BlockPos, state: BlockState) :
         const val MAX_WATER: Int = 4000 // 4 buckets (4000 mB)
         const val MAX_PRESSURE: Double = 8.0 // 8.0 bar max before heavy relief
         const val RELIEF_THRESHOLD: Double = 6.0 // Safety valve triggers at 6.0 bar
+
+        fun createTicker(): BlockEntityTicker<LowPressureBoilerBlockEntity> {
+            return BlockEntityTicker { level, pos, state, blockEntity ->
+                blockEntity.tick(level, pos, state)
+            }
+        }
     }
 
     var waterAmount: Int = 0
@@ -221,13 +227,5 @@ class LowPressureBoilerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getUpdatePacket(): Packet<ClientGamePacketListener>? {
         return ClientboundBlockEntityDataPacket.create(this)
-    }
-
-    companion object {
-        fun createTicker(): BlockEntityTicker<LowPressureBoilerBlockEntity> {
-            return BlockEntityTicker { level, pos, state, blockEntity ->
-                blockEntity.tick(level, pos, state)
-            }
-        }
     }
 }

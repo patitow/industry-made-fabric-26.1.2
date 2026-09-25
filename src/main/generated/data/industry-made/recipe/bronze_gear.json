@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "industry-made:bronze_plate",
+    "R": "industry-made:bronze_rod"
+  },
+  "pattern": [
+    " P ",
+    "PRP",
+    " P "
+  ],
+  "result": {
+    "id": "industry-made:bronze_gear"
+  }
+}

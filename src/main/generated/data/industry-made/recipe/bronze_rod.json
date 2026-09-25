@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": "industry-made:bronze_ingot"
+  },
+  "pattern": [
+    "B",
+    "B"
+  ],
+  "result": {
+    "count": 4,
+    "id": "industry-made:bronze_rod"
+  }
+}

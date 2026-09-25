@@ -13,6 +13,7 @@ object ModSounds {
     val STEAM_WHISTLE: SoundEvent = register("steam_whistle")
     val VALVE_CLICK: SoundEvent = register("valve_click")
     val PISTON_CHUG: SoundEvent = register("piston_chug")
+    val HAMMER_SLAM: SoundEvent = register("hammer_slam")
 
     private fun register(name: String): SoundEvent {
         val id = IndustryMade.id(name)

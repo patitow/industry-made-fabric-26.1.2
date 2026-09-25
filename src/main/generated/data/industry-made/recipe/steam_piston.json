@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "G": "industry-made:bronze_gear",
+    "P": "industry-made:bronze_plate",
+    "R": "industry-made:bronze_rod"
+  },
+  "pattern": [
+    " G ",
+    " P ",
+    " R "
+  ],
+  "result": {
+    "id": "industry-made:steam_piston"
+  }
+}

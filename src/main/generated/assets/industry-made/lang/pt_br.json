@@ -1,8 +1,13 @@
 {
   "block.industry-made.bellows": "Fole Manual",
   "block.industry-made.crucible": "Cadinho de Fundição",
+  "block.industry-made.low_pressure_boiler": "Caldeira a Vapor de Baixa Pressão",
   "block.industry-made.refractory_bricks": "Tijolos Refratários",
+  "block.industry-made.steam_piston": "Pistão Mecânico a Vapor",
+  "item.industry-made.bronze_gear": "Engrenagem de Bronze",
   "item.industry-made.bronze_ingot": "Lingote de Bronze",
+  "item.industry-made.bronze_plate": "Placa de Bronze",
+  "item.industry-made.bronze_rod": "Haste de Bronze",
   "item.industry-made.ceramic_mold": "Molde Cerâmico",
   "item.industry-made.clay_mold": "Molde de Argila Cru",
   "item.industry-made.fire_brick": "Tijolo Refratário",
@@ -11,6 +16,7 @@
   "item.industry-made.raw_tin": "Estanho Bruto",
   "item.industry-made.tin_ingot": "Lingote de Estanho",
   "itemGroup.industry-made": "Industry Made",
+  "message.industry-made.boiler_water_full": "A caldeira já está cheia de água.",
   "message.industry-made.crucible_full": "O cadinho está cheio (máx. 4 itens).",
   "message.industry-made.crucible_no_molten": "O cadinho não contém metal fundido para moldar.",
   "metal.industry-made.bronze": "Bronze",
@@ -19,6 +25,10 @@
   "metal.industry-made.tin": "Estanho",
   "subtitles.industry-made.bellows_blow": "Fole soprando",
   "subtitles.industry-made.bellows_pump": "Fole bombeando",
+  "subtitles.industry-made.piston_chug": "Pistão a vapor trabalhando",
+  "subtitles.industry-made.steam_hiss": "Vapor sibilando",
+  "subtitles.industry-made.steam_whistle": "Apito de vapor estridente",
+  "subtitles.industry-made.valve_click": "Válvula estalando",
   "tooltip.industry-made.hot_mold_metal": "Metal Fundido: %s",
   "tooltip.industry-made.hot_mold_quench_hint": "Mergulhe na água ou aguarde resfriar."
 }

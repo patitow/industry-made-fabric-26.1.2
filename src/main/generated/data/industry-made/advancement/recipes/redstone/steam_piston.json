@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bronze_gear": {
+      "conditions": {
+        "items": [
+          {
+            "items": "industry-made:bronze_gear"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "industry-made:steam_piston"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_bronze_gear"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "industry-made:steam_piston"
+    ]
+  }
+}

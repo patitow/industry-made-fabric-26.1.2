@@ -36,5 +36,12 @@
     "sounds": [
       "minecraft:block/piston/extend"
     ]
+  },
+  "hammer_slam": {
+    "subtitle": "subtitles.industry-made.hammer_slam",
+    "sounds": [
+      "minecraft:block/anvil/land",
+      "minecraft:block/anvil/use"
+    ]
   }
 }

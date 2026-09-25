@@ -1,8 +1,13 @@
 {
   "block.industry-made.bellows": "Manual Bellows",
   "block.industry-made.crucible": "Smelting Crucible",
+  "block.industry-made.low_pressure_boiler": "Low Pressure Steam Boiler",
   "block.industry-made.refractory_bricks": "Refractory Bricks",
+  "block.industry-made.steam_piston": "Mechanical Steam Piston",
+  "item.industry-made.bronze_gear": "Bronze Gear",
   "item.industry-made.bronze_ingot": "Bronze Ingot",
+  "item.industry-made.bronze_plate": "Bronze Plate",
+  "item.industry-made.bronze_rod": "Bronze Rod",
   "item.industry-made.ceramic_mold": "Ceramic Ingot Mold",
   "item.industry-made.clay_mold": "Clay Ingot Mold",
   "item.industry-made.fire_brick": "Fire Brick",
@@ -11,6 +16,7 @@
   "item.industry-made.raw_tin": "Raw Tin",
   "item.industry-made.tin_ingot": "Tin Ingot",
   "itemGroup.industry-made": "Industry Made",
+  "message.industry-made.boiler_water_full": "The boiler is already full of water.",
   "message.industry-made.crucible_full": "The crucible is full (max 4 items).",
   "message.industry-made.crucible_no_molten": "The crucible has no molten metal to pour.",
   "metal.industry-made.bronze": "Bronze",
@@ -19,6 +25,10 @@
   "metal.industry-made.tin": "Tin",
   "subtitles.industry-made.bellows_blow": "Bellows blowing",
   "subtitles.industry-made.bellows_pump": "Bellows pumping",
+  "subtitles.industry-made.piston_chug": "Steam piston chugging",
+  "subtitles.industry-made.steam_hiss": "Steam hissing",
+  "subtitles.industry-made.steam_whistle": "Steam whistle blaring",
+  "subtitles.industry-made.valve_click": "Valve clicking",
   "tooltip.industry-made.hot_mold_metal": "Molten Metal: %s",
   "tooltip.industry-made.hot_mold_quench_hint": "Dip into water or wait to cool down."
 }

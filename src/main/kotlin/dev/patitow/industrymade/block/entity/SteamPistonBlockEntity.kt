@@ -100,9 +100,9 @@ class SteamPistonBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     fun getInterpolatedStroke(partialTicks: Float): Float {
-        val current = Mth.lerp(partialTicks, prevAnimTicks.toFloat(), animTicks.toFloat())
-        // Smooth sine wave from 0.0 to 1.0
-        return (Mth.sin(current / CYCLE_TICKS.toFloat() * (Math.PI * 2).toFloat()) + 1.0f) * 0.5f
+        val current = prevAnimTicks.toFloat() + (animTicks - prevAnimTicks).toFloat() * partialTicks
+        val angle = (current / CYCLE_TICKS.toFloat()) * (Math.PI.toFloat() * 2.0f)
+        return (kotlin.math.sin(angle) + 1.0f) * 0.5f
     }
 
     override fun saveAdditional(output: ValueOutput) {

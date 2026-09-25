@@ -79,6 +79,17 @@ object ModBlocks {
         )
     }
 
+    val MECHANICAL_HAMMER: dev.patitow.industrymade.block.MechanicalHammerBlock = registerBlock("mechanical_hammer") { id ->
+        dev.patitow.industrymade.block.MechanicalHammerBlock(
+            BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id))
+                .strength(3.0f, 6.0f)
+                .sound(SoundType.ANVIL)
+                .noOcclusion()
+                .requiresCorrectToolForDrops()
+        )
+    }
+
     private fun <T : Block> registerBlock(name: String, blockFactory: (net.minecraft.resources.Identifier) -> T): T {
         val id = IndustryMade.id(name)
         val block = blockFactory(id)
