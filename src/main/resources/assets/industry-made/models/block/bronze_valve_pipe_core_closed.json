@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
-    "particle": "industry-made:block/bronze_steam_pipe",
-    "pipe": "industry-made:block/bronze_steam_pipe",
+    "particle": "industry-made:block/bronze_pipe",
+    "pipe": "industry-made:block/bronze_pipe",
     "wheel": "industry-made:block/bronze_valve_wheel"
   },
   "elements": [

@@ -1,5 +1,5 @@
 {
-  "parent": "block/block",
+  "parent": "minecraft:block/block",
   "textures": {
     "particle": "industry-made:block/bronze_pipe",
     "pipe": "industry-made:block/bronze_pipe",
@@ -77,70 +77,122 @@
       }
     },
     {
-      "name": "gauge_stem",
+      "name": "hex_fitting",
       "from": [
-        7.0,
+        6.2,
         11.0,
-        7.0
+        6.2
       ],
       "to": [
-        9.0,
-        12.5,
-        9.0
+        9.8,
+        12.0,
+        9.8
       ],
       "shade": true,
       "faces": {
         "north": {
           "uv": [
-            7.0,
-            3.5,
-            9.0,
+            6.2,
+            4.0,
+            9.8,
             5.0
           ],
           "texture": "#pipe"
         },
         "south": {
           "uv": [
-            7.0,
-            3.5,
-            9.0,
+            6.2,
+            4.0,
+            9.8,
             5.0
           ],
           "texture": "#pipe"
         },
         "west": {
           "uv": [
-            7.0,
-            3.5,
-            9.0,
+            6.2,
+            4.0,
+            9.8,
             5.0
           ],
           "texture": "#pipe"
         },
         "east": {
           "uv": [
-            7.0,
-            3.5,
-            9.0,
+            6.2,
+            4.0,
+            9.8,
             5.0
           ],
           "texture": "#pipe"
         },
         "up": {
           "uv": [
-            7.0,
-            7.0,
-            9.0,
-            9.0
+            6.2,
+            6.2,
+            9.8,
+            9.8
           ],
           "texture": "#pipe"
         },
         "down": {
           "uv": [
-            7.0,
-            7.0,
-            9.0,
-            9.0
+            6.2,
+            6.2,
+            9.8,
+            9.8
+          ],
+          "texture": "#pipe"
+        }
+      }
+    },
+    {
+      "name": "gauge_stem",
+      "from": [
+        7.2,
+        12.0,
+        7.2
+      ],
+      "to": [
+        8.8,
+        12.8,
+        8.8
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            7.2,
+            3.2,
+            8.8,
+            4.0
+          ],
+          "texture": "#pipe"
+        },
+        "south": {
+          "uv": [
+            7.2,
+            3.2,
+            8.8,
+            4.0
+          ],
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            7.2,
+            3.2,
+            8.8,
+            4.0
+          ],
+          "texture": "#pipe"
+        },
+        "east": {
+          "uv": [
+            7.2,
+            3.2,
+            8.8,
+            4.0
           ],
           "texture": "#pipe"
         }
@@ -149,14 +201,328 @@
     {
       "name": "gauge_casing",
       "from": [
-        5.0,
-        11.5,
-        6.5
+        5.5,
+        12.8,
+        6.8
       ],
       "to": [
-        11.0,
-        16.0,
-        9.5
+        10.5,
+        17.8,
+        8.6
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            5.5,
+            12.8,
+            10.5,
+            17.8
+          ],
+          "texture": "#pipe"
+        },
+        "south": {
+          "uv": [
+            5.5,
+            12.8,
+            10.5,
+            17.8
+          ],
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            6.8,
+            12.8,
+            8.6,
+            17.8
+          ],
+          "texture": "#pipe"
+        },
+        "east": {
+          "uv": [
+            6.8,
+            12.8,
+            8.6,
+            17.8
+          ],
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            5.5,
+            6.8,
+            10.5,
+            8.6
+          ],
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            5.5,
+            6.8,
+            10.5,
+            8.6
+          ],
+          "texture": "#pipe"
+        }
+      }
+    },
+    {
+      "name": "bezel_top",
+      "from": [
+        6.2,
+        17.2,
+        5.8
+      ],
+      "to": [
+        9.8,
+        17.8,
+        6.8
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            6.2,
+            0.0,
+            9.8,
+            0.6
+          ],
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            6.2,
+            5.8,
+            9.8,
+            6.8
+          ],
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            6.2,
+            5.8,
+            9.8,
+            6.8
+          ],
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            5.8,
+            0.0,
+            6.8,
+            0.6
+          ],
+          "texture": "#pipe"
+        },
+        "east": {
+          "uv": [
+            5.8,
+            0.0,
+            6.8,
+            0.6
+          ],
+          "texture": "#pipe"
+        }
+      }
+    },
+    {
+      "name": "bezel_bottom",
+      "from": [
+        6.2,
+        12.8,
+        5.8
+      ],
+      "to": [
+        9.8,
+        13.4,
+        6.8
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            6.2,
+            4.4,
+            9.8,
+            5.0
+          ],
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            6.2,
+            5.8,
+            9.8,
+            6.8
+          ],
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            6.2,
+            5.8,
+            9.8,
+            6.8
+          ],
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            5.8,
+            4.4,
+            6.8,
+            5.0
+          ],
+          "texture": "#pipe"
+        },
+        "east": {
+          "uv": [
+            5.8,
+            4.4,
+            6.8,
+            5.0
+          ],
+          "texture": "#pipe"
+        }
+      }
+    },
+    {
+      "name": "bezel_west",
+      "from": [
+        5.5,
+        13.4,
+        5.8
+      ],
+      "to": [
+        6.1,
+        17.2,
+        6.8
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.6,
+            0.6,
+            4.4
+          ],
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            5.8,
+            0.6,
+            6.8,
+            4.4
+          ],
+          "texture": "#pipe"
+        },
+        "east": {
+          "uv": [
+            5.8,
+            0.6,
+            6.8,
+            4.4
+          ],
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            5.5,
+            5.8,
+            6.1,
+            6.8
+          ],
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            5.5,
+            5.8,
+            6.1,
+            6.8
+          ],
+          "texture": "#pipe"
+        }
+      }
+    },
+    {
+      "name": "bezel_east",
+      "from": [
+        9.9,
+        13.4,
+        5.8
+      ],
+      "to": [
+        10.5,
+        17.2,
+        6.8
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            4.4,
+            0.6,
+            5.0,
+            4.4
+          ],
+          "texture": "#pipe"
+        },
+        "east": {
+          "uv": [
+            5.8,
+            0.6,
+            6.8,
+            4.4
+          ],
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            5.8,
+            0.6,
+            6.8,
+            4.4
+          ],
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            9.9,
+            5.8,
+            10.5,
+            6.8
+          ],
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            9.9,
+            5.8,
+            10.5,
+            6.8
+          ],
+          "texture": "#pipe"
+        }
+      }
+    },
+    {
+      "name": "dial_face",
+      "from": [
+        6.1,
+        13.4,
+        6.2
+      ],
+      "to": [
+        9.9,
+        17.2,
+        6.6
       ],
       "shade": true,
       "faces": {
@@ -171,46 +537,10 @@
         },
         "south": {
           "uv": [
-            5.0,
-            11.5,
-            11.0,
-            16.0
-          ],
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            6.5,
-            11.5,
-            9.5,
-            16.0
-          ],
-          "texture": "#pipe"
-        },
-        "east": {
-          "uv": [
-            6.5,
-            11.5,
-            9.5,
-            16.0
-          ],
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            5.0,
-            6.5,
-            11.0,
-            9.5
-          ],
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            5.0,
-            6.5,
-            11.0,
-            9.5
+            6.1,
+            13.4,
+            9.9,
+            17.2
           ],
           "texture": "#pipe"
         }
