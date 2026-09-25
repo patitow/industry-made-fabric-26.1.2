@@ -168,3 +168,52 @@ model.export_block_model("src/main/resources/assets/industry-made/models/block/c
 model.export_item_definition("src/main/resources/assets/industry-made/items/crucible.json", "industry-made:block/crucible")
 model.export_blockstate("src/main/resources/assets/industry-made/blockstates/crucible.json", "industry-made:block/crucible")
 ```
+
+---
+
+## 🧩 7. Multi-Material Texture Architecture (Preventing UV Bleed)
+
+### The Anti-Pattern: Mixed Single-Sheet UV Bleed
+When a single 16x16 PNG contains multiple distinct materials (e.g. wood planks, leather folds, iron nozzles, and a pressure gauge packed together), world-space auto-projection (`uv = [x, y, x, y]`) causes severe cross-sampling artifacts:
+- Top wooden boards accidentally display leather folds or metal patches.
+- Corner legs sample pressure gauge needle dials.
+- Elements stretched across the block sample multiple unrelated materials simultaneously.
+
+### The Solution: Modular Material Variables
+Follow the canonical Minecraft Vanilla approach (as seen in `stonecutter`, `grindstone`, `hopper`, `blast_furnace`):
+1. Create separate 16x16 pixel art textures for each distinct material component:
+   - `bellows_wood.png`, `bellows_leather.png`, `bellows_iron.png`
+   - `boiler_bronze.png`, `boiler_iron.png`, `boiler_gauge.png`
+   - `piston_bronze.png`, `piston_iron.png`, `piston_steel.png`
+   - `hammer_frame.png`, `hammer_steel.png`, `hammer_bronze.png`
+2. In the block model JSON, declare each material variable:
+   ```json
+   "textures": {
+     "particle": "industry-made:block/boiler_bronze",
+     "bronze": "industry-made:block/boiler_bronze",
+     "iron": "industry-made:block/boiler_iron",
+     "gauge": "industry-made:block/boiler_gauge"
+   }
+   ```
+3. Assign each element strictly to its respective material variable (`texture: "#wood"`, `texture: "#leather"`).
+4. For featured elements like the pressure gauge, define explicit UV coordinates `[0, 0, 16, 16]` on the front face so the complete dial fills the element without distortion.
+
+---
+
+## 🎨 8. 3D Inspection Workflow: Blockbench & Blender
+
+### Option A: Blockbench (Native Minecraft JSON)
+Blockbench directly opens Minecraft Java block model JSON files:
+1. File ➔ Open Model (`Ctrl + O`).
+2. Select any model in `src/main/resources/assets/industry-made/models/block/`.
+3. View the model in real-time 3D with all elements, UVs, and isometric transforms intact.
+
+### Option B: Blender (Multi-Material OBJ Export)
+Run the converter script:
+```powershell
+python .agents/skills/minecraft-3d-model-and-texture-generator/scripts/export_to_obj.py
+```
+This generates `.obj` and `.mtl` files inside `blender_export/`. In Blender:
+1. File ➔ Import ➔ Wavefront (.obj).
+2. Select the exported `.obj` file.
+3. Switch 3D Viewport shading to **Material Preview** (`Z` ➔ Material Preview) to see all component textures applied.

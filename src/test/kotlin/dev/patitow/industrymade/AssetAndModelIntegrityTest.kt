@@ -136,6 +136,32 @@ class AssetAndModelIntegrityTest {
     }
 
     @Test
+    @DisplayName("Verify every texture variable referenced across all 3D models resolves to an existing PNG file")
+    fun testModelTextureVariablesResolve() {
+        val modelsDir = File(assetsDir, "models/block")
+        val texDir = File(assetsDir, "textures/block")
+
+        for (machine in expectedMachines) {
+            val modelFile = File(modelsDir, "$machine.json")
+            val content = modelFile.readText()
+
+            // Find all "industry-made:block/<name>"
+            val matches = Regex(""""industry-made:block/([^"]+)"""").findAll(content)
+            val referencedTextures = matches.map { it.groupValues[1] }.toSet()
+            assertTrue(referencedTextures.isNotEmpty(), "Model $machine must reference at least one texture")
+
+            for (texName in referencedTextures) {
+                val texFile = File(texDir, "$texName.png")
+                assertTrue(
+                    texFile.exists(),
+                    "Model $machine references missing texture '$texName.png' at ${texFile.path}"
+                )
+                assertTrue(texFile.length() > 0, "Texture $texName.png must not be empty")
+            }
+        }
+    }
+
+    @Test
     @DisplayName("Verify dual localization (en_us and pt_br) has zero unlocalized machine keys")
     fun testLocalizationCompleteness() {
         val enFile = File(generatedAssetsDir, "lang/en_us.json")
