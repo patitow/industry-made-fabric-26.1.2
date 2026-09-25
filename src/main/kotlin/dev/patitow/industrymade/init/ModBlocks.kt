@@ -25,6 +25,35 @@ object ModBlocks {
         )
     }
 
+    val TIN_ORE: Block = registerBlock("tin_ore") { id ->
+        Block(
+            BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id))
+                .strength(3.0f, 3.0f)
+                .sound(SoundType.STONE)
+                .requiresCorrectToolForDrops()
+        )
+    }
+
+    val DEEPSLATE_TIN_ORE: Block = registerBlock("deepslate_tin_ore") { id ->
+        Block(
+            BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id))
+                .strength(4.5f, 3.0f)
+                .sound(SoundType.DEEPSLATE)
+                .requiresCorrectToolForDrops()
+        )
+    }
+
+    val FIRE_CLAY_BLOCK: Block = registerBlock("fire_clay_block") { id ->
+        Block(
+            BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(Registries.BLOCK, id))
+                .strength(0.6f)
+                .sound(SoundType.GRAVEL)
+        )
+    }
+
     val BELLOWS: BellowsBlock = registerBlock("bellows") { id ->
         BellowsBlock(
             BlockBehaviour.Properties.of()

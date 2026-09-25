@@ -47,6 +47,9 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
     class ModModelProvider(output: FabricPackOutput) : FabricModelProvider(output) {
         override fun generateBlockStateModels(blockModelGenerators: BlockModelGenerators) {
             blockModelGenerators.createTrivialCube(ModBlocks.REFRACTORY_BRICKS)
+            blockModelGenerators.createTrivialCube(ModBlocks.TIN_ORE)
+            blockModelGenerators.createTrivialCube(ModBlocks.DEEPSLATE_TIN_ORE)
+            blockModelGenerators.createTrivialCube(ModBlocks.FIRE_CLAY_BLOCK)
         }
 
         override fun generateItemModels(itemModelGenerators: ItemModelGenerators) {
@@ -194,6 +197,62 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
                         100
                     ).unlockedBy("has_raw_tin", has(ModItems.RAW_TIN))
                         .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("tin_ingot_from_blasting")))
+
+                    // Fire Clay Block (2x2 Fire Clay)
+                    shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.FIRE_CLAY_BLOCK, 1)
+                        .define('C', ModItems.FIRE_CLAY)
+                        .pattern("CC")
+                        .pattern("CC")
+                        .unlockedBy("has_fire_clay", has(ModItems.FIRE_CLAY))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("fire_clay_block")))
+
+                    // Fire Clay from Fire Clay Block
+                    shapeless(RecipeCategory.MISC, ModItems.FIRE_CLAY, 4)
+                        .requires(ModBlocks.FIRE_CLAY_BLOCK)
+                        .unlockedBy("has_fire_clay_block", has(ModBlocks.FIRE_CLAY_BLOCK))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("fire_clay_from_block")))
+
+                    // Tin Ingot from Tin Ore
+                    SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(ModBlocks.TIN_ORE),
+                        RecipeCategory.MISC,
+                        CookingBookCategory.MISC,
+                        ModItems.TIN_INGOT,
+                        0.7f,
+                        200
+                    ).unlockedBy("has_tin_ore", has(ModBlocks.TIN_ORE))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("tin_ingot_from_tin_ore_smelting")))
+
+                    SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(ModBlocks.TIN_ORE),
+                        RecipeCategory.MISC,
+                        CookingBookCategory.MISC,
+                        ModItems.TIN_INGOT,
+                        0.7f,
+                        100
+                    ).unlockedBy("has_tin_ore", has(ModBlocks.TIN_ORE))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("tin_ingot_from_tin_ore_blasting")))
+
+                    // Tin Ingot from Deepslate Tin Ore
+                    SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(ModBlocks.DEEPSLATE_TIN_ORE),
+                        RecipeCategory.MISC,
+                        CookingBookCategory.MISC,
+                        ModItems.TIN_INGOT,
+                        0.7f,
+                        200
+                    ).unlockedBy("has_deepslate_tin_ore", has(ModBlocks.DEEPSLATE_TIN_ORE))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("tin_ingot_from_deepslate_tin_ore_smelting")))
+
+                    SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(ModBlocks.DEEPSLATE_TIN_ORE),
+                        RecipeCategory.MISC,
+                        CookingBookCategory.MISC,
+                        ModItems.TIN_INGOT,
+                        0.7f,
+                        100
+                    ).unlockedBy("has_deepslate_tin_ore", has(ModBlocks.DEEPSLATE_TIN_ORE))
+                        .save(output, ResourceKey.create(Registries.RECIPE, IndustryMade.id("tin_ingot_from_deepslate_tin_ore_blasting")))
 
                     // 9. Bronze Plate (2 Bronze Ingots horizontal)
                     shaped(RecipeCategory.MISC, ModItems.BRONZE_PLATE, 2)
@@ -356,6 +415,9 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             dropSelf(ModBlocks.BRONZE_STEAM_PIPE)
             dropSelf(ModBlocks.BRONZE_VALVE_PIPE)
             dropSelf(ModBlocks.BRONZE_GAUGE_PIPE)
+            add(ModBlocks.TIN_ORE, createOreDrop(ModBlocks.TIN_ORE, ModItems.RAW_TIN))
+            add(ModBlocks.DEEPSLATE_TIN_ORE, createOreDrop(ModBlocks.DEEPSLATE_TIN_ORE, ModItems.RAW_TIN))
+            add(ModBlocks.FIRE_CLAY_BLOCK, createSingleItemTableWithSilkTouch(ModBlocks.FIRE_CLAY_BLOCK, ModItems.FIRE_CLAY, net.minecraft.world.level.storage.loot.providers.number.ConstantValue.exactly(4.0f)))
         }
     }
 
@@ -373,6 +435,8 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
                 .add(ModBlocks.BRONZE_STEAM_PIPE)
                 .add(ModBlocks.BRONZE_VALVE_PIPE)
                 .add(ModBlocks.BRONZE_GAUGE_PIPE)
+                .add(ModBlocks.TIN_ORE)
+                .add(ModBlocks.DEEPSLATE_TIN_ORE)
             valueLookupBuilder(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.REFRACTORY_BRICKS)
                 .add(ModBlocks.CRUCIBLE)
@@ -382,8 +446,12 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
                 .add(ModBlocks.BRONZE_STEAM_PIPE)
                 .add(ModBlocks.BRONZE_VALVE_PIPE)
                 .add(ModBlocks.BRONZE_GAUGE_PIPE)
+                .add(ModBlocks.TIN_ORE)
+                .add(ModBlocks.DEEPSLATE_TIN_ORE)
             valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE)
                 .add(ModBlocks.BELLOWS)
+            valueLookupBuilder(BlockTags.MINEABLE_WITH_SHOVEL)
+                .add(ModBlocks.FIRE_CLAY_BLOCK)
         }
     }
 
@@ -411,6 +479,12 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add(ModItems.FIRE_BRICK, "Fire Brick")
             translationBuilder.add(ModBlocks.REFRACTORY_BRICKS, "Refractory Bricks")
             translationBuilder.add("item.industry-made.refractory_bricks", "Refractory Bricks")
+            translationBuilder.add(ModBlocks.TIN_ORE, "Tin Ore")
+            translationBuilder.add("item.industry-made.tin_ore", "Tin Ore")
+            translationBuilder.add(ModBlocks.DEEPSLATE_TIN_ORE, "Deepslate Tin Ore")
+            translationBuilder.add("item.industry-made.deepslate_tin_ore", "Deepslate Tin Ore")
+            translationBuilder.add(ModBlocks.FIRE_CLAY_BLOCK, "Fire Clay Block")
+            translationBuilder.add("item.industry-made.fire_clay_block", "Fire Clay Block")
             translationBuilder.add(ModBlocks.BELLOWS, "Manual Bellows")
             translationBuilder.add("item.industry-made.bellows", "Manual Bellows")
             translationBuilder.add(ModBlocks.CRUCIBLE, "Smelting Crucible")
@@ -473,6 +547,9 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add("tooltip.industry-made.bronze_hoe", "Durable bronze agricultural tool.")
 
             translationBuilder.add("tooltip.industry-made.refractory_bricks", "Combustion chamber insulation. Adds +50°C per brick surrounding fire.")
+            translationBuilder.add("tooltip.industry-made.tin_ore", "Natural cassiterite mineral deposit found embedded in underground stone.")
+            translationBuilder.add("tooltip.industry-made.deepslate_tin_ore", "Dense cassiterite vein embedded deep in subterranean deepslate.")
+            translationBuilder.add("tooltip.industry-made.fire_clay_block", "Natural refractory sediment found in riverbeds and swamps. Rich in alumina and silica.")
             translationBuilder.add("tooltip.industry-made.bellows", "Manual draft pump. Injects oxygen blasts into crucibles and boilers.")
             translationBuilder.add("tooltip.industry-made.crucible", "Melts raw ores and alloys metals when placed over a heat source.")
             translationBuilder.add("tooltip.industry-made.low_pressure_boiler", "Boils water into pressurized steam (up to 6.0 bar) using fuel.")
@@ -501,6 +578,12 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add(ModItems.FIRE_BRICK, "Tijolo Refratário")
             translationBuilder.add(ModBlocks.REFRACTORY_BRICKS, "Tijolos Refratários")
             translationBuilder.add("item.industry-made.refractory_bricks", "Tijolos Refratários")
+            translationBuilder.add(ModBlocks.TIN_ORE, "Minério de Estanho")
+            translationBuilder.add("item.industry-made.tin_ore", "Minério de Estanho")
+            translationBuilder.add(ModBlocks.DEEPSLATE_TIN_ORE, "Minério de Estanho em Ardósia")
+            translationBuilder.add("item.industry-made.deepslate_tin_ore", "Minério de Estanho em Ardósia")
+            translationBuilder.add(ModBlocks.FIRE_CLAY_BLOCK, "Bloco de Argila Refratária")
+            translationBuilder.add("item.industry-made.fire_clay_block", "Bloco de Argila Refratária")
             translationBuilder.add(ModBlocks.BELLOWS, "Fole Manual")
             translationBuilder.add("item.industry-made.bellows", "Fole Manual")
             translationBuilder.add(ModBlocks.CRUCIBLE, "Cadinho de Fundição")
@@ -563,6 +646,9 @@ object IndustryMadeDataGenerator : DataGeneratorEntrypoint {
             translationBuilder.add("tooltip.industry-made.bronze_hoe", "Enxada durável de bronze para plantio e cultivo.")
 
             translationBuilder.add("tooltip.industry-made.refractory_bricks", "Isolação térmica. Adiciona +50°C por bloco ao redor da fornalha.")
+            translationBuilder.add("tooltip.industry-made.tin_ore", "Depósito natural de cassiterita encontrado incrustado em rochas subterrâneas.")
+            translationBuilder.add("tooltip.industry-made.deepslate_tin_ore", "Veio denso de cassiterita incrustado nas profundezas da ardósia.")
+            translationBuilder.add("tooltip.industry-made.fire_clay_block", "Sedimento refratário natural encontrado em leitos de rios e pântanos. Rico em alumina e sílica.")
             translationBuilder.add("tooltip.industry-made.bellows", "Injeção forçada de ar. Aumenta instantaneamente a temperatura em +500°C.")
             translationBuilder.add("tooltip.industry-made.crucible", "Funde minérios brutos e ligas metálicas sobre fontes de calor.")
             translationBuilder.add("tooltip.industry-made.low_pressure_boiler", "Ferve água gerando vapor sob pressão (até 6.0 bar) usando combustível.")

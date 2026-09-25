@@ -121,10 +121,11 @@ object ModItems {
             .icon { ItemStack(ModBlocks.REFRACTORY_BRICKS) }
             .displayItems { _, output ->
                 output.accept(FIRE_CLAY)
+                output.accept(ModBlocks.FIRE_CLAY_BLOCK)
                 output.accept(FIRE_BRICK)
                 output.accept(ModBlocks.REFRACTORY_BRICKS)
-                output.accept(ModBlocks.BELLOWS)
-                output.accept(ModBlocks.CRUCIBLE)
+                output.accept(ModBlocks.TIN_ORE)
+                output.accept(ModBlocks.DEEPSLATE_TIN_ORE)
                 output.accept(RAW_TIN)
                 output.accept(TIN_INGOT)
                 output.accept(BRONZE_INGOT)
@@ -141,6 +142,8 @@ object ModItems {
                 output.accept(CLAY_MOLD)
                 output.accept(CERAMIC_MOLD)
                 output.accept(HOT_INGOT_MOLD)
+                output.accept(ModBlocks.BELLOWS)
+                output.accept(ModBlocks.CRUCIBLE)
                 output.accept(ModBlocks.LOW_PRESSURE_BOILER)
                 output.accept(ModBlocks.BRONZE_STEAM_PIPE)
                 output.accept(ModBlocks.BRONZE_VALVE_PIPE)

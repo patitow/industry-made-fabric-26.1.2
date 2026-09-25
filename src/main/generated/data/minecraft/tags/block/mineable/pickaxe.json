@@ -7,6 +7,8 @@
     "industry-made:mechanical_hammer",
     "industry-made:bronze_steam_pipe",
     "industry-made:bronze_valve_pipe",
-    "industry-made:bronze_gauge_pipe"
+    "industry-made:bronze_gauge_pipe",
+    "industry-made:tin_ore",
+    "industry-made:deepslate_tin_ore"
   ]
 }

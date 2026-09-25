@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "industry-made:fire_clay_block"
+  ],
+  "result": {
+    "count": 4,
+    "id": "industry-made:fire_clay"
+  }
+}

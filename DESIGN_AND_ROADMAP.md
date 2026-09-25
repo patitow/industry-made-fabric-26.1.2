@@ -138,9 +138,11 @@ dev.patitow.industrymade/
 O slice vertical da **Era 1** está implementado, funcional e testado in-game:
 
 - [x] **Itens & Blocos Fundamentais:** `fire_clay`, `fire_brick`, `refractory_bricks`.
+- [x] **Geração Natural de Recursos (WorldGen):** Minério de Estanho (`tin_ore` em pedra e `deepslate_tin_ore` em ardósia) com distribuição trapezoidal (Y=-16 a Y=112) e depósitos naturais de Argila Refratária (`fire_clay_block`) em leitos de rios e pântanos via `BiomeModifications`.
 - [x] **Fole Manual (`bellows`):** Modelo 3D com texturas modulares (madeira, couro, bico de ferro), orientação horizontal em 4 direções, injeção física de oxigênio (`OxygenReceiver`), áudio e partículas.
 - [x] **Cadinho de Fundição (`crucible`):** Modelo 3D vazado, aquecimento gradativo por forja inferior (com bônus de isolamento térmico e fole), fusão de cobre e estanho em bronze líquido, molde cerâmico e têmpera (*quench*) em água e caldeirão.
 - [x] **Caldeira a Vapor (`low_pressure_boiler`):** Gerenciamento térmico, aquecimento por fogueira/lava, geração de vapor, válvula de segurança sonora/visual contra sobrepressão (sem crateras), reabastecimento com baldes de água com feedback instantâneo e partículas.
+- [x] **Tubulações Industriais & Telemetria:** `bronze_steam_pipe` com malha dinâmica, `bronze_valve_pipe` com volante octogonal 3D e corte estanque de fluxo, `bronze_gauge_pipe` com mostrador Bourdon 3D e 4 níveis de pressão (`p0` a `p3`).
 - [x] **Pistão a Vapor (`steam_piston`):** Conversão de vapor sob pressão em força mecânica/cinética para blocos adjacentes.
 - [x] **Martelo Forjador Mecânico (`mechanical_hammer`):** Modelo 3D com bigorna, batimento cíclico automatizado, forja de chapas de metal, purificação de ferro em ferro forjado e britagem mecânica para duplicação de minérios brutos.
 - [x] **Qualidade & Ferramentas:** Suíte de testes automatizados JUnit 5 (validação de JSONs, UVs de texturas, power-of-two, tags e termodinâmica), integração nativa com JEI, modelos 3D exportáveis para Blender (`.obj`/`.mtl`), e padronização por skills de desenvolvimento.
@@ -149,22 +151,27 @@ O slice vertical da **Era 1** está implementado, funcional e testado in-game:
 
 ## 5. Próximos Passos Mapeados (Roadmap Imediato)
 
-### 5.1 Refinamento de Feedbacks, HUD & Animações (UX & Game Feel)
-1. **Manômetro & Indicadores no Modelo:**
-   - Exibição de nível de água e pressão em tempo real diretamente na carcaça do bloco.
-   - Suporte a tooltip de HUD (Jade / Wthit) para inspecionar água, temperatura e pressão apenas apontando a mira para a máquina.
-2. **Animações Cinéticas Suaves (`partialTicks`):**
-   - Transição suave na descida da cabeça do martelo forjador mecânico e avanço suave da haste do pistão a vapor sem saltos visuais.
-3. **Interfaces / GUIs Rústicas Opcionais:**
-   - GUI simples, leve e temática em estilo rústico para quem preferir visualizar internamente a composição do cadinho ou o reservatório da caldeira.
+### 5.1 Filosofia de Crafting no Mundo Real & Montagem Física
+- **Fim do "Crafting Table Mágico":** Em vez de construir máquinas complexas inteiras instantaneamente numa mesa 3x3 de madeira, as máquinas exigem subcomponentes usinados/forjados previamente nas próprias máquinas da Era:
+  - **Lâmina de Serra Temperada (`saw_blade`):** Requer forjar uma chapa de bronze ou ferro sob o Martelo Forjador Mecânico para estampar os dentes da serra.
+  - **Rebites de Caldeira (`bronze_rivets`):** Chapas unidas sob impacto mecânico em vez de coladas magicamente.
+  - **Haste de Transmissão / Biela (`crankshaft` / `connecting_rod`):** Transforma o empuxo linear do pistão a vapor em movimento rotativo contínuo.
 
-### 5.2 Expansão da Linha a Vapor (Era 1 Final)
-1. **Tubulações de Vapor de Bronze (`bronze_steam_pipe`):**
-   - Conexão de caldeiras a múltiplas máquinas à distância (removendo a limitação de blocos colados).
-   - Válvulas reguladoras e manômetros em linha.
-2. **Serraria Mecânica a Vapor (`mechanical_sawmill`):**
-   - Corte automatizado de toras de madeira em tábuas com rendimento aumentado e subproduto de serragem.
+### 5.2 Automação Física no Mundo: Calha de Gravidade (`gravity_chute`)
+- **Alimentação Sem GUIs Cinzas:** Uma calha aberta em ângulo que canaliza e despeja itens diretamente no interior do cadinho ou sobre a bigorna do martelo. Permite automação mecânica visível e tátil.
 
-### 5.3 Transição para a Era 2 (O Aço)
+### 5.3 Serraria Mecânica a Vapor (`mechanical_sawmill`)
+- **Inspiração Real:** Bancada de corte com disco de serra circular giratório e carro de deslizamento de toras (*log carriage*).
+- **Mecânica:** Conectada à rede de vapor ($\ge 1.5$ bar). Fatie toras em tábuas com rendimento aumentado (6 tábuas por tora) gerando subproduto de **Serragem** (`sawdust`) para briquetes de queima e compensados.
+
+### 5.4 Refinamento de Feedbacks, HUD & Animações (UX & Game Feel)
+1. **Animações Cinéticas Suaves (`partialTicks`):**
+   - Transição suave na descida da cabeça do martelo forjador mecânico e avanço suave da haste do pistão a vapor sem saltos visuais a 60+ FPS.
+2. **Áudio Posicional Contínuo:**
+   - Loop sonoro de ebulição da água quando a caldeira atinge $T > 100^\circ\text{C}$.
+3. **Integração de HUD (Jade / Wthit):**
+   - Exibição de temperatura, pressão e fluido diretamente na retícula de mira do jogador.
+
+### 5.5 Transição para a Era 2 (O Aço)
 1. **Conversor Bessemer (`bessemer_converter`):**
    - Insuflação contínua de ar sob pressão em ferro fundido para descarbonetação e produção em escala de **Aço Industrial**.

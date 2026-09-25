@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fire_clay": {
+      "conditions": {
+        "items": [
+          {
+            "items": "industry-made:fire_clay"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "industry-made:fire_clay_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fire_clay"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "industry-made:fire_clay_block"
+    ]
+  }
+}

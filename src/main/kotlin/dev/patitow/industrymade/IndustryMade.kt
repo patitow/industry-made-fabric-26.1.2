@@ -22,6 +22,7 @@ object IndustryMade : ModInitializer {
 		ModBlocks.initialize()
 		ModBlockEntities.initialize()
 		ModItems.initialize()
+		dev.patitow.industrymade.world.ModWorldGen.initialize()
 		dev.patitow.industrymade.command.TestLabCommand.register()
 
 		LOGGER.info("Industry Made initialized successfully!")
