@@ -349,5 +349,75 @@ class AssetAndModelIntegrityTest {
         assertTrue(enFile.readText().contains("\"block.industry-made.bronze_gauge_pipe\""))
         assertTrue(ptFile.readText().contains("\"block.industry-made.bronze_gauge_pipe\""))
     }
+
+    @Test
+    @DisplayName("Verify WorldGen assets, ore textures, blockstates, loot tables, and configured/placed features")
+    fun testWorldGenAssetsAndIntegrity() {
+        val texDir = File(assetsDir, "textures/block")
+        val oreTextures = listOf("tin_ore.png", "deepslate_tin_ore.png", "fire_clay_block.png")
+        for (texName in oreTextures) {
+            val f = File(texDir, texName)
+            assertTrue(f.exists(), "Texture $texName must exist at ${f.path}")
+            assertTrue(f.length() > 0, "Texture $texName must not be empty")
+            val img = ImageIO.read(f)
+            assertNotNull(img, "ImageIO must decode $texName")
+            assertEquals(16, img.width, "$texName width must be 16")
+            assertEquals(16, img.height, "$texName height must be 16")
+        }
+
+        // Verify blockstates and item model links generated
+        val blockstatesDir = File(generatedAssetsDir, "blockstates")
+        val itemsDir = File(generatedAssetsDir, "items")
+        val newBlocks = listOf("tin_ore", "deepslate_tin_ore", "fire_clay_block")
+        for (b in newBlocks) {
+            val bsFile = File(blockstatesDir, "$b.json")
+            assertTrue(bsFile.exists(), "Blockstate for $b must exist at ${bsFile.path}")
+            val bsContent = bsFile.readText()
+            assertTrue(bsContent.contains("industry-made:block/$b"), "Blockstate for $b must reference model")
+
+            val itemFile = File(itemsDir, "$b.json")
+            assertTrue(itemFile.exists(), "Item model for $b must exist at ${itemFile.path}")
+            val itemContent = itemFile.readText()
+            assertTrue(itemContent.contains("industry-made:block/$b"), "Item model for $b must reference block model")
+        }
+
+        // Verify loot tables
+        val dataDir = File(rootDir, "src/main/resources/data/industry-made")
+        val generatedDataDir = File(rootDir, "src/main/generated/data/industry-made")
+        val lootDir = File(generatedDataDir, "loot_table/blocks")
+        for (b in newBlocks) {
+            val lootFile = File(lootDir, "$b.json")
+            assertTrue(lootFile.exists(), "Loot table for $b must exist at ${lootFile.path}")
+            val lootContent = lootFile.readText()
+            assertTrue(lootContent.contains("\"entries\""), "Loot table for $b must contain entries")
+        }
+
+        // Verify WorldGen configured and placed feature JSON files
+        val confDir = File(dataDir, "worldgen/configured_feature")
+        val placedDir = File(dataDir, "worldgen/placed_feature")
+        val features = listOf("ore_tin", "ore_fire_clay")
+        for (feat in features) {
+            val confFile = File(confDir, "$feat.json")
+            assertTrue(confFile.exists(), "Configured feature $feat must exist at ${confFile.path}")
+            val confContent = confFile.readText()
+            assertTrue(confContent.contains("\"config\""), "Configured feature $feat must define config")
+
+            val placedFile = File(placedDir, "$feat.json")
+            assertTrue(placedFile.exists(), "Placed feature $feat must exist at ${placedFile.path}")
+            val placedContent = placedFile.readText()
+            assertTrue(placedContent.contains("\"placement\""), "Placed feature $feat must define placement")
+            assertTrue(placedContent.contains("industry-made:$feat"), "Placed feature $feat must reference feature")
+        }
+
+        // Verify translations for new blocks
+        val enFile = File(generatedAssetsDir, "lang/en_us.json")
+        val ptFile = File(generatedAssetsDir, "lang/pt_br.json")
+        for (b in newBlocks) {
+            assertTrue(enFile.readText().contains("\"block.industry-made.$b\""), "en_us missing block $b")
+            assertTrue(enFile.readText().contains("\"tooltip.industry-made.$b\""), "en_us missing tooltip for $b")
+            assertTrue(ptFile.readText().contains("\"block.industry-made.$b\""), "pt_br missing block $b")
+            assertTrue(ptFile.readText().contains("\"tooltip.industry-made.$b\""), "pt_br missing tooltip for $b")
+        }
+    }
 }
 

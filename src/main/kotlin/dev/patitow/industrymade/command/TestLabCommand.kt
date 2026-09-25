@@ -108,6 +108,11 @@ object TestLabCommand {
         level.setBlock(brickPos, ModBlocks.REFRACTORY_BRICKS.defaultBlockState(), 3)
         level.setBlock(bellowsPos, ModBlocks.BELLOWS.defaultBlockState().setValue(BellowsBlock.FACING, Direction.SOUTH), 3)
 
+        // Geological Samples (Left wall)
+        level.setBlock(origin.offset(-4, 0, -1), ModBlocks.TIN_ORE.defaultBlockState(), 3)
+        level.setBlock(origin.offset(-4, 0, 0), ModBlocks.DEEPSLATE_TIN_ORE.defaultBlockState(), 3)
+        level.setBlock(origin.offset(-4, 0, 1), ModBlocks.FIRE_CLAY_BLOCK.defaultBlockState(), 3)
+
         level.setBlock(chest1Pos, Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.NORTH), 3)
         val chest1 = level.getBlockEntity(chest1Pos) as? ChestBlockEntity
         if (chest1 != null) {
@@ -117,6 +122,11 @@ object TestLabCommand {
             chest1.setItem(3, ItemStack(ModItems.FIRE_CLAY, 16))
             chest1.setItem(4, ItemStack(ModItems.FIRE_BRICK, 16))
             chest1.setItem(5, ItemStack(Items.WATER_BUCKET, 1))
+            chest1.setItem(6, ItemStack(ModBlocks.TIN_ORE, 16))
+            chest1.setItem(7, ItemStack(ModBlocks.DEEPSLATE_TIN_ORE, 16))
+            chest1.setItem(8, ItemStack(ModBlocks.FIRE_CLAY_BLOCK, 16))
+            chest1.setItem(9, ItemStack(ModItems.BRONZE_PICKAXE, 1))
+            chest1.setItem(10, ItemStack(ModItems.BRONZE_SHOVEL, 1))
             chest1.setChanged()
         }
 
@@ -270,7 +280,8 @@ object TestLabCommand {
                     §6[Estação 1 - Esquerda] Cadinho & Fole Térmico:§r
                       • Cadinho sobre fogo aceso pronto para fundir minérios.
                       • Fole manual ao lado (clique repetidamente para soprar oxigênio e elevar o calor a 1200°C).
-                      • Baú com Cobre, Estanho e Moldes de Lingote.
+                      • Amostras geológicas de §eMinério de Estanho§r e §eArgila Refratária§r na parede lateral.
+                      • Baú com Cobre, Estanho, Argila Refratária, Moldes e Ferramentas de Bronze.
                     
                     §6[Estação 2 - Centro] Caldeira & Rede de Tubulação:§r
                       • Caldeira de Baixa Pressão pré-abastecida fervendo a 105°C com vapor ativo.
@@ -283,7 +294,7 @@ object TestLabCommand {
                       • Lingote de Bronze já repousando na bigorna para demonstração visual!
                       • Baú de Conformação com lingotes e minérios para dobrar rendimento.
                     
-                    §bDica: Use §f/im kit§b para receber um kit completo no inventário!§r
+                    §bDica: Use §f/im kit§b para receber o kit completo no inventário!§r
                     §6===================================================§r
                     """.trimIndent()
                 )
@@ -315,15 +326,23 @@ object TestLabCommand {
         give(ItemStack(ModBlocks.BRONZE_GAUGE_PIPE, 4))
         give(ItemStack(ModBlocks.STEAM_PISTON, 2))
         give(ItemStack(ModBlocks.MECHANICAL_HAMMER, 2))
+        give(ItemStack(ModBlocks.TIN_ORE, 16))
+        give(ItemStack(ModBlocks.DEEPSLATE_TIN_ORE, 16))
+        give(ItemStack(ModBlocks.FIRE_CLAY_BLOCK, 16))
+        give(ItemStack(ModItems.RAW_TIN, 32))
+        give(ItemStack(ModItems.TIN_INGOT, 32))
+        give(ItemStack(ModItems.FIRE_CLAY, 32))
         give(ItemStack(ModItems.CERAMIC_MOLD, 8))
         give(ItemStack(ModItems.BRONZE_INGOT, 16))
         give(ItemStack(ModItems.WROUGHT_IRON_INGOT, 16))
+        give(ItemStack(ModItems.BRONZE_PICKAXE, 1))
+        give(ItemStack(ModItems.BRONZE_SHOVEL, 1))
         give(ItemStack(Items.WATER_BUCKET, 2))
         give(ItemStack(Items.CAMPFIRE, 4))
 
         source.sendSuccess(
             {
-                Component.literal("§a[Industry Made] Kit completo de engenharia e metalurgia adicionado ao seu inventário!§r")
+                Component.literal("§a[Industry Made] Kit completo de engenharia, mineração e metalurgia adicionado ao seu inventário!§r")
             },
             false
         )
