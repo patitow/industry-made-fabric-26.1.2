@@ -23,17 +23,20 @@ import net.minecraft.world.level.block.LayeredCauldronBlock
 class HotIngotMoldItem(properties: Properties) : Item(properties) {
 
     companion object {
-        const val DEFAULT_COOLING_TICKS = 240 // 12 seconds
+        const val DEFAULT_COOLING_TICKS = 240L // 12 seconds
     }
 
     override fun inventoryTick(itemStack: ItemStack, level: ServerLevel, owner: Entity, slot: net.minecraft.world.entity.EquipmentSlot?) {
         val player = owner as? Player ?: return
 
-        val ticks = itemStack.get(ModDataComponents.COOLING_TICKS) ?: DEFAULT_COOLING_TICKS
-        if (ticks > 0) {
-            itemStack.set(ModDataComponents.COOLING_TICKS, ticks - 1)
-        } else {
-            // Cool down completely
+        var targetTick = itemStack.get(ModDataComponents.COOL_DOWN_AT)
+        if (targetTick == null) {
+            targetTick = level.gameTime + DEFAULT_COOLING_TICKS
+            itemStack.set(ModDataComponents.COOL_DOWN_AT, targetTick)
+            return
+        }
+
+        if (level.gameTime >= targetTick) {
             quenchMold(itemStack, level, player)
         }
     }

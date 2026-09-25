@@ -244,6 +244,10 @@ class CrucibleBlockEntity(pos: BlockPos, state: BlockState) :
         meltProgress = input.getIntOr("MeltProgress", 0)
     }
 
+    override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag {
+        return saveCustomOnly(registries)
+    }
+
     override fun getUpdatePacket(): Packet<ClientGamePacketListener>? {
         return ClientboundBlockEntityDataPacket.create(this)
     }

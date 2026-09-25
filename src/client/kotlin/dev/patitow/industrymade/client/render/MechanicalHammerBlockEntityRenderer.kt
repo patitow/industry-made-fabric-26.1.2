@@ -59,7 +59,7 @@ class MechanicalHammerBlockEntityRenderer(private val context: BlockEntityRender
     ) {
         if (state.hasItem) {
             poseStack.pushPose()
-            poseStack.translate(0.5, 0.44, 0.5)
+            poseStack.translate(0.5, 0.465, 0.5)
 
             when (state.facing) {
                 Direction.NORTH -> poseStack.mulPose(Axis.YP.rotationDegrees(0f))

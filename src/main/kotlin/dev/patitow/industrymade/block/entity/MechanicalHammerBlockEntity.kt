@@ -7,8 +7,10 @@ import dev.patitow.industrymade.init.ModSounds
 import dev.patitow.industrymade.thermal.SteamProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
@@ -239,6 +241,10 @@ class MechanicalHammerBlockEntity(pos: BlockPos, state: BlockState) :
         strikes = input.getIntOr("Strikes", 0)
         animTicks = input.getIntOr("AnimTicks", 0)
         active = input.getBooleanOr("Active", false)
+    }
+
+    override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag {
+        return saveCustomOnly(registries)
     }
 
     override fun getUpdatePacket(): Packet<ClientGamePacketListener>? {

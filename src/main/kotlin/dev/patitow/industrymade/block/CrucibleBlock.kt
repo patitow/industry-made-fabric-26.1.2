@@ -47,6 +47,9 @@ class CrucibleBlock(properties: Properties) : BaseEntityBlock(properties) {
         private val WEST_WALL: VoxelShape = box(2.0, 3.0, 4.0, 4.0, 14.0, 12.0)
         private val EAST_WALL: VoxelShape = box(12.0, 3.0, 4.0, 14.0, 14.0, 12.0)
         val SHAPE: VoxelShape = Shapes.or(BOTTOM, NORTH_WALL, SOUTH_WALL, WEST_WALL, EAST_WALL)
+
+        private val COLLISION_BOTTOM: VoxelShape = box(0.0, 0.0, 0.0, 16.0, 4.0, 16.0)
+        val COLLISION_SHAPE: VoxelShape = Shapes.or(COLLISION_BOTTOM, NORTH_WALL, SOUTH_WALL, WEST_WALL, EAST_WALL)
     }
 
     init {
@@ -61,6 +64,10 @@ class CrucibleBlock(properties: Properties) : BaseEntityBlock(properties) {
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
         return SHAPE
+    }
+
+    override fun getCollisionShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
+        return COLLISION_SHAPE
     }
 
     override fun getRenderShape(state: BlockState): RenderShape {
@@ -95,7 +102,7 @@ class CrucibleBlock(properties: Properties) : BaseEntityBlock(properties) {
 
                     val hotMold = ItemStack(ModItems.HOT_INGOT_MOLD, 1)
                     hotMold.set(ModDataComponents.MOLTEN_METAL, metalId)
-                    hotMold.set(ModDataComponents.COOLING_TICKS, HotIngotMoldItem.DEFAULT_COOLING_TICKS)
+                    hotMold.set(ModDataComponents.COOL_DOWN_AT, level.gameTime + HotIngotMoldItem.DEFAULT_COOLING_TICKS)
 
                     if (!player.inventory.add(hotMold)) {
                         player.drop(hotMold, false)
@@ -126,10 +133,14 @@ class CrucibleBlock(properties: Properties) : BaseEntityBlock(properties) {
         // 2. Inserting meltable items (Raw ores, ingots)
         val meltResult = MetalRegistry.getMeltableResult(stack)
         if (meltResult != null) {
-            val emptySlot = be.items.indexOfFirst { it.isEmpty }
-            if (emptySlot != -1) {
+            val hitX = hitResult.location.x - pos.x
+            val hitZ = hitResult.location.z - pos.z
+            val targetSlot = (if (hitZ >= 0.5) 2 else 0) + (if (hitX >= 0.5) 1 else 0)
+            val slotToUse = if (be.items[targetSlot].isEmpty) targetSlot else be.items.indexOfFirst { it.isEmpty }
+
+            if (slotToUse != -1) {
                 if (!level.isClientSide) {
-                    be.items[emptySlot] = stack.copyWithCount(1)
+                    be.items[slotToUse] = stack.copyWithCount(1)
                     if (!player.isCreative) {
                         stack.shrink(1)
                     }
@@ -194,31 +205,41 @@ class CrucibleBlock(properties: Properties) : BaseEntityBlock(properties) {
     ): InteractionResult {
         val be = level.getBlockEntity(pos) as? CrucibleBlockEntity ?: return InteractionResult.PASS
 
-        // Crouching + empty hand = retrieve last item
-        if (player.isShiftKeyDown) {
-            val lastOccupiedSlot = be.items.indexOfLast { !it.isEmpty }
-            if (lastOccupiedSlot != -1) {
-                if (!level.isClientSide) {
-                    val removed = be.items[lastOccupiedSlot]
-                    be.items[lastOccupiedSlot] = ItemStack.EMPTY
+        // Determine which slot the player is targeting inside the cavity
+        val hitX = hitResult.location.x - pos.x
+        val hitZ = hitResult.location.z - pos.z
+        val targetSlot = (if (hitZ >= 0.5) 2 else 0) + (if (hitX >= 0.5) 1 else 0)
 
-                    if (!player.inventory.add(removed)) {
-                        player.drop(removed, false)
-                    }
+        // Retrieve item: If targeting an occupied slot, or if crouching and any item exists
+        val slotToRetrieve = if (!be.items[targetSlot].isEmpty) {
+            targetSlot
+        } else if (player.isShiftKeyDown) {
+            be.items.indexOfLast { !it.isEmpty }
+        } else {
+            -1
+        }
 
-                    level.playSound(
-                        null,
-                        pos,
-                        SoundEvents.ITEM_PICKUP,
-                        SoundSource.PLAYERS,
-                        0.5f,
-                        1.0f
-                    )
-                    be.setChanged()
-                    level.sendBlockUpdated(pos, state, state, 3)
+        if (slotToRetrieve != -1) {
+            if (!level.isClientSide) {
+                val removed = be.items[slotToRetrieve]
+                be.items[slotToRetrieve] = ItemStack.EMPTY
+
+                if (!player.inventory.add(removed)) {
+                    player.drop(removed, false)
                 }
-                return InteractionResult.SUCCESS
+
+                level.playSound(
+                    null,
+                    pos,
+                    SoundEvents.ITEM_PICKUP,
+                    SoundSource.PLAYERS,
+                    0.5f,
+                    1.0f
+                )
+                be.setChanged()
+                level.sendBlockUpdated(pos, state, state, 3)
             }
+            return InteractionResult.SUCCESS
         }
 
         // Standing + empty hand = inspect crucible state

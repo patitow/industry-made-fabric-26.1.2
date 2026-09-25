@@ -6,7 +6,9 @@ import dev.patitow.industrymade.init.ModSounds
 import dev.patitow.industrymade.thermal.SteamProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
@@ -114,6 +116,10 @@ class SteamPistonBlockEntity(pos: BlockPos, state: BlockState) :
         super.loadAdditional(input)
         active = input.getBooleanOr("Active", false)
         animTicks = input.getIntOr("AnimTicks", 0)
+    }
+
+    override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag {
+        return saveCustomOnly(registries)
     }
 
     override fun getUpdatePacket(): Packet<ClientGamePacketListener>? {

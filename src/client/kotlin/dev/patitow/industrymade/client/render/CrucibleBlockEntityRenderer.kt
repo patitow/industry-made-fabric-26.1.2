@@ -1,6 +1,8 @@
 package dev.patitow.industrymade.client.render
 
 import com.mojang.blaze3d.vertex.PoseStack
+import com.mojang.math.Axis
+import dev.patitow.industrymade.IndustryMade
 import dev.patitow.industrymade.block.entity.CrucibleBlockEntity
 import dev.patitow.industrymade.thermal.MetalRegistry
 import net.minecraft.client.renderer.SubmitNodeCollector
@@ -8,24 +10,36 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer
+import net.minecraft.client.renderer.item.ItemStackRenderState
 import net.minecraft.client.renderer.rendertype.RenderTypes
 import net.minecraft.client.renderer.state.level.CameraRenderState
 import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.phys.Vec3
 
 class CrucibleRenderState : BlockEntityRenderState() {
     var moltenMetal: String = ""
     var moltenAmount: Int = 0
     var temperature: Double = 20.0
+    val itemRenderStates: Array<ItemStackRenderState> = Array(4) { ItemStackRenderState() }
+    val hasItems: BooleanArray = BooleanArray(4)
 }
 
-class CrucibleBlockEntityRenderer(context: BlockEntityRendererProvider.Context) :
+class CrucibleBlockEntityRenderer(private val context: BlockEntityRendererProvider.Context) :
     BlockEntityRenderer<CrucibleBlockEntity, CrucibleRenderState> {
 
     companion object {
-        val LIQUID_TEXTURE: Identifier = Identifier.fromNamespaceAndPath("minecraft", "textures/block/lava_still.png")
+        val FLUID_TEXTURE: Identifier = IndustryMade.id("textures/entity/molten_fluid.png")
         const val FULL_BRIGHT: Int = 0x00F000F0
+
+        // 2x2 grid offsets for the 4 item slots inside the crucible cavity
+        val SLOT_OFFSETS = arrayOf(
+            Pair(-0.12f, -0.12f), // Slot 0: NW
+            Pair(0.12f, -0.12f),  // Slot 1: NE
+            Pair(-0.12f, 0.12f),  // Slot 2: SW
+            Pair(0.12f, 0.12f)    // Slot 3: SE
+        )
     }
 
     override fun createRenderState(): CrucibleRenderState {
@@ -43,6 +57,21 @@ class CrucibleBlockEntityRenderer(context: BlockEntityRendererProvider.Context) 
         state.moltenMetal = entity.moltenMetal
         state.moltenAmount = entity.moltenAmount
         state.temperature = entity.temperature
+
+        for (i in 0 until 4) {
+            val stack = entity.items[i]
+            state.hasItems[i] = !stack.isEmpty
+            if (state.hasItems[i] && entity.level != null) {
+                context.itemModelResolver().updateForTopItem(
+                    state.itemRenderStates[i],
+                    stack,
+                    ItemDisplayContext.GROUND,
+                    entity.level,
+                    null,
+                    0
+                )
+            }
+        }
     }
 
     override fun submit(
@@ -51,7 +80,30 @@ class CrucibleBlockEntityRenderer(context: BlockEntityRendererProvider.Context) 
         collector: SubmitNodeCollector,
         cameraRenderState: CameraRenderState
     ) {
-        // If there is molten metal, render the glowing liquid level inside the crucible cavity
+        // 1. Render solid items sitting inside the crucible cavity (if cavity isn't full of molten metal)
+        if (state.moltenAmount < 4) {
+            for (i in 0 until 4) {
+                if (state.hasItems[i]) {
+                    val (ox, oz) = SLOT_OFFSETS[i]
+                    poseStack.pushPose()
+                    poseStack.translate(0.5 + ox, 0.22, 0.5 + oz)
+                    poseStack.mulPose(Axis.XP.rotationDegrees(90f))
+                    val rotationDeg = i * 45f
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(rotationDeg))
+                    poseStack.scale(0.32f, 0.32f, 0.32f)
+                    state.itemRenderStates[i].submit(
+                        poseStack,
+                        collector,
+                        state.lightCoords,
+                        OverlayTexture.NO_OVERLAY,
+                        0
+                    )
+                    poseStack.popPose()
+                }
+            }
+        }
+
+        // 2. Render glowing molten liquid surface
         if (state.moltenAmount > 0) {
             val metal = MetalRegistry.getMetal(state.moltenMetal)
             val color = metal?.colorRgb ?: 0xDF9B28
@@ -59,15 +111,14 @@ class CrucibleBlockEntityRenderer(context: BlockEntityRendererProvider.Context) 
             val g = ((color shr 8) and 0xFF) / 255.0f
             val b = (color and 0xFF) / 255.0f
 
-            // Liquid height rises with amount inside crucible cavity (cavity from y=4 to y=14)
-            // In 0.0 to 1.0 block space: y = 0.25 (1 item) up to 0.70 (4 items)
-            val liquidY = 0.22f + (state.moltenAmount * 0.12f)
+            // Liquid height rises with amount inside crucible cavity (cavity from y=3 to y=14)
+            val liquidY = 0.24f + (state.moltenAmount * 0.14f)
 
             poseStack.pushPose()
             poseStack.translate(0.5, 0.0, 0.5)
 
-            // Submit custom geometry for the glowing fluid surface using captured pose matrix
-            collector.submitCustomGeometry(poseStack, RenderTypes.entityCutout(LIQUID_TEXTURE)) { pose, consumer ->
+            // Submit custom geometry for the glowing fluid surface (double-sided quad for reliability)
+            collector.submitCustomGeometry(poseStack, RenderTypes.entityCutout(FLUID_TEXTURE)) { pose, consumer ->
                 val matrix = pose.pose()
 
                 val x1 = -0.245f
@@ -75,6 +126,7 @@ class CrucibleBlockEntityRenderer(context: BlockEntityRendererProvider.Context) 
                 val z1 = -0.245f
                 val z2 = 0.245f
 
+                // Top face
                 consumer.addVertex(matrix, x1, liquidY, z1)
                     .setColor(r, g, b, 1.0f)
                     .setUv(0.0f, 0.0f)
@@ -102,6 +154,35 @@ class CrucibleBlockEntityRenderer(context: BlockEntityRendererProvider.Context) 
                     .setOverlay(OverlayTexture.NO_OVERLAY)
                     .setLight(FULL_BRIGHT)
                     .setNormal(pose, 0.0f, 1.0f, 0.0f)
+
+                // Bottom face
+                consumer.addVertex(matrix, x2, liquidY, z1)
+                    .setColor(r, g, b, 1.0f)
+                    .setUv(1.0f, 0.0f)
+                    .setOverlay(OverlayTexture.NO_OVERLAY)
+                    .setLight(FULL_BRIGHT)
+                    .setNormal(pose, 0.0f, -1.0f, 0.0f)
+
+                consumer.addVertex(matrix, x2, liquidY, z2)
+                    .setColor(r, g, b, 1.0f)
+                    .setUv(1.0f, 1.0f)
+                    .setOverlay(OverlayTexture.NO_OVERLAY)
+                    .setLight(FULL_BRIGHT)
+                    .setNormal(pose, 0.0f, -1.0f, 0.0f)
+
+                consumer.addVertex(matrix, x1, liquidY, z2)
+                    .setColor(r, g, b, 1.0f)
+                    .setUv(0.0f, 1.0f)
+                    .setOverlay(OverlayTexture.NO_OVERLAY)
+                    .setLight(FULL_BRIGHT)
+                    .setNormal(pose, 0.0f, -1.0f, 0.0f)
+
+                consumer.addVertex(matrix, x1, liquidY, z1)
+                    .setColor(r, g, b, 1.0f)
+                    .setUv(0.0f, 0.0f)
+                    .setOverlay(OverlayTexture.NO_OVERLAY)
+                    .setLight(FULL_BRIGHT)
+                    .setNormal(pose, 0.0f, -1.0f, 0.0f)
             }
 
             poseStack.popPose()

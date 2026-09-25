@@ -27,6 +27,15 @@ object ModDataComponents {
             .build()
     )
 
+    val COOL_DOWN_AT: DataComponentType<Long> = Registry.register(
+        BuiltInRegistries.DATA_COMPONENT_TYPE,
+        IndustryMade.id("cool_down_at"),
+        DataComponentType.builder<Long>()
+            .persistent(Codec.LONG)
+            .networkSynchronized(ByteBufCodecs.VAR_LONG)
+            .build()
+    )
+
     fun initialize() {
         // Trigger classloading
     }

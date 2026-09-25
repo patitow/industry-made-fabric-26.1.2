@@ -56,10 +56,12 @@ class BronzeValvePipeBlock(properties: Properties) : BronzeSteamPipeBlock(proper
         level.setBlock(pos, state.setValue(OPEN, newOpen), 3)
 
         if (!level.isClientSide) {
+            val be = level.getBlockEntity(pos) as? BronzeValvePipeBlockEntity
+            val pressure = if (be != null) String.format(java.util.Locale.US, "%.1f", be.steamPressure) else "0.0"
             val sound = if (newOpen) SoundEvents.IRON_TRAPDOOR_OPEN else SoundEvents.IRON_TRAPDOOR_CLOSE
             level.playSound(null, pos, sound, SoundSource.BLOCKS, 0.8f, 1.2f)
             val statusMsg = if (newOpen) "§aAberta (Fluxo liberado)§r" else "§cFechada (Fluxo bloqueado)§r"
-            player.sendSystemMessage(Component.literal("§6Válvula de Bronze§r: $statusMsg"))
+            player.sendSystemMessage(Component.literal("§6Válvula de Bronze§r: $statusMsg | §e${pressure} bar§r"))
         }
 
         return InteractionResult.SUCCESS

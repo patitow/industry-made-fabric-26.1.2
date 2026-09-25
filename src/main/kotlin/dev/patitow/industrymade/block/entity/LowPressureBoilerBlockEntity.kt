@@ -9,7 +9,9 @@ import dev.patitow.industrymade.thermal.SteamProvider
 import dev.patitow.industrymade.thermal.TemperatureHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
@@ -225,6 +227,10 @@ class LowPressureBoilerBlockEntity(pos: BlockPos, state: BlockState) :
         temperature = input.getDoubleOr("Temperature", TemperatureHelper.ROOM_TEMPERATURE_CELSIUS)
         targetTemperature = input.getDoubleOr("TargetTemperature", TemperatureHelper.ROOM_TEMPERATURE_CELSIUS)
         oxygenBoostTicks = input.getIntOr("OxygenBoost", 0)
+    }
+
+    override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag {
+        return saveCustomOnly(registries)
     }
 
     override fun getUpdatePacket(): Packet<ClientGamePacketListener>? {

@@ -33,6 +33,12 @@
 				"value": "dev.patitow.industrymade.client.IndustryMadeDataGenerator",
 				"adapter": "kotlin"
 			}
+		],
+		"jei_mod_plugin": [
+			{
+				"value": "dev.patitow.industrymade.client.jei.IndustryMadeJeiPlugin",
+				"adapter": "kotlin"
+			}
 		]
 	},
 	"mixins": [

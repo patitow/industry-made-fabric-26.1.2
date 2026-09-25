@@ -5,6 +5,10 @@ import dev.patitow.industrymade.block.entity.SteamPistonBlockEntity
 import dev.patitow.industrymade.init.ModBlockEntities
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -19,6 +23,7 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 
@@ -63,6 +68,33 @@ class SteamPistonBlock(properties: Properties) : BaseEntityBlock(properties) {
 
     override fun getSignal(state: BlockState, level: BlockGetter, pos: BlockPos, direction: Direction): Int {
         return if (state.getValue(POWERED)) 15 else 0
+    }
+
+    override fun useWithoutItem(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hitResult: BlockHitResult
+    ): InteractionResult {
+        if (!level.isClientSide) {
+            val isPowered = state.getValue(POWERED)
+            val status = if (isPowered) {
+                "§aEm operação (Empuxo ativo)§r | §bSinal Redstone: 15§r"
+            } else {
+                "§7Inativo (Requer pressão ≥ 1.5 bar)§r"
+            }
+            player.sendSystemMessage(net.minecraft.network.chat.Component.literal("§6Pistão a Vapor§r: $status"))
+            level.playSound(
+                null,
+                pos,
+                SoundEvents.COMPARATOR_CLICK,
+                SoundSource.BLOCKS,
+                0.5f,
+                1.4f
+            )
+        }
+        return InteractionResult.SUCCESS
     }
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
