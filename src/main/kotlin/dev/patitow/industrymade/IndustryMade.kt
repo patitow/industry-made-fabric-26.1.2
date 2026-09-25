@@ -2,6 +2,7 @@ package dev.patitow.industrymade
 
 import dev.patitow.industrymade.init.ModBlockEntities
 import dev.patitow.industrymade.init.ModBlocks
+import dev.patitow.industrymade.init.ModDataComponents
 import dev.patitow.industrymade.init.ModItems
 import dev.patitow.industrymade.init.ModSounds
 import net.fabricmc.api.ModInitializer
@@ -17,6 +18,7 @@ object IndustryMade : ModInitializer {
 		LOGGER.info("Initializing Industry Made...")
 
 		ModSounds.initialize()
+		ModDataComponents.initialize()
 		ModBlocks.initialize()
 		ModBlockEntities.initialize()
 		ModItems.initialize()

@@ -12,5 +12,29 @@
       "minecraft:item/bundle/drop_contents1",
       "minecraft:item/bundle/drop_contents2"
     ]
+  },
+  "steam_hiss": {
+    "subtitle": "subtitles.industry-made.steam_hiss",
+    "sounds": [
+      "minecraft:random/fizz"
+    ]
+  },
+  "steam_whistle": {
+    "subtitle": "subtitles.industry-made.steam_whistle",
+    "sounds": [
+      "minecraft:block/bell/resonate"
+    ]
+  },
+  "valve_click": {
+    "subtitle": "subtitles.industry-made.valve_click",
+    "sounds": [
+      "minecraft:block/iron_trapdoor/open"
+    ]
+  },
+  "piston_chug": {
+    "subtitle": "subtitles.industry-made.piston_chug",
+    "sounds": [
+      "minecraft:block/piston/extend"
+    ]
   }
 }

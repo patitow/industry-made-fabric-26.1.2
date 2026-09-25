@@ -5,6 +5,7 @@ import dev.patitow.industrymade.init.ModBlockEntities
 import dev.patitow.industrymade.init.ModSounds
 import dev.patitow.industrymade.thermal.OxygenReceiver
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundSource
@@ -121,9 +122,13 @@ class BellowsBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(ModBloc
             val targetState = level.getBlockState(targetPos)
             val targetBe = level.getBlockEntity(targetPos)
 
-            // 1. Custom OxygenReceiver (future Crucible / Industrial Forges)
+            // 1. Custom OxygenReceiver (Crucible / Industrial Forges)
             if (targetBe is OxygenReceiver) {
                 targetBe.receiveAirBlast(level, targetPos, facing.opposite, 1.0f)
+            }
+            val aboveBe = level.getBlockEntity(targetPos.above())
+            if (aboveBe is OxygenReceiver) {
+                aboveBe.receiveAirBlast(level, targetPos.above(), Direction.DOWN, 1.0f)
             }
 
             // 2. Vanilla Furnace boost

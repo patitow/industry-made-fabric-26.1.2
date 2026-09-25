@@ -1,9 +1,24 @@
 {
   "block.industry-made.bellows": "Manual Bellows",
+  "block.industry-made.crucible": "Smelting Crucible",
   "block.industry-made.refractory_bricks": "Refractory Bricks",
+  "item.industry-made.bronze_ingot": "Bronze Ingot",
+  "item.industry-made.ceramic_mold": "Ceramic Ingot Mold",
+  "item.industry-made.clay_mold": "Clay Ingot Mold",
   "item.industry-made.fire_brick": "Fire Brick",
   "item.industry-made.fire_clay": "Fire Clay",
+  "item.industry-made.hot_ingot_mold": "Hot Ingot Mold",
+  "item.industry-made.raw_tin": "Raw Tin",
+  "item.industry-made.tin_ingot": "Tin Ingot",
   "itemGroup.industry-made": "Industry Made",
+  "message.industry-made.crucible_full": "The crucible is full (max 4 items).",
+  "message.industry-made.crucible_no_molten": "The crucible has no molten metal to pour.",
+  "metal.industry-made.bronze": "Bronze",
+  "metal.industry-made.copper": "Copper",
+  "metal.industry-made.iron": "Iron",
+  "metal.industry-made.tin": "Tin",
   "subtitles.industry-made.bellows_blow": "Bellows blowing",
-  "subtitles.industry-made.bellows_pump": "Bellows pumping"
+  "subtitles.industry-made.bellows_pump": "Bellows pumping",
+  "tooltip.industry-made.hot_mold_metal": "Molten Metal: %s",
+  "tooltip.industry-made.hot_mold_quench_hint": "Dip into water or wait to cool down."
 }

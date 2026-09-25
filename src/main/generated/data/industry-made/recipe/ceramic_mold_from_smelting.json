@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.2,
+  "ingredient": "industry-made:clay_mold",
+  "result": {
+    "id": "industry-made:ceramic_mold"
+  }
+}

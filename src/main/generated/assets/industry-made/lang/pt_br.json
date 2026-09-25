@@ -1,9 +1,24 @@
 {
   "block.industry-made.bellows": "Fole Manual",
+  "block.industry-made.crucible": "Cadinho de Fundição",
   "block.industry-made.refractory_bricks": "Tijolos Refratários",
+  "item.industry-made.bronze_ingot": "Lingote de Bronze",
+  "item.industry-made.ceramic_mold": "Molde Cerâmico",
+  "item.industry-made.clay_mold": "Molde de Argila Cru",
   "item.industry-made.fire_brick": "Tijolo Refratário",
   "item.industry-made.fire_clay": "Argila Refratária",
+  "item.industry-made.hot_ingot_mold": "Molde de Lingote Fervente",
+  "item.industry-made.raw_tin": "Estanho Bruto",
+  "item.industry-made.tin_ingot": "Lingote de Estanho",
   "itemGroup.industry-made": "Industry Made",
+  "message.industry-made.crucible_full": "O cadinho está cheio (máx. 4 itens).",
+  "message.industry-made.crucible_no_molten": "O cadinho não contém metal fundido para moldar.",
+  "metal.industry-made.bronze": "Bronze",
+  "metal.industry-made.copper": "Cobre",
+  "metal.industry-made.iron": "Ferro",
+  "metal.industry-made.tin": "Estanho",
   "subtitles.industry-made.bellows_blow": "Fole soprando",
-  "subtitles.industry-made.bellows_pump": "Fole bombeando"
+  "subtitles.industry-made.bellows_pump": "Fole bombeando",
+  "tooltip.industry-made.hot_mold_metal": "Metal Fundido: %s",
+  "tooltip.industry-made.hot_mold_quench_hint": "Mergulhe na água ou aguarde resfriar."
 }

@@ -7,11 +7,10 @@ plugins {
 }
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+	maven {
+		name = "BlameJared"
+		url = uri("https://maven.blamejared.com/")
+	}
 }
 
 loom {
@@ -40,6 +39,10 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
     implementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("fabric_kotlin_version").get()}")
+
+	// JEI (Just Enough Items)
+	compileOnly("mezz.jei:jei-26.1.2-fabric-api:${providers.gradleProperty("jei_version").get()}")
+	"localRuntime"("mezz.jei:jei-26.1.2-fabric:${providers.gradleProperty("jei_version").get()}")
 }
 
 tasks.processResources {
