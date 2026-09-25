@@ -1,17 +1,32 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,powered=false": {
       "model": "industry-made:block/mechanical_hammer"
     },
-    "facing=east": {
+    "facing=north,powered=true": {
+      "model": "industry-made:block/mechanical_hammer"
+    },
+    "facing=east,powered=false": {
       "model": "industry-made:block/mechanical_hammer",
       "y": 90
     },
-    "facing=south": {
+    "facing=east,powered=true": {
+      "model": "industry-made:block/mechanical_hammer",
+      "y": 90
+    },
+    "facing=south,powered=false": {
       "model": "industry-made:block/mechanical_hammer",
       "y": 180
     },
-    "facing=west": {
+    "facing=south,powered=true": {
+      "model": "industry-made:block/mechanical_hammer",
+      "y": 180
+    },
+    "facing=west,powered=false": {
+      "model": "industry-made:block/mechanical_hammer",
+      "y": 270
+    },
+    "facing=west,powered=true": {
       "model": "industry-made:block/mechanical_hammer",
       "y": 270
     }

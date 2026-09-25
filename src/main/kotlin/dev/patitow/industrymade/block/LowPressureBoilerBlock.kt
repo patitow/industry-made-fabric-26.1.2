@@ -5,7 +5,9 @@ import dev.patitow.industrymade.block.entity.LowPressureBoilerBlockEntity
 import dev.patitow.industrymade.init.ModBlockEntities
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.network.chat.Component
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
@@ -18,6 +20,7 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -66,6 +69,10 @@ class LowPressureBoilerBlock(properties: Properties) : BaseEntityBlock(propertie
         return SHAPE
     }
 
+    override fun getRenderShape(state: BlockState): RenderShape {
+        return RenderShape.MODEL
+    }
+
     override fun useItemOn(
         stack: ItemStack,
         state: BlockState,
@@ -94,6 +101,17 @@ class LowPressureBoilerBlock(properties: Properties) : BaseEntityBlock(propertie
                         1.0f,
                         1.0f
                     )
+                    val serverLevel = level as? ServerLevel
+                    serverLevel?.sendParticles(
+                        ParticleTypes.SPLASH,
+                        pos.x + 0.5, pos.y + 0.9, pos.z + 0.5,
+                        15,
+                        0.25, 0.1, 0.25,
+                        0.1
+                    )
+                    player.sendSystemMessage(
+                        Component.literal("§bÁgua na Caldeira: ${be.waterAmount}/4000 mB (+1 Balde)§r")
+                    )
                     be.setChanged()
                     level.sendBlockUpdated(pos, state, state, 3)
                 }
@@ -101,7 +119,7 @@ class LowPressureBoilerBlock(properties: Properties) : BaseEntityBlock(propertie
             } else {
                 if (!level.isClientSide) {
                     player.sendSystemMessage(
-                        Component.translatable("message.industry-made.boiler_water_full")
+                        Component.literal("§eA caldeira já está cheia de água (4/4 Baldes)!§r")
                     )
                 }
                 return InteractionResult.CONSUME
@@ -127,6 +145,9 @@ class LowPressureBoilerBlock(properties: Properties) : BaseEntityBlock(propertie
                         SoundSource.BLOCKS,
                         1.0f,
                         1.0f
+                    )
+                    player.sendSystemMessage(
+                        Component.literal("§bÁgua restante na Caldeira: ${be.waterAmount}/4000 mB (-1 Balde)§r")
                     )
                     be.setChanged()
                     level.sendBlockUpdated(pos, state, state, 3)
@@ -161,6 +182,14 @@ class LowPressureBoilerBlock(properties: Properties) : BaseEntityBlock(propertie
 
             player.sendSystemMessage(
                 Component.literal("§6Caldeira a Vapor§r: §e${temp}°C§r | §bÁgua: ${waterBuckets}/4.0 Baldes§r | $pressureColor${pressure} bar§r")
+            )
+            level.playSound(
+                null,
+                pos,
+                SoundEvents.COMPARATOR_CLICK,
+                SoundSource.BLOCKS,
+                0.6f,
+                1.4f
             )
         }
 

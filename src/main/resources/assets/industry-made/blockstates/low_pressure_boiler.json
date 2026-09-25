@@ -1,17 +1,122 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,lit=false,pressure_level=0": {
       "model": "industry-made:block/low_pressure_boiler"
     },
-    "facing=east": {
+    "facing=north,lit=false,pressure_level=1": {
+      "model": "industry-made:block/low_pressure_boiler"
+    },
+    "facing=north,lit=false,pressure_level=2": {
+      "model": "industry-made:block/low_pressure_boiler"
+    },
+    "facing=north,lit=false,pressure_level=3": {
+      "model": "industry-made:block/low_pressure_boiler"
+    },
+    "facing=north,lit=true,pressure_level=0": {
+      "model": "industry-made:block/low_pressure_boiler"
+    },
+    "facing=north,lit=true,pressure_level=1": {
+      "model": "industry-made:block/low_pressure_boiler"
+    },
+    "facing=north,lit=true,pressure_level=2": {
+      "model": "industry-made:block/low_pressure_boiler"
+    },
+    "facing=north,lit=true,pressure_level=3": {
+      "model": "industry-made:block/low_pressure_boiler"
+    },
+    "facing=east,lit=false,pressure_level=0": {
       "model": "industry-made:block/low_pressure_boiler",
       "y": 90
     },
-    "facing=south": {
+    "facing=east,lit=false,pressure_level=1": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 90
+    },
+    "facing=east,lit=false,pressure_level=2": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 90
+    },
+    "facing=east,lit=false,pressure_level=3": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 90
+    },
+    "facing=east,lit=true,pressure_level=0": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 90
+    },
+    "facing=east,lit=true,pressure_level=1": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 90
+    },
+    "facing=east,lit=true,pressure_level=2": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 90
+    },
+    "facing=east,lit=true,pressure_level=3": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 90
+    },
+    "facing=south,lit=false,pressure_level=0": {
       "model": "industry-made:block/low_pressure_boiler",
       "y": 180
     },
-    "facing=west": {
+    "facing=south,lit=false,pressure_level=1": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 180
+    },
+    "facing=south,lit=false,pressure_level=2": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 180
+    },
+    "facing=south,lit=false,pressure_level=3": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 180
+    },
+    "facing=south,lit=true,pressure_level=0": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 180
+    },
+    "facing=south,lit=true,pressure_level=1": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 180
+    },
+    "facing=south,lit=true,pressure_level=2": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 180
+    },
+    "facing=south,lit=true,pressure_level=3": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 180
+    },
+    "facing=west,lit=false,pressure_level=0": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 270
+    },
+    "facing=west,lit=false,pressure_level=1": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 270
+    },
+    "facing=west,lit=false,pressure_level=2": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 270
+    },
+    "facing=west,lit=false,pressure_level=3": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 270
+    },
+    "facing=west,lit=true,pressure_level=0": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 270
+    },
+    "facing=west,lit=true,pressure_level=1": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 270
+    },
+    "facing=west,lit=true,pressure_level=2": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 270
+    },
+    "facing=west,lit=true,pressure_level=3": {
       "model": "industry-made:block/low_pressure_boiler",
       "y": 270
     }

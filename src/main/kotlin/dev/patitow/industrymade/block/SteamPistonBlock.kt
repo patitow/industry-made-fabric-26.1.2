@@ -10,6 +10,7 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -52,6 +53,10 @@ class SteamPistonBlock(properties: Properties) : BaseEntityBlock(properties) {
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
         return SHAPE
+    }
+
+    override fun getRenderShape(state: BlockState): RenderShape {
+        return RenderShape.MODEL
     }
 
     override fun isSignalSource(state: BlockState): Boolean = true

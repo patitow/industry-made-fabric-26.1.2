@@ -1,6 +1,15 @@
 {
   "variants": {
-    "": {
+    "heat_level=0": {
+      "model": "industry-made:block/crucible"
+    },
+    "heat_level=1": {
+      "model": "industry-made:block/crucible"
+    },
+    "heat_level=2": {
+      "model": "industry-made:block/crucible"
+    },
+    "heat_level=3": {
       "model": "industry-made:block/crucible"
     }
   }

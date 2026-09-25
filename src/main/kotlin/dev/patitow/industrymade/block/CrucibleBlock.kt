@@ -8,17 +8,21 @@ import dev.patitow.industrymade.init.ModItems
 import dev.patitow.industrymade.item.HotIngotMoldItem
 import dev.patitow.industrymade.thermal.MetalRegistry
 import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.network.chat.Component
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -57,6 +61,10 @@ class CrucibleBlock(properties: Properties) : BaseEntityBlock(properties) {
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
         return SHAPE
+    }
+
+    override fun getRenderShape(state: BlockState): RenderShape {
+        return RenderShape.MODEL
     }
 
     override fun useItemOn(
@@ -148,6 +156,32 @@ class CrucibleBlock(properties: Properties) : BaseEntityBlock(properties) {
             }
         }
 
+        // 3. Water bucket rejection with informative feedback
+        if (stack.`is`(Items.WATER_BUCKET)) {
+            if (!level.isClientSide) {
+                val serverLevel = level as? ServerLevel
+                serverLevel?.sendParticles(
+                    ParticleTypes.SMOKE,
+                    pos.x + 0.5, pos.y + 0.6, pos.z + 0.5,
+                    8,
+                    0.2, 0.1, 0.2,
+                    0.02
+                )
+                level.playSound(
+                    null,
+                    pos,
+                    SoundEvents.FIRE_EXTINGUISH,
+                    SoundSource.BLOCKS,
+                    0.7f,
+                    1.2f
+                )
+                player.sendSystemMessage(
+                    Component.literal("§cO Cadinho funde metais e não aceita água! Para vapor, use a Caldeira.§r")
+                )
+            }
+            return InteractionResult.SUCCESS
+        }
+
         return InteractionResult.PASS
     }
 
@@ -212,6 +246,14 @@ class CrucibleBlock(properties: Properties) : BaseEntityBlock(properties) {
 
             player.sendSystemMessage(
                 Component.literal("§6Cadinho§r: $tempColor${temp}°C§r | $statusText")
+            )
+            level.playSound(
+                null,
+                pos,
+                SoundEvents.COMPARATOR_CLICK,
+                SoundSource.BLOCKS,
+                0.6f,
+                1.4f
             )
         }
 

@@ -5,6 +5,7 @@ import dev.patitow.industrymade.block.entity.MechanicalHammerBlockEntity
 import dev.patitow.industrymade.init.ModBlockEntities
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.Containers
@@ -19,6 +20,7 @@ import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.HorizontalDirectionalBlock
 import net.minecraft.world.level.block.Mirror
+import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
@@ -78,6 +80,10 @@ class MechanicalHammerBlock(properties: Properties) : BaseEntityBlock(properties
         return SHAPE
     }
 
+    override fun getRenderShape(state: BlockState): RenderShape {
+        return RenderShape.MODEL
+    }
+
     override fun useItemOn(
         stack: ItemStack,
         state: BlockState,
@@ -102,6 +108,9 @@ class MechanicalHammerBlock(properties: Properties) : BaseEntityBlock(properties
                     if (!player.inventory.add(toGive)) {
                         Containers.dropItemStack(level, pos.x + 0.5, pos.y + 0.6, pos.z + 0.5, toGive)
                     }
+                    player.sendSystemMessage(
+                        Component.literal("§eItem recolhido: ${toGive.hoverName.string}§r")
+                    )
                     level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0f, 1.0f)
                 }
                 return InteractionResult.SUCCESS
@@ -113,10 +122,14 @@ class MechanicalHammerBlock(properties: Properties) : BaseEntityBlock(properties
         if (blockEntity.itemOnBed.isEmpty) {
             if (MechanicalHammerBlockEntity.isValidHammerInput(stack)) {
                 if (!level.isClientSide) {
-                    blockEntity.itemOnBed = stack.split(1)
+                    val placed = stack.split(1)
+                    blockEntity.itemOnBed = placed
                     blockEntity.strikes = 0
                     blockEntity.setChanged()
                     level.sendBlockUpdated(pos, state, state, 3)
+                    player.sendSystemMessage(
+                        Component.literal("§aItem posicionado na bigorna: ${placed.hoverName.string}§r")
+                    )
                     level.playSound(null, pos, SoundEvents.ARMOR_EQUIP_GENERIC.value(), SoundSource.BLOCKS, 1.0f, 1.0f)
                 }
                 return InteractionResult.SUCCESS
@@ -145,11 +158,21 @@ class MechanicalHammerBlock(properties: Properties) : BaseEntityBlock(properties
                 if (!player.inventory.add(toGive)) {
                     Containers.dropItemStack(level, pos.x + 0.5, pos.y + 0.6, pos.z + 0.5, toGive)
                 }
+                player.sendSystemMessage(
+                    Component.literal("§eItem recolhido: ${toGive.hoverName.string}§r")
+                )
                 level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0f, 1.0f)
             }
             return InteractionResult.SUCCESS
+        } else {
+            if (!level.isClientSide) {
+                val powerStatus = if (state.getValue(POWERED)) "§aAtivo (Com força motriz)§r" else "§cInativo (Sem vapor/energia)§r"
+                player.sendSystemMessage(
+                    Component.literal("§6Martelo Mecânico§r: $powerStatus | §7Bigorna vazia§r")
+                )
+            }
+            return InteractionResult.SUCCESS
         }
-        return InteractionResult.PASS
     }
 
     override fun affectNeighborsAfterRemoval(

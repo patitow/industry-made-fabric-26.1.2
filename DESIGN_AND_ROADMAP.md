@@ -133,19 +133,38 @@ dev.patitow.industrymade/
 
 ---
 
-## 4. O Primeiro Marco Imediato (Vertical Slice da Era 1)
+## 4. Status de Conclusão do Marco 1 (Era 1: Vapor & Forja)
 
-Para o próximo ciclo de desenvolvimento (via Antigravity CLI ou IDE):
+O slice vertical da **Era 1** está implementado, funcional e testado in-game:
 
-1. **Itens & Blocos Fundamentais:**
-   * Item `fire_clay` (Argila Refratária: argila + areia/saibro).
-   * Item `fire_brick` (Tijolo Refratário cozido).
-   * Bloco `refractory_bricks` (Tijolos Refratários para câmara térmica).
-2. **O Fole Manual (`bellows`):**
-   * Bloco com modelo que se contrai ao clique com botão direito ou pulso de redstone.
-   * Dispara partículas de ar (`POOF` ou fumaça rápida) na direção em que está apontado.
-   * Toca efeito sonoro de sopro de couro/ar.
-   * Aumenta o nível de oxigênio do bloco de fogo/forja à frente.
-3. **O Cadinho de Fundição (`crucible`):**
-   * Bloco aberto em cima onde minérios brutos ou lingotes são inseridos visualmente.
-   * Se aquecido por baixo por uma forja com fole, atinge temperatura de fusão e transforma o conteúdo em metal fundido.
+- [x] **Itens & Blocos Fundamentais:** `fire_clay`, `fire_brick`, `refractory_bricks`.
+- [x] **Fole Manual (`bellows`):** Modelo 3D com texturas modulares (madeira, couro, bico de ferro), orientação horizontal em 4 direções, injeção física de oxigênio (`OxygenReceiver`), áudio e partículas.
+- [x] **Cadinho de Fundição (`crucible`):** Modelo 3D vazado, aquecimento gradativo por forja inferior (com bônus de isolamento térmico e fole), fusão de cobre e estanho em bronze líquido, molde cerâmico e têmpera (*quench*) em água e caldeirão.
+- [x] **Caldeira a Vapor (`low_pressure_boiler`):** Gerenciamento térmico, aquecimento por fogueira/lava, geração de vapor, válvula de segurança sonora/visual contra sobrepressão (sem crateras), reabastecimento com baldes de água com feedback instantâneo e partículas.
+- [x] **Pistão a Vapor (`steam_piston`):** Conversão de vapor sob pressão em força mecânica/cinética para blocos adjacentes.
+- [x] **Martelo Forjador Mecânico (`mechanical_hammer`):** Modelo 3D com bigorna, batimento cíclico automatizado, forja de chapas de metal, purificação de ferro em ferro forjado e britagem mecânica para duplicação de minérios brutos.
+- [x] **Qualidade & Ferramentas:** Suíte de testes automatizados JUnit 5 (validação de JSONs, UVs de texturas, power-of-two, tags e termodinâmica), integração nativa com JEI, modelos 3D exportáveis para Blender (`.obj`/`.mtl`), e padronização por skills de desenvolvimento.
+
+---
+
+## 5. Próximos Passos Mapeados (Roadmap Imediato)
+
+### 5.1 Refinamento de Feedbacks, HUD & Animações (UX & Game Feel)
+1. **Manômetro & Indicadores no Modelo:**
+   - Exibição de nível de água e pressão em tempo real diretamente na carcaça do bloco.
+   - Suporte a tooltip de HUD (Jade / Wthit) para inspecionar água, temperatura e pressão apenas apontando a mira para a máquina.
+2. **Animações Cinéticas Suaves (`partialTicks`):**
+   - Transição suave na descida da cabeça do martelo forjador mecânico e avanço suave da haste do pistão a vapor sem saltos visuais.
+3. **Interfaces / GUIs Rústicas Opcionais:**
+   - GUI simples, leve e temática em estilo rústico para quem preferir visualizar internamente a composição do cadinho ou o reservatório da caldeira.
+
+### 5.2 Expansão da Linha a Vapor (Era 1 Final)
+1. **Tubulações de Vapor de Bronze (`bronze_steam_pipe`):**
+   - Conexão de caldeiras a múltiplas máquinas à distância (removendo a limitação de blocos colados).
+   - Válvulas reguladoras e manômetros em linha.
+2. **Serraria Mecânica a Vapor (`mechanical_sawmill`):**
+   - Corte automatizado de toras de madeira em tábuas com rendimento aumentado e subproduto de serragem.
+
+### 5.3 Transição para a Era 2 (O Aço)
+1. **Conversor Bessemer (`bessemer_converter`):**
+   - Insuflação contínua de ar sob pressão em ferro fundido para descarbonetação e produção em escala de **Aço Industrial**.

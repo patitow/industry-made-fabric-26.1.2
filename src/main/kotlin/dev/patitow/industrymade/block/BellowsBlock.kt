@@ -58,7 +58,7 @@ class BellowsBlock(properties: Properties) : Block(properties), EntityBlock {
     }
 
     override fun getRenderShape(state: BlockState): RenderShape {
-        return RenderShape.INVISIBLE
+        return RenderShape.MODEL
     }
 
     override fun useWithoutItem(

@@ -38,6 +38,37 @@ class HotIngotMoldItem(properties: Properties) : Item(properties) {
         }
     }
 
+    override fun use(level: Level, player: Player, hand: InteractionHand): InteractionResult {
+        val hitResult = getPlayerPOVHitResult(level, player, net.minecraft.world.level.ClipContext.Fluid.SOURCE_ONLY)
+        if (hitResult.type == net.minecraft.world.phys.HitResult.Type.BLOCK) {
+            val pos = hitResult.blockPos
+            val state = level.getBlockState(pos)
+            if (state.`is`(Blocks.WATER)) {
+                if (!level.isClientSide) {
+                    val serverLevel = level as? ServerLevel
+                    serverLevel?.sendParticles(
+                        ParticleTypes.SMOKE,
+                        pos.x + 0.5, pos.y + 0.8, pos.z + 0.5,
+                        15,
+                        0.2, 0.2, 0.2,
+                        0.05
+                    )
+                    level.playSound(
+                        null,
+                        pos,
+                        SoundEvents.FIRE_EXTINGUISH,
+                        SoundSource.BLOCKS,
+                        0.8f,
+                        1.2f
+                    )
+                    quenchMold(player.getItemInHand(hand), level, player)
+                }
+                return InteractionResult.SUCCESS
+            }
+        }
+        return super.use(level, player, hand)
+    }
+
     override fun useOn(context: UseOnContext): InteractionResult {
         val level = context.level
         val pos = context.clickedPos
@@ -93,6 +124,10 @@ class HotIngotMoldItem(properties: Properties) : Item(properties) {
         if (!player.inventory.add(moldStack)) {
             player.drop(moldStack, false)
         }
+
+        player.sendSystemMessage(
+            Component.literal("§aMetal temperado com sucesso! Lingote obtido.§r")
+        )
 
         level.playSound(
             null,
