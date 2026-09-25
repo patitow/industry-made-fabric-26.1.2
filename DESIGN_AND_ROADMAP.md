@@ -149,29 +149,39 @@ O slice vertical da **Era 1** está implementado, funcional e testado in-game:
 
 ---
 
-## 5. Próximos Passos Mapeados (Roadmap Imediato)
+## 5. Próximos Passos Mapeados (Roadmap Imediato & Handoff)
 
-### 5.1 Filosofia de Crafting no Mundo Real & Montagem Física
-- **Fim do "Crafting Table Mágico":** Em vez de construir máquinas complexas inteiras instantaneamente numa mesa 3x3 de madeira, as máquinas exigem subcomponentes usinados/forjados previamente nas próprias máquinas da Era:
-  - **Lâmina de Serra Temperada (`saw_blade`):** Requer forjar uma chapa de bronze ou ferro sob o Martelo Forjador Mecânico para estampar os dentes da serra.
-  - **Rebites de Caldeira (`bronze_rivets`):** Chapas unidas sob impacto mecânico em vez de coladas magicamente.
-  - **Haste de Transmissão / Biela (`crankshaft` / `connecting_rod`):** Transforma o empuxo linear do pistão a vapor em movimento rotativo contínuo.
+> **Documentação de Engenharia & Handoff Disponível:**
+> - [Guia de Passagem de Bastão (Handoff)](file:///D:/.Minecraft%20Mod%20Development/industry-made-fabric-26.1.2/docs/HANDOFF.md)
+> - [Dashboard Interativo v2.0](file:///D:/.Minecraft%20Mod%20Development/industry-made-fabric-26.1.2/docs/engineering_study.html)
+> - [Tratado de Engenharia dos 33 Elementos da Era 1](file:///D:/.Minecraft%20Mod%20Development/industry-made-fabric-26.1.2/docs/ERA1_MACHINERY_STUDY.md)
+> - [Especificação Técnica da Serraria & Calha](file:///D:/.Minecraft%20Mod%20Development/industry-made-fabric-26.1.2/docs/SAWMILL_AND_CHUTE_SPEC.md)
 
-### 5.2 Automação Física no Mundo: Calha de Gravidade (`gravity_chute`)
-- **Alimentação Sem GUIs Cinzas:** Uma calha aberta em ângulo que canaliza e despeja itens diretamente no interior do cadinho ou sobre a bigorna do martelo. Permite automação mecânica visível e tátil.
+### 5.1 O Princípio da Progressão Linear Sem Bloqueio Circular
+- **Regra Fundamental de Dependência:** Nenhuma máquina que consome vapor (Martelo Mecânico, Serraria) pode ser necessária para criar os blocos que produzem, conduzem ou medem a pressão (Caldeira, Tubos, Válvula, Manômetro).
+- **As 6 Camadas Sequenciais:**
+  1. *Camada 0 (Natureza):* Argila Refratária (`fire_clay_block`), Minério de Estanho (`tin_ore`), Cobre e Madeira.
+  2. *Camada 1 (Forja Manual):* Cadinho cru moldado e queimado na forja, fole manual, fusão de bronze e **Martelo de Ferreiro Manual (`blacksmith_hammer`)**.
+  3. *Camada 2 (Pressão & Telemetria):* Caldeira de Baixa Pressão rebitada (`bronze_rivets`), tubos, válvula 3D e **Manômetro Bourdon Sem Paradoxo**.
+  4. *Camada 3 (Cinética Linear):* Pistão a Vapor ($\ge 1.5$ bar), usando o tubo como camisa retificada do cilindro.
+  5. *Camada 4 (Matriz Forjadora):* Martelo Mecânico a vapor assumindo rendimento dobrado (1:2) e forja pesada.
+  6. *Camada 5 (Indústria & Logística):* Serraria Mecânica a vapor (6 tábuas + serragem) e Calha de Gravidade física.
 
-### 5.3 Serraria Mecânica a Vapor (`mechanical_sawmill`)
-- **Inspiração Real:** Bancada de corte com disco de serra circular giratório e carro de deslizamento de toras (*log carriage*).
-- **Mecânica:** Conectada à rede de vapor ($\ge 1.5$ bar). Fatie toras em tábuas com rendimento aumentado (6 tábuas por tora) gerando subproduto de **Serragem** (`sawdust`) para briquetes de queima e compensados.
+### 5.2 Ferramentas Manuais vs Automação: O Martelo de Ferreiro
+- **Ponte do Early-Game:** O jogador bate lingotes em chapas (1:1) e hastes em rebites (1:4) manualmente com o `blacksmith_hammer`, eliminando qualquer soft-lock antes de ter vapor.
+- **Incentivo à Automação com o Martelo a Vapor:** O Martelo Mecânico a vapor dobra o rendimento para 1:2 (1 lingote = 2 chapas), não desgasta ferramentas do jogador e estampa dentes de lâmina de serra (`saw_blade`) e briquetes de serragem (`fuel_briquette`).
 
-### 5.4 Refinamento de Feedbacks, HUD & Animações (UX & Game Feel)
-1. **Animações Cinéticas Suaves (`partialTicks`):**
-   - Transição suave na descida da cabeça do martelo forjador mecânico e avanço suave da haste do pistão a vapor sem saltos visuais a 60+ FPS.
-2. **Áudio Posicional Contínuo:**
-   - Loop sonoro de ebulição da água quando a caldeira atinge $T > 100^\circ\text{C}$.
-3. **Integração de HUD (Jade / Wthit):**
-   - Exibição de temperatura, pressão e fluido diretamente na retícula de mira do jogador.
+### 5.3 Resolução do Manômetro Bourdon (`bronze_gauge_pipe`)
+- Inspirado na patente de Bourdon (1849): tubo elástico oval com haste ponteiro e mostrador de vidro selado.
+- Receita no Tier 2: `1x bronze_steam_pipe + 1x bronze_rod + 1x glass_pane` (sem bússola e sem martelo a vapor).
 
-### 5.5 Transição para a Era 2 (O Aço)
-1. **Conversor Bessemer (`bessemer_converter`):**
-   - Insuflação contínua de ar sob pressão em ferro fundido para descarbonetação e produção em escala de **Aço Industrial**.
+### 5.4 Automação Física no Mundo: Calha de Gravidade (`gravity_chute`)
+- Calha aberta inclinada que canaliza itens diretamente pela gravidade para o interior do cadinho, sobre a bigorna do martelo ou leito da serraria, sem GUIs.
+
+### 5.5 Serraria Mecânica a Vapor (`mechanical_sawmill`) & Ciclo Fechado
+- Leito guiado com disco girando a 60 FPS com `partialTicks`. Fatie toras em 6 tábuas + 1 serragem (`sawdust`).
+- 4 unidades de serragem prensadas no Martelo Mecânico geram 1 **Briquete Combustível (`fuel_briquette`)**, que queima na caldeira que move a própria serraria.
+
+### 5.6 Transição para a Era 2 (O Aço)
+1. **Conversor Bessemer (`bessemer_converter`):** Insuflação contínua de ar sob pressão em ferro fundido para descarbonetação e produção em escala de **Aço Industrial**.
+
