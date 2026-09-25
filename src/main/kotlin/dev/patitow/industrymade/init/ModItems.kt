@@ -14,43 +14,43 @@ import net.minecraft.world.item.ItemStack
 object ModItems {
 
     val FIRE_CLAY: Item = registerItem("fire_clay") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
     }
 
     val FIRE_BRICK: Item = registerItem("fire_brick") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
     }
 
     val RAW_TIN: Item = registerItem("raw_tin") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
     }
 
     val TIN_INGOT: Item = registerItem("tin_ingot") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
     }
 
     val BRONZE_INGOT: Item = registerItem("bronze_ingot") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
     }
 
     val BRONZE_PLATE: Item = registerItem("bronze_plate") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
     }
 
     val BRONZE_ROD: Item = registerItem("bronze_rod") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
     }
 
     val BRONZE_GEAR: Item = registerItem("bronze_gear") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
     }
 
     val CLAY_MOLD: Item = registerItem("clay_mold") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)).stacksTo(16))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)).stacksTo(16))
     }
 
     val CERAMIC_MOLD: Item = registerItem("ceramic_mold") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)).stacksTo(16))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)).stacksTo(16))
     }
 
     val HOT_INGOT_MOLD: dev.patitow.industrymade.item.HotIngotMoldItem = registerItem("hot_ingot_mold") { id ->
@@ -60,15 +60,15 @@ object ModItems {
     } as dev.patitow.industrymade.item.HotIngotMoldItem
 
     val WROUGHT_IRON_INGOT: Item = registerItem("wrought_iron_ingot") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
     }
 
     val IRON_PLATE: Item = registerItem("iron_plate") { id ->
-        Item(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
+        dev.patitow.industrymade.item.DescriptiveItem(Item.Properties().setId(ResourceKey.create(Registries.ITEM, id)))
     }
 
     val BRONZE_SWORD: Item = registerItem("bronze_sword") { id ->
-        Item(
+        dev.patitow.industrymade.item.DescriptiveItem(
             Item.Properties()
                 .setId(ResourceKey.create(Registries.ITEM, id))
                 .sword(dev.patitow.industrymade.item.ModToolMaterials.BRONZE, 3.0f, -2.4f)
@@ -76,7 +76,7 @@ object ModItems {
     }
 
     val BRONZE_SHOVEL: Item = registerItem("bronze_shovel") { id ->
-        net.minecraft.world.item.ShovelItem(
+        dev.patitow.industrymade.item.DescriptiveShovelItem(
             dev.patitow.industrymade.item.ModToolMaterials.BRONZE,
             1.5f,
             -3.0f,
@@ -85,7 +85,7 @@ object ModItems {
     }
 
     val BRONZE_PICKAXE: Item = registerItem("bronze_pickaxe") { id ->
-        Item(
+        dev.patitow.industrymade.item.DescriptiveItem(
             Item.Properties()
                 .setId(ResourceKey.create(Registries.ITEM, id))
                 .pickaxe(dev.patitow.industrymade.item.ModToolMaterials.BRONZE, 1.0f, -2.8f)
@@ -93,7 +93,7 @@ object ModItems {
     }
 
     val BRONZE_AXE: Item = registerItem("bronze_axe") { id ->
-        net.minecraft.world.item.AxeItem(
+        dev.patitow.industrymade.item.DescriptiveAxeItem(
             dev.patitow.industrymade.item.ModToolMaterials.BRONZE,
             6.0f,
             -3.1f,
@@ -102,7 +102,7 @@ object ModItems {
     }
 
     val BRONZE_HOE: Item = registerItem("bronze_hoe") { id ->
-        net.minecraft.world.item.HoeItem(
+        dev.patitow.industrymade.item.DescriptiveHoeItem(
             dev.patitow.industrymade.item.ModToolMaterials.BRONZE,
             0.0f,
             -1.0f,

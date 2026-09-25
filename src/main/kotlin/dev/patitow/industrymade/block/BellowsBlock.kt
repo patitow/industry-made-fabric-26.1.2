@@ -4,6 +4,7 @@ import dev.patitow.industrymade.block.entity.BellowsBlockEntity
 import dev.patitow.industrymade.init.ModBlockEntities
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.network.chat.Component
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.context.BlockPlaceContext
@@ -68,6 +69,15 @@ class BellowsBlock(properties: Properties) : Block(properties), EntityBlock {
         player: Player,
         hitResult: BlockHitResult
     ): InteractionResult {
+        if (player.isShiftKeyDown) {
+            if (!level.isClientSide) {
+                player.sendSystemMessage(
+                    Component.literal("§6Fole Manual§r: §eInjeção de Ar (+500°C forçado para caldeiras e cadinhos)§r")
+                )
+            }
+            return InteractionResult.SUCCESS
+        }
+
         val be = level.getBlockEntity(pos) as? BellowsBlockEntity ?: return InteractionResult.PASS
         return if (be.pump()) {
             InteractionResult.SUCCESS

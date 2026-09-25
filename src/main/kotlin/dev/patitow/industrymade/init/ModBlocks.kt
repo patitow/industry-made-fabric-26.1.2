@@ -129,7 +129,7 @@ object ModBlocks {
         Registry.register(BuiltInRegistries.BLOCK, id, block)
 
         val itemKey = ResourceKey.create(Registries.ITEM, id)
-        val item = BlockItem(block, Item.Properties().setId(itemKey).useBlockDescriptionPrefix())
+        val item = dev.patitow.industrymade.item.DescriptiveBlockItem(block, Item.Properties().setId(itemKey).useBlockDescriptionPrefix())
         Registry.register(BuiltInRegistries.ITEM, id, item)
 
         return block

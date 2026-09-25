@@ -20,7 +20,12 @@ class BronzeValvePipeBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     fun isOpen(): Boolean {
-        return blockState.getValue(BronzeValvePipeBlock.OPEN)
+        val st = level?.getBlockState(worldPosition) ?: blockState
+        return if (st.`is`(dev.patitow.industrymade.init.ModBlocks.BRONZE_VALVE_PIPE)) {
+            st.getValue(BronzeValvePipeBlock.OPEN)
+        } else {
+            true
+        }
     }
 
     override fun getAvailablePressure(): Double {

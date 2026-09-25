@@ -52,6 +52,17 @@ class BronzeValvePipeBlock(properties: Properties) : BronzeSteamPipeBlock(proper
         player: Player,
         hitResult: BlockHitResult
     ): InteractionResult {
+        if (player.isShiftKeyDown) {
+            if (!level.isClientSide) {
+                val be = level.getBlockEntity(pos) as? BronzeValvePipeBlockEntity
+                val pressure = if (be != null) String.format(java.util.Locale.US, "%.1f", be.steamPressure) else "0.0"
+                val isOpen = state.getValue(OPEN)
+                val statusMsg = if (isOpen) "§aAberta (Fluxo liberado)§r" else "§cFechada (Fluxo bloqueado)§r"
+                player.sendSystemMessage(Component.literal("§6Válvula de Bronze§r: $statusMsg | §e${pressure} bar§r"))
+            }
+            return InteractionResult.SUCCESS
+        }
+
         val newOpen = !state.getValue(OPEN)
         level.setBlock(pos, state.setValue(OPEN, newOpen), 3)
 

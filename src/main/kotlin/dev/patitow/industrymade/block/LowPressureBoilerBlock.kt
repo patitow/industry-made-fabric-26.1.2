@@ -11,11 +11,14 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemUtils
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -92,7 +95,7 @@ class LowPressureBoilerBlock(properties: Properties) : BaseEntityBlock(propertie
                 if (!level.isClientSide) {
                     be.waterAmount = (be.waterAmount + 1000).coerceAtMost(LowPressureBoilerBlockEntity.MAX_WATER)
                     if (!player.isCreative) {
-                        player.setItemInHand(hand, ItemStack(Items.BUCKET))
+                        player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, ItemStack(Items.BUCKET)))
                     }
                     level.playSound(
                         null,
@@ -127,17 +130,49 @@ class LowPressureBoilerBlock(properties: Properties) : BaseEntityBlock(propertie
             }
         }
 
+        // 1b. Water filling with water bottle
+        if (stack.`is`(Items.POTION)) {
+            val potionContents = stack.get(DataComponents.POTION_CONTENTS)
+            if (potionContents != null && potionContents.`is`(Potions.WATER)) {
+                if (be.waterAmount < LowPressureBoilerBlockEntity.MAX_WATER) {
+                    if (!level.isClientSide) {
+                        be.waterAmount = (be.waterAmount + 333).coerceAtMost(LowPressureBoilerBlockEntity.MAX_WATER)
+                        if (!player.isCreative) {
+                            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, ItemStack(Items.GLASS_BOTTLE)))
+                        }
+                        level.playSound(
+                            null,
+                            pos,
+                            SoundEvents.BOTTLE_EMPTY,
+                            SoundSource.BLOCKS,
+                            1.0f,
+                            1.0f
+                        )
+                        player.sendSystemMessage(
+                            Component.literal("§bÁgua na Caldeira: ${be.waterAmount}/4000 mB (+1 Garrafa)§r")
+                        )
+                        be.setChanged()
+                        level.sendBlockUpdated(pos, state, state, 3)
+                    }
+                    return InteractionResult.SUCCESS
+                } else {
+                    if (!level.isClientSide) {
+                        player.sendSystemMessage(
+                            Component.literal("§eA caldeira já está cheia de água (4/4 Baldes)!§r")
+                        )
+                    }
+                    return InteractionResult.CONSUME
+                }
+            }
+        }
+
         // 2. Emptying water with empty bucket
         if (stack.`is`(Items.BUCKET)) {
             if (be.waterAmount >= 1000) {
                 if (!level.isClientSide) {
                     be.waterAmount -= 1000
                     if (!player.isCreative) {
-                        stack.shrink(1)
-                        val filledBucket = ItemStack(Items.WATER_BUCKET)
-                        if (!player.inventory.add(filledBucket)) {
-                            player.drop(filledBucket, false)
-                        }
+                        player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, ItemStack(Items.WATER_BUCKET)))
                     }
                     level.playSound(
                         null,
@@ -157,7 +192,7 @@ class LowPressureBoilerBlock(properties: Properties) : BaseEntityBlock(propertie
             }
         }
 
-        return InteractionResult.PASS
+        return InteractionResult.TRY_WITH_EMPTY_HAND
     }
 
     override fun useWithoutItem(

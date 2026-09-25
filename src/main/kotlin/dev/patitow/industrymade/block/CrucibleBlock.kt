@@ -193,7 +193,7 @@ class CrucibleBlock(properties: Properties) : BaseEntityBlock(properties) {
             return InteractionResult.SUCCESS
         }
 
-        return InteractionResult.PASS
+        return InteractionResult.TRY_WITH_EMPTY_HAND
     }
 
     override fun useWithoutItem(

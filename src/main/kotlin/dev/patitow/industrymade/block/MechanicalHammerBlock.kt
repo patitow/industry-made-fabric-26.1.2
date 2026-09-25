@@ -136,7 +136,7 @@ class MechanicalHammerBlock(properties: Properties) : BaseEntityBlock(properties
             }
         }
 
-        return InteractionResult.PASS
+        return InteractionResult.TRY_WITH_EMPTY_HAND
     }
 
     override fun useWithoutItem(
