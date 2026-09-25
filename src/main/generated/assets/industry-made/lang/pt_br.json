@@ -1,0 +1,9 @@
+{
+  "block.industry-made.bellows": "Fole Manual",
+  "block.industry-made.refractory_bricks": "Tijolos Refratários",
+  "item.industry-made.fire_brick": "Tijolo Refratário",
+  "item.industry-made.fire_clay": "Argila Refratária",
+  "itemGroup.industry-made": "Industry Made",
+  "subtitles.industry-made.bellows_blow": "Fole soprando",
+  "subtitles.industry-made.bellows_pump": "Fole bombeando"
+}

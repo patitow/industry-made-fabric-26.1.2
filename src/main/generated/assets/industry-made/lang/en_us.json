@@ -1,0 +1,9 @@
+{
+  "block.industry-made.bellows": "Manual Bellows",
+  "block.industry-made.refractory_bricks": "Refractory Bricks",
+  "item.industry-made.fire_brick": "Fire Brick",
+  "item.industry-made.fire_clay": "Fire Clay",
+  "itemGroup.industry-made": "Industry Made",
+  "subtitles.industry-made.bellows_blow": "Bellows blowing",
+  "subtitles.industry-made.bellows_pump": "Bellows pumping"
+}
