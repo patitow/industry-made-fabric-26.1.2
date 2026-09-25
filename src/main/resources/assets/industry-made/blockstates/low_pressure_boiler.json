@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "industry-made:block/low_pressure_boiler"
+    },
+    "facing=east": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "industry-made:block/low_pressure_boiler",
+      "y": 270
+    }
+  }
+}

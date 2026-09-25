@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "industry-made:item/bellows"
+    "model": "industry-made:block/bellows"
   }
 }

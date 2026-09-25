@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "industry-made:block/mechanical_hammer"
+    },
+    "facing=east": {
+      "model": "industry-made:block/mechanical_hammer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "industry-made:block/mechanical_hammer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "industry-made:block/mechanical_hammer",
+      "y": 270
+    }
+  }
+}

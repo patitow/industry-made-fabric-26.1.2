@@ -42,6 +42,7 @@ Every feature in Industry Made must complete all 8 steps without skipping auxili
 
 ### 2. Core Registration
 - Blocks ➔ `dev.patitow.industrymade.init.ModBlocks.kt`
+  - **MANDATORY FOR ALL BLOCK ITEMS:** When instantiating `BlockItem`, ALWAYS call `Item.Properties().setId(itemKey).useBlockDescriptionPrefix()`. This prevents Minecraft 26.x from generating `"item.<namespace>.<name>"` keys that cause unlocalized item names in GUI and creative tabs.
 - Items ➔ `dev.patitow.industrymade.init.ModItems.kt`
 - Block Entities ➔ `dev.patitow.industrymade.init.ModBlockEntities.kt`
 - Data Components ➔ `dev.patitow.industrymade.init.ModDataComponents.kt`
@@ -51,7 +52,8 @@ Every feature in Industry Made must complete all 8 steps without skipping auxili
 ### 3. Creative Tab Placement
 - Every obtainable block and item must be added to `INDUSTRY_MADE_TAB` in `ModItems.kt` in a logical developmental order (e.g. Raw Material ➔ Refractory Blocks ➔ Molds ➔ Hot Molds ➔ Ingots ➔ Machines).
 
-### 4. Visual Textures & Assets
+### 4. Visual Textures & 3D Models
+- **No Flat Cubes or Plain 2D Sprites for Machinery:** Industrial and metallurgical machines must NEVER be flat 2D sprites or simple flat cubes. They require rich 3D voxel geometry (Blockbench-compatible JSON models with `elements`, UV mapping, and isometric GUI/Hand display transforms).
 - Textures live in `src/main/resources/assets/industry-made/textures/`:
   - `item/<name>.png`: 16x16 pixel art.
   - `block/<name>.png`: 16x16 pixel art.
@@ -69,8 +71,8 @@ Every feature in Industry Made must complete all 8 steps without skipping auxili
 ### 6. Fabric DataGen Automation (`IndustryMadeDataGenerator.kt`)
 Never write raw JSON files manually. Declare them in `IndustryMadeDataGenerator.kt`:
 1. `ModModelProvider`:
-   - `createTrivialCube` or `createParticleOnlyBlock` for blocks.
-   - `generateFlatItem` for items.
+   - Block models with 3D elements, or 3D parent linkage for items (`itemModelGenerators.generateFlatItem` for purely flat materials like ingots/plates; 3D block model inheritance for machine items).
+   - Handheld tools use `ModelTemplates.FLAT_HANDHELD_ITEM`.
 2. `ModRecipeProvider`:
    - Shaped/shapeless crafting recipes.
    - Smelting and blasting recipes (`SimpleCookingRecipeBuilder`).
@@ -78,12 +80,17 @@ Never write raw JSON files manually. Declare them in `IndustryMadeDataGenerator.
    - `dropSelf(...)` for blocks.
 4. `ModBlockTagsProvider` & `ModItemTagsProvider`:
    - Tool tags (`BlockTags.MINEABLE_WITH_PICKAXE`, `BlockTags.NEEDS_STONE_TOOL`, etc.).
+   - Tool item tags (`ItemTags.SWORDS`, `ItemTags.PICKAXES`, etc.).
 
-### 7. Dual Localization
+### 7. Dual Localization (Zero Unlocalized Keys)
 Both languages are mandatory:
 - `ModEnglishLanguageProvider` (`en_us`)
 - `ModPortugueseLanguageProvider` (`pt_br`)
-Include block names, item names, metal types, interaction messages (`message.industry-made.*`), and tooltips (`tooltip.industry-made.*`).
+- **DUAL KEY RULE:** To prevent unlocalized strings in JEI, inventory, or tooltips, ALWAYS register BOTH the block and the item key for every block:
+  - `translationBuilder.add(ModBlocks.MY_BLOCK, "Name")`
+  - `translationBuilder.add(ModBlocks.MY_BLOCK.asItem(), "Name")`
+  - Explicit fallback: `translationBuilder.add("item.industry-made.my_block", "Name")`
+- Include all item names, metal names (`metal.industry-made.*`), interaction messages (`message.industry-made.*`), tooltips (`tooltip.industry-made.*`), and sound subtitles (`subtitles.industry-made.*`).
 
 ### 8. Continuous Verification
 Always execute and verify the Gradle pipeline before considering a task complete:

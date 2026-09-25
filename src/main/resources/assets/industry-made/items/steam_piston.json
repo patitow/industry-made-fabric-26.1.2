@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "industry-made:item/crucible"
+    "model": "industry-made:block/steam_piston"
   }
 }

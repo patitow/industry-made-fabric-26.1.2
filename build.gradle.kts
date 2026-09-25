@@ -43,6 +43,14 @@ dependencies {
 	// JEI (Just Enough Items)
 	compileOnly("mezz.jei:jei-26.1.2-fabric-api:${providers.gradleProperty("jei_version").get()}")
 	"localRuntime"("mezz.jei:jei-26.1.2-fabric:${providers.gradleProperty("jei_version").get()}")
+
+	// Testing
+	testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.test {
+	useJUnitPlatform()
 }
 
 tasks.processResources {
